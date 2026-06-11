@@ -48,7 +48,7 @@
 </style>
 </head>
 <body>
-<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html" class="active">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html" class="active">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
 <button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
 </div>
 <div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
@@ -81,6 +81,7 @@
   <button class="paylasim-btn paylasim-link" onclick="paylasim('link')">🔗 Kopyala</button>
 </div>
 <footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="blog.html">Blog</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+<script src="assets/blog_data.js"></script>
 <script src="assets/app.js"></script>
 <script>
 var DB = {
@@ -307,7 +308,13 @@ var mid = parseInt(new URLSearchParams(window.location.search).get('id'));
 var ac = document.getElementById('articleContent');
 
 var makale = DB[mid];
+// Önce DB'de ara, sonra BLOG_LIST'te, sonra MAKALELER'de
 var meta = BLOG_LIST.find(function(x){return x.id===mid;});
+// blog_data.js'den MAKALELER ile de karşılaştır
+if(!meta && typeof MAKALELER !== 'undefined') {
+  var mItem = MAKALELER.find(function(x){return x.id===mid;});
+  if(mItem) meta = {id:mItem.id, t:mItem.title, b:mItem.bitki, c:mItem.cat};
+}
 
 if(!makale && !meta){
   ac.innerHTML = '<div class="info-box info-box-red"><h5>Makale bulunamadı</h5><p><a href="blog.html">Blog\'a dön</a></p></div>';
