@@ -1,103 +1,517 @@
-var MAKALELER = [
-  {id:1,cat:'Meyve Ağaçları',emoji:'🍎',bitki:'elma',title:'Elma Ağacı Bakımı: Budama, Sulama ve Gübreleme Rehberi',desc:'Elma ağacında yıllık bakım takvimi, doğru budama teknikleri, sulama sıklığı ve gübreleme programı hakkında kapsamlı rehber.',sure:'8 dk'},
-  {id:2,cat:'Meyve Ağaçları',emoji:'🫒',bitki:'zeytin',title:'Zeytin Hastalıkları: Teşhis ve Organik Tedavi Yöntemleri',desc:'Zeytin ağacında görülen Verticillium solgunluğu, zeytin sineği, halka lekesi hastalıklarının organik yöntemlerle tedavisi.',sure:'7 dk'},
-  {id:3,cat:'Sebzeler',emoji:'🍅',bitki:'domates',title:'Domates Yetiştirme: Hastalık Olmadan Bol Hasat Sırrı',desc:'Domatesin en yaygın hastalıklarından korunarak bol ve sağlıklı hasat almanın püf noktaları, toprak hazırlığı ve bakım ipuçları.',sure:'9 dk'},
-  {id:4,cat:'Çiçekler',emoji:'🌹',bitki:'gul',title:'Gül Bakımı: Mevsimlik Takvim ve Hastalık Önleme',desc:'İlkbahardan sonbahara gül bakımı, siyah leke hastalığı önleme, gübre seçimi ve kış hazırlığı hakkında detaylı rehber.',sure:'7 dk'},
-  {id:5,cat:'İç Mekan',emoji:'🌿',bitki:'monstera',title:'Monstera Bakımı: Sararmış Yaprakların Nedenleri',desc:'Monstera yapraklarının neden sarardığını ve bunun nasıl önleneceğini, sulama hatalarını ve ışık ihtiyacını açıklayan kapsamlı rehber.',sure:'6 dk'},
-  {id:6,cat:'Çiçekler',emoji:'💜',bitki:'lavanta',title:'Lavanta Yetiştiriciliği ve Hasat Takvimi',desc:'Lavanta yetiştirme koşulları, toprak hazırlığı, sulama ve hasat zamanlaması hakkında adım adım rehber.',sure:'6 dk'},
-  {id:7,cat:'Meyve Ağaçları',emoji:'🍒',bitki:'kiraz',title:'Kiraz Ağacı Yetiştirme: Dikimden Hasada Rehber',desc:'Kiraz ağacı dikim zamanı, toprak seçimi, budama teknikleri ve kiraz sineğiyle mücadele yöntemleri hakkında detaylı bilgi.',sure:'8 dk'},
-  {id:8,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'nane',title:'Nane Yetiştiriciliği: Balkon ve Mutfak Bahçesinde',desc:'Balkonda ve bahçede nane yetiştirme, saksı seçimi, sulama sıklığı ve hasad teknikleri hakkında pratik rehber.',sure:'5 dk'},
-  {id:9,cat:'Sebzeler',emoji:'🍉',bitki:'karpuz',title:'Karpuz Yetiştiriciliği: Büyük ve Tatlı Karpuz İpuçları',desc:'Karpuzda tatlılığı artıran sulama teknikleri, gübreleme programı, hasat zamanı belirleme ve depolama yöntemleri.',sure:'7 dk'},
-  {id:10,cat:'İç Mekan',emoji:'🌵',bitki:'aloe',title:'Aloe Vera Bakımı: Hem Dekoratif Hem Şifalı',desc:'Aloe vera sulama sıklığı, toprak türü, güneş ihtiyacı ve çoğaltma yöntemleri hakkında kapsamlı ev bitkisi bakım rehberi.',sure:'5 dk'},
-  {id:11,cat:'Meyve Ağaçları',emoji:'🍓',bitki:'cilek',title:'Çilek Yetiştiriciliği: Serada ve Açıkta Üretim',desc:'Çilek fidesi seçimi, dikim aralığı, sulama sistemi kurma, hastalıktan korunma ve hasat dönemini optimize etme rehberi.',sure:'8 dk'},
-  {id:12,cat:'Sebzeler',emoji:'🫑',bitki:'biber',title:'Biber Çeşitleri ve Yetiştiriciliği Rehberi',desc:'Dolmalık, sivri ve acı biber çeşitlerinin yetiştirme farklılıkları, gübreleme programı ve hasat teknikleri.',sure:'7 dk'},
-  {id:13,cat:'Meyve Ağaçları',emoji:'🌰',bitki:'ceviz',title:'Ceviz Ağacında Görülen Hastalıklar ve Çözümler',desc:'Ceviz antraknozu, Phytophthora çürüklüğü ve ceviz yaprak lekesi hastalıklarının belirtileri ve ilaçlama programı.',sure:'8 dk'},
-  {id:14,cat:'İç Mekan',emoji:'🌿',bitki:'sansevieria',title:'Kayınvalide Dili Bakımı: Öldürülmesi Zor Bitki',desc:'Sansevieria bakımının temel kuralları, az sulama yöntemi, yeniden canlandırma teknikleri ve çoğaltma rehberi.',sure:'5 dk'},
-  {id:15,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'kekik',title:'Kekik Yetiştiriciliği ve Kurutma Teknikleri',desc:'Bahçede ve balkonda kekik yetiştirme, hasat zamanlaması, kurutma ve saklama yöntemleri ile kullanım alanları.',sure:'6 dk'},
-  {id:16,cat:'Meyve Ağaçları',emoji:'🍇',bitki:'uzum',title:'Üzüm Bağı Kurma: Toprak Seçimi ve Çeşit Tercihi',desc:'Üzüm bağı kurmak için ideal toprak özellikleri, çeşit seçimi kriterleri, terbiye sistemi ve ilk yıl bakımı rehberi.',sure:'9 dk'},
-  {id:17,cat:'Sebzeler',emoji:'🥒',bitki:'salatalik',title:'Salatalık Sararmış Yapraklar: Neden Olur Nasıl Önlenir',desc:'Salatalık yapraklarının sararmasının nedenleri — besin eksikliği, aşırı sulama, hastalık — ve çözüm yöntemleri.',sure:'6 dk'},
-  {id:18,cat:'İç Mekan',emoji:'🌸',bitki:'orkide',title:'Orkide Bakımı: Yeniden Çiçek Açtırmanın 7 Kuralı',desc:'Orkide çiçeklendirme için doğru sıcaklık, nem, ışık ve gübreleme koşulları ile saksı yenileme teknikleri.',sure:'7 dk'},
-  {id:19,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'biberiye',title:'Biberiye Bakımı: Çok Yıllık Aromatik Bitkinin Sırları',desc:'Biberiye sulama sıklığı, budama zamanı, kışa hazırlık ve mutfakta kullanım alanları hakkında kapsamlı rehber.',sure:'6 dk'},
-  {id:20,cat:'Meyve Ağaçları',emoji:'🍑',bitki:'seftali',title:'Şeftali Budaması: Mevsime Göre Yapılması Gerekenler',desc:'Şeftali ağacında kış ve yaz budamasının zamanı, tekniği ve budama sonrası bakım hakkında detaylı rehber.',sure:'7 dk'},
-  {id:21,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Kompost Yapımı: Evde Organik Gübre Üretimi',desc:'Mutfak artıklarından ve bahçe atıklarından kaliteli kompost yapımı, olgunlaşma süreci ve kullanım yöntemleri.',sure:'8 dk'},
-  {id:22,cat:'Hastalık Rehberi',emoji:'🌹',bitki:'gul',title:'Külleme Hastalığı: Tüm Bitkilerde Tanı ve Tedavi',desc:'Beyaz un görünümlü külleme hastalığının belirtileri, sebepleri, önleyici tedbirler ve organik-kimyasal mücadele yöntemleri.',sure:'7 dk'},
-  {id:23,cat:'Hastalık Rehberi',emoji:'🍅',bitki:'domates',title:'Yaprak Biti ile Organik Mücadele Yöntemleri',desc:'Yaprak bitinin hayat döngüsü, zarar belirtileri ve sarımsak suyu, sabun çözeltisi gibi organik mücadele yöntemleri.',sure:'6 dk'},
-  {id:24,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'elma',title:'Toprak pH Testi: Neden Önemli ve Nasıl Yapılır',desc:'Toprak asitliğinin bitki gelişimine etkisi, pH testi yapma yöntemleri ve pH düzeltme teknikleri hakkında rehber.',sure:'7 dk'},
-  {id:25,cat:'Genel Bahçecilik',emoji:'💧',bitki:'domates',title:'Damlama Sulama Sistemi Kurma Rehberi',desc:'Bahçe ve seraya damlama sulama sistemi kurma adımları, bileşen seçimi, kurulum ve bakım hakkında pratik rehber.',sure:'9 dk'},
-  {id:26,cat:'İç Mekan',emoji:'🌿',bitki:'pothos',title:'Pothos Bakımı: Sarkık Sarmaşığı Sağlıklı Tutma',desc:'Pothos sulama zamanı, ışık ihtiyacı, sararan yaprak sorunları ve çelik ile çoğaltma teknikleri hakkında rehber.',sure:'5 dk'},
-  {id:27,cat:'İç Mekan',emoji:'🌵',bitki:'kaktus',title:'Kaktüs Bakımı: Sulama Hataları ve Doğru Toprak',desc:'Kaktüste en yaygın sulama hataları, doğru toprak karışımı, saksı seçimi ve kışın bakım koşulları rehberi.',sure:'6 dk'},
-  {id:28,cat:'Çiçekler',emoji:'🌷',bitki:'lale',title:'Lale Soğanı Dikimi: Sonbaharda Yapılması Gerekenler',desc:'Lale soğanı dikim zamanı, derinliği, toprak hazırlığı ve soğan saklaması hakkında adım adım rehber.',sure:'6 dk'},
-  {id:29,cat:'Meyve Ağaçları',emoji:'🍎',bitki:'nar',title:'Nar Ağacı Bakımı ve Hasat Zamanı Belirleme',desc:'Nar ağacı sulama sıklığı, budama teknikleri, hasat zamanı belirleme yöntemleri ve depolama koşulları.',sure:'7 dk'},
-  {id:30,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'elma',title:'Gübre Çeşitleri: NPK Oranları ve Doğru Kullanım',desc:'Azot, fosfor ve potasyum içeren gübrelerin bitki gelişimine etkileri, doğru doz hesaplama ve uygulama zamanları.',sure:'8 dk'},
-  {id:31,cat:'Sebzeler',emoji:'🥕',bitki:'havuc',title:'Havuç Yetiştiriciliği: Tohumdan Hasada Toprak Hazırlığı',desc:'Havuç için ideal toprak özellikleri, ekim derinliği, seyreltme zamanı ve hasat tekniği hakkında kapsamlı rehber.',sure:'7 dk'},
-  {id:32,cat:'Hastalık Rehberi',emoji:'🥔',bitki:'patates',title:'Patates Hastalıkları: Geç Yanıklık ve Tedavisi',desc:'Phytophthora infestans kaynaklı patates geç yanıklığının belirtileri, yayılma koşulları ve ilaçlama programı.',sure:'8 dk'},
-  {id:33,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'adacayi',title:'Adaçayı Bakımı ve Şifalı Kullanım Alanları',desc:'Adaçayı yetiştirme koşulları, hasat zamanı, kurutma yöntemleri ve tıbbi kullanım alanları hakkında kapsamlı rehber.',sure:'6 dk'},
-  {id:34,cat:'Çiçekler',emoji:'🌺',bitki:'begonvil',title:'Begonvil Bakımı: Akdeniz\'in Renk Şöleni',desc:'Begonvil sulama sıklığı, güneş ihtiyacı, budama zamanı, kışa hazırlık ve çiçeklenmeyi artırma teknikleri.',sure:'6 dk'},
-  {id:35,cat:'Dış Mekan',emoji:'🌳',bitki:'mese',title:'Meşe Ağacı Dikimi: Uzun Ömürlü Ağaç Yetiştirme',desc:'Meşe palamudundan ağaç yetiştirme, dikim yeri seçimi, ilk yıl sulama ve uzun vadeli bakım rehberi.',sure:'7 dk'},
-  {id:36,cat:'Hastalık Rehberi',emoji:'🍅',bitki:'domates',title:'Kırmızı Örümcek Mücadelesi: Erken Tespit ve Tedavi',desc:'Kırmızı örümceğin zarar belirtileri, yaşam koşulları ve akarisit seçimi ile organik mücadele yöntemleri.',sure:'7 dk'},
-  {id:37,cat:'Sebzeler',emoji:'🧄',bitki:'sarimsak',title:'Sarımsak Yetiştiriciliği: Sağlıklı Diş Elde Etme',desc:'Sarımsak diş seçimi, ekim zamanı, gübreleme programı, hasat zamanı belirleme ve kurutma yöntemleri.',sure:'7 dk'},
-  {id:38,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'fesleen',title:'Fesleğen Yetiştiriciliği: Marul ile Ortak Yetiştirme',desc:'Fesleğen ve marulun ortak yetiştirilmesinin faydaları, sulama, gübreleme ve hasat teknikleri rehberi.',sure:'6 dk'},
-  {id:39,cat:'Çiçekler',emoji:'🌻',bitki:'ayicegi',title:'Ayçiçeği Yetiştiriciliği: Dev Çiçekler İçin Gübre',desc:'Büyük başlı ayçiçeği yetiştirmek için doğru gübreleme programı, sulama sıklığı ve destekleme teknikleri.',sure:'6 dk'},
-  {id:40,cat:'İç Mekan',emoji:'🌿',bitki:'zz',title:'ZZ Bitkisi Bakımı: Unutkanlara Mükemmel Bitki',desc:'Az bakım gerektiren ZZ bitkisinin sulama sıklığı, ışık ihtiyacı, yeniden canlandırma ve çoğaltma rehberi.',sure:'5 dk'},
-  {id:41,cat:'Dış Mekan',emoji:'🌳',bitki:'ihlamur',title:'Ihlamur Ağacı: Çiçek Hasadı ve Şifalı Çay Yapımı',desc:'Ihlamur çiçeği hasat zamanı, kurutma teknikleri, şifalı çay hazırlama ve ağaç bakımı hakkında rehber.',sure:'6 dk'},
-  {id:42,cat:'Sebzeler',emoji:'🌽',bitki:'misir',title:'Mısır Yetiştiriciliği: Tatlı Mısır Hasadı İpuçları',desc:'Tatlı mısır çeşidi seçimi, dikim aralığı, sulama ve gübreleme programı ile hasat zamanı belirleme rehberi.',sure:'7 dk'},
-  {id:43,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'melisa',title:'Melisa Çayı İçin Evde Melisa Yetiştirme',desc:'Saksıda ve bahçede melisa yetiştirme, hasat zamanı, kurutma yöntemleri ve sakinleştirici çay hazırlama rehberi.',sure:'5 dk'},
-  {id:44,cat:'Dış Mekan',emoji:'🌴',bitki:'palmiye',title:'Palmiye Bakımı: Türkiye\'de Tropikal Görünüm',desc:'Türkiye iklimine uygun palmiye türleri, kışa dayanıklılık, sulama sıklığı ve gübre seçimi hakkında rehber.',sure:'6 dk'},
-  {id:45,cat:'Meyve Ağaçları',emoji:'🌰',bitki:'findik',title:'Fındık Bahçesinde Verim Artışı: Gübreleme Takvimi',desc:'Karadeniz fındık bahçesi için yıllık gübreleme programı, mikrobesin eksiklikleri ve verimi artıran teknikler.',sure:'8 dk'},
-  {id:46,cat:'Hastalık Rehberi',emoji:'🍆',bitki:'patlican',title:'Patlıcan Hastalıkları: Külleme ve Yanıklık Tedavisi',desc:'Patlıcanda külleme ve Verticillium yanıklığının belirtileri, önleyici tedbirler ve ilaçlama programı.',sure:'7 dk'},
-  {id:47,cat:'Dış Mekan',emoji:'🎍',bitki:'bambu',title:'Bambu Yetiştiriciliği: Hızlı Büyüyen Yeşil Perde',desc:'Bahçe perdesi için bambu çeşidi seçimi, dikim aralığı, yayılma kontrolü ve bakım rehberi.',sure:'7 dk'},
-  {id:48,cat:'İç Mekan',emoji:'🌸',bitki:'baris_zambagi',title:'Barış Zambağı Bakımı: Gölgede Çiçek Açan Bitki',desc:'Az ışıkta çiçek açan barış zambağının sulama sıklığı, nem ihtiyacı, sararan yapraklar ve canlandırma rehberi.',sure:'5 dk'},
-  {id:49,cat:'Meyve Ağaçları',emoji:'🥝',bitki:'kivi',title:'Kivi Yetiştiriciliği: İklim ve Toprak Gereksinimleri',desc:'Türkiye\'de kivi yetiştiriciliği için iklim koşulları, toprak hazırlığı, sulama sistemi ve erkek-dişi bitki oranı.',sure:'8 dk'},
-  {id:50,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Sera Kurulumu: Küçük Bahçe İçin Ucuz Çözümler',desc:'Düşük bütçeyle küçük sera kurulumu, malzeme seçimi, havalandırma sistemi ve ısıtma yöntemleri rehberi.',sure:'9 dk'},
-  {id:51,cat:'Meyve Ağaçları',emoji:'🍑',bitki:'kayisi',title:'Kayısı Ağacında Don Zararı: Önleme Yolları',desc:'İlkbahar donlarından kayısı çiçeklerini koruma yöntemleri, don örtüsü kullanımı ve hasar sonrası bakım.',sure:'7 dk'},
-  {id:52,cat:'Sebzeler',emoji:'🥬',bitki:'ispanak',title:'Ispanak Yetiştiriciliği: 4 Mevsim Sürekli Hasat',desc:'Yıl boyunca ıspanak hasadı için ekim takvimi, çeşit seçimi, sulama ve gübreleme programı rehberi.',sure:'6 dk'},
-  {id:53,cat:'Sebzeler',emoji:'🧅',bitki:'sogan',title:'Soğan Yetiştiriciliği: Ekim Zamanı ve Gübreleme',desc:'Soğan ekim zamanı, tohum ve fide yöntemi farkları, gübreleme programı ve hasat-depolama teknikleri.',sure:'7 dk'},
-  {id:54,cat:'Dış Mekan',emoji:'🌲',bitki:'servi',title:'Servi Ağacı Bakımı: Akdeniz Peyzajının Simgesi',desc:'İtalyan servisi bakımı, budama zamanı, sulama sıklığı ve peyzajda doğru kullanım rehberi.',sure:'6 dk'},
-  {id:55,cat:'Sebzeler',emoji:'🥬',bitki:'marul',title:'Marul Çeşitleri ve Balkon Bahçesinde Yetiştirme',desc:'Kıvırcık, göbek ve iceberg marulun balkon saksısında yetiştirilmesi, sulama ve hasat teknikleri.',sure:'6 dk'},
-  {id:56,cat:'Meyve Ağaçları',emoji:'💛',bitki:'ayva',title:'Ayva Bakımı: Az Bakım Gerektiren Meyve',desc:'Ayva ağacının sulama, gübreleme ve budama ihtiyaçları ile hasat zamanı ve ev yapımı ayva reçeli rehberi.',sure:'6 dk'},
-  {id:57,cat:'Çiçekler',emoji:'🌸',bitki:'sardunya',title:'Sardunya Neden Sararır? Nedeni ve Çözümleri',desc:'Sardunya yapraklarının sararmasının 5 temel nedeni ve her biri için pratik çözüm yöntemleri rehberi.',sure:'5 dk'},
-  {id:58,cat:'Meyve Ağaçları',emoji:'🟣',bitki:'erik',title:'Erik Ağacı Bakımı: Budama Programı',desc:'Erik ağacında yıllık budama programı, seyreltme önemi, hastalıktan korunma ve hasat optimizasyonu.',sure:'7 dk'},
-  {id:59,cat:'Sebzeler',emoji:'🥦',bitki:'brokoli',title:'Brokoli Yetiştiriciliği: Kış Sebzeciliği Rehberi',desc:'Güz ve kış döneminde brokoli yetiştirme, don dayanıklılığı, gübreleme programı ve hasat zamanı rehberi.',sure:'7 dk'},
-  {id:60,cat:'Sebzeler',emoji:'🍈',bitki:'kavun',title:'Kavun Bahçesi: Çeşit Seçimi ve Sulama',desc:'Türk kavun çeşitlerinin özellikleri, sulama sıklığı, olgunluk belirleme teknikleri ve depolama koşulları.',sure:'7 dk'},
-  {id:61,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'elma',title:'Organik Bahçecilik: Kimyasalsız Verimli Bahçe',desc:'Organik bahçeciliğe geçiş rehberi, doğal gübre alternatifleri, biyolojik mücadele ve toprak sağlığı.',sure:'9 dk'},
-  {id:62,cat:'Sebzeler',emoji:'🫛',bitki:'bezelye',title:'Bezelye Yetiştiriciliği: İlkbahar Bahçesinin Vazgeçilmezi',desc:'Bezelye ekim zamanı, destek sistemi kurma, sulama ve gübreleme programı ile taze hasat teknikleri.',sure:'6 dk'},
-  {id:63,cat:'Meyve Ağaçları',emoji:'🍊',bitki:'portakal',title:'Portakal Bahçesi Kurma: Narenciye Yetiştiriciliği',desc:'Türkiye\'de portakal yetiştiriciliği için iklim koşulları, çeşit seçimi, sulama sistemi ve hasat rehberi.',sure:'8 dk'},
-  {id:64,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'maydanoz',title:'Maydanoz ve Dereotu: Balkonlarda Taze Ot',desc:'Balkonda maydanoz ve dereotu yetiştirme, saksı seçimi, sulama sıklığı ve sürekli hasat teknikleri.',sure:'5 dk'},
-  {id:65,cat:'Sebzeler',emoji:'🫘',bitki:'fasulye',title:'Fasulye Çeşitleri: Sırık ve Bodur Bakım Farkları',desc:'Sırık ve bodur fasulye çeşitlerinin dikim, sulama, gübreleme ve hasat farklılıkları hakkında karşılaştırmalı rehber.',sure:'7 dk'},
-  {id:66,cat:'Meyve Ağaçları',emoji:'🤎',bitki:'badem',title:'Badem Ağacı Çiçeklenmesi ve Don Koruması',desc:'Erken çiçeklenen badem ağacını don zararından koruma yöntemleri, don örtüsü kullanımı ve hasar sonrası bakım.',sure:'7 dk'},
-  {id:67,cat:'Sebzeler',emoji:'🥬',bitki:'kabak',title:'Kabak Yetiştiriciliği: Saksıda ve Bahçede Bol Verim',desc:'Kabak çeşidi seçimi, tozlaşma sorunu çözme, sulama-gübreleme programı ve bol verim için teknikler.',sure:'6 dk'},
-  {id:68,cat:'Meyve Ağaçları',emoji:'🍋',bitki:'limon',title:'Limon Ağacı Saksıda Yetiştirilir mi?',desc:'Saksıda limon ağacı yetiştirme koşulları, kışın içeri alma, gübreleme programı ve çiçek dökmesini önleme.',sure:'7 dk'},
-  {id:69,cat:'Çiçekler',emoji:'🌼',bitki:'papatya',title:'Papatya Çayı İçin Bahçede Papatya Yetiştirme',desc:'Şifalı papatya yetiştirme koşulları, hasat zamanı, kurutma yöntemleri ve yatıştırıcı çay hazırlama.',sure:'5 dk'},
-  {id:70,cat:'Çiçekler',emoji:'🌸',bitki:'zambak',title:'Zambak Bakımı ve Soğanlı Bitkinin Çoğaltılması',desc:'Zambak soğanı dikim zamanı, derinliği, güneş ihtiyacı ve soğan bölme ile çoğaltma teknikleri rehberi.',sure:'6 dk'},
-  {id:71,cat:'Meyve Ağaçları',emoji:'🥑',bitki:'avokado',title:'Avokado Çekirdeğinden Fide Yetiştirme',desc:'Avokado çekirdeğini suda filizlendirme, saksıya aktarma, sulama sıklığı ve meyve vermesi için gerekli koşullar.',sure:'7 dk'},
-  {id:72,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Fide Yetiştirme: Tohum Ekiminden Şaşırtmaya',desc:'Kapalı ortamda fide yetiştirme, viyol seçimi, çimlenme sıcaklığı ve fideleri şaşırtma teknikleri rehberi.',sure:'8 dk'},
-  {id:73,cat:'Genel Bahçecilik',emoji:'📅',bitki:'elma',title:'Bahçede Ekim Takvimi: Hangi Ay Ne Ekilir',desc:'Ocak\'tan Aralık\'a aylık bahçe ekim ve dikim takvimi, Türkiye iklim bölgelerine göre optimum zamanlar.',sure:'9 dk'},
-  {id:74,cat:'Hastalık Rehberi',emoji:'🍐',bitki:'armut',title:'Armut Hastalıkları: Ateş Yanıklığı Tedavisi',desc:'Erwinia amylovora kaynaklı ateş yanıklığının belirtileri, yayılma yolları ve antibiyotikli ilaçlama programı.',sure:'8 dk'},
-  {id:75,cat:'Hastalık Rehberi',emoji:'🌲',bitki:'cam',title:'Çam Ağacı Hastalıkları: Mantar ve Böcek',desc:'Çam ağacında kabuk böceği, çam kesmeci ve mantar hastalıklarının belirtileri ile mücadele yöntemleri.',sure:'7 dk'},
-  {id:76,cat:'Çiçekler',emoji:'🌸',bitki:'karanfil',title:'Karanfil Yetiştiriciliği ve Kesme Çiçek Üretimi',desc:'Kesme karanfil üretimi için çeşit seçimi, sera koşulları, gübreleme programı ve hasat-soğuk zinciri rehberi.',sure:'8 dk'},
-  {id:77,cat:'Genel Bahçecilik',emoji:'🪨',bitki:'elma',title:'Toprak İyileştirme: Kil Toprağı Düzeltme Yolları',desc:'Kil toprağını gevşetme yöntemleri, perlit, kum ve organik madde karışım oranları ve drenaj iyileştirme.',sure:'7 dk'},
-  {id:78,cat:'Genel Bahçecilik',emoji:'✂️',bitki:'elma',title:'Kış Budaması: Meyve Ağaçlarında Doğru Teknik',desc:'Kış budamasının zamanı, kullanılacak aletler, yara kalus oluşumu ve hatalı budamanın sonuçları hakkında rehber.',sure:'8 dk'},
-  {id:79,cat:'Genel Bahçecilik',emoji:'💧',bitki:'domates',title:'Sulama Hataları: En Yaygın 8 Hata ve Çözümü',desc:'Aşırı sulama, yetersiz sulama, yanlış sulama zamanı gibi 8 yaygın hata ve her biri için pratik çözümler.',sure:'7 dk'},
-  {id:80,cat:'Hastalık Rehberi',emoji:'🍓',bitki:'cilek',title:'Çilek Hastalıkları: Gri Küf ve Solgunluk Tedavisi',desc:'Botrytis gri küfü ve Verticillium solgunluğunun belirtileri, önleyici tedbirler ve ilaçlama programı.',sure:'7 dk'},
-  {id:81,cat:'Hastalık Rehberi',emoji:'🌿',bitki:'monstera',title:'Sarı Yapraklar: Nedenleri ve Çözüm Rehberi',desc:'Tüm bitkilerde sarı yaprak sorununun 10 farklı nedeni ve her biri için tanı ve çözüm yöntemleri rehberi.',sure:'8 dk'},
-  {id:82,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'kiraz',title:'Meyve Ağaçlarında Aşılama Teknikleri',desc:'T-göz, yarma ve dil aşısı tekniklerinin detaylı anlatımı, aşı kalemi saklama ve aşı başarısını artırma.',sure:'9 dk'},
-  {id:83,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Balkon Bahçeciliği: En Kolay 10 Sebze',desc:'Balkonda en kolay yetiştirilen 10 sebze türü, saksı boyutu, sulama sıklığı ve gübreleme programı rehberi.',sure:'7 dk'},
-  {id:84,cat:'Meyve Ağaçları',emoji:'🌿',bitki:'incir',title:'İncir Ağacı Budaması ve Verim Artırma',desc:'İncir ağacında budama zamanı, şekil budaması teknikleri, verim artırma yöntemleri ve kışa hazırlık.',sure:'7 dk'},
-  {id:85,cat:'Tıbbi Bitkiler',emoji:'💜',bitki:'lavanta',title:'Aromatik Bitki Bahçesi Nasıl Kurulur',desc:'Lavanta, biberiye, kekik ve adaçayından oluşan aromatik bitki bahçesi tasarımı, dikim planı ve bakım takvimi.',sure:'8 dk'},
-  {id:86,cat:'Hastalık Rehberi',emoji:'🍅',bitki:'domates',title:'Beyazsinekle Organik Mücadele Yöntemleri',desc:'Beyazsineklerin yaşam döngüsü, zarar belirtileri ve sarı yapışkan tuzak, sabun çözeltisi ile mücadele yöntemleri.',sure:'6 dk'},
-  {id:87,cat:'İç Mekan',emoji:'🌵',bitki:'sukulent',title:'Succulentler İçin Doğru Toprak Karışımı',desc:'Sukulent toprağı hazırlama, perlit oranı, ph değeri, saksı seçimi ve kış ile yaz sulama farkları rehberi.',sure:'5 dk'},
-  {id:88,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'domates',title:'Mantar Gübresi: Avantajları ve Kullanım Rehberi',desc:'Mantar gübresi içeriği, toprak yapısına katkıları, uygulama miktarı ve diğer organik gübrelerle karşılaştırma.',sure:'7 dk'},
-  {id:89,cat:'Genel Bahçecilik',emoji:'🫒',bitki:'zeytin',title:'Kuraklığa Dayanıklı Bahçe Bitkileri',desc:'Su isteği az olan 15 kuraklık toleranslı bitki türü, bakım gereksinimleri ve su tasarrufu sağlayan peyzaj önerileri.',sure:'8 dk'},
-  {id:90,cat:'Hastalık Rehberi',emoji:'🌿',bitki:'monstera',title:'Ev Bitkilerinde Sinek Problemi: Organik Çözüm',desc:'Toprak sineği ve beyazsinek sorunlarının nedenleri ile neem yağı, sarı tuzak ve toprak kuruması yöntemi ile çözüm.',sure:'6 dk'},
-  {id:91,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'nane',title:'Çay Bahçesi Kurma: Tıbbi Bitkilerle Dolu Bahçe',desc:'Nane, melisa, adaçayı ve kekikten oluşan şifalı çay bahçesi tasarımı, bakım takvimi ve hasat teknikleri.',sure:'7 dk'},
-  {id:92,cat:'Meyve Ağaçları',emoji:'🍇',bitki:'uzum',title:'Bağ Budaması: Üzümde Yıllık Bakım Takvimi',desc:'Üzüm bağında yıllık budama zamanı, Guyot ve kordon terbiye sistemlerinde teknikler ve yeşil budama rehberi.',sure:'9 dk'},
-  {id:93,cat:'Sebzeler',emoji:'🌿',bitki:'enginar',title:'Enginar Yetiştiriciliği ve Hasadı',desc:'Enginar fide dikimi, sulama sıklığı, gübreleme programı, hasat zamanı belirleme ve çok yıllık bakım rehberi.',sure:'7 dk'},
-  {id:94,cat:'Sebzeler',emoji:'🌿',bitki:'bamya',title:'Bamya Yetiştiriciliği: Sıcak İklim Sebzesi',desc:'Bamya tohumun çimlendirilmesi, dikim aralığı, sulama-gübreleme programı ve sürekli hasat teknikleri rehberi.',sure:'6 dk'},
-  {id:95,cat:'Meyve Ağaçları',emoji:'🍊',bitki:'mandalina',title:'Mandalina Ağacı Bakımı ve İklim Gereksinimleri',desc:'Saksı ve bahçe mandalinası bakımı, don dayanıklılığı, gübre seçimi ve bol meyve için teknikler.',sure:'7 dk'},
-  {id:96,cat:'Çiçekler',emoji:'🌸',bitki:'kasimpati',title:'Kasımpatı Bakımı: Sonbaharın Rengi',desc:'Kasımpatı dikim zamanı, sulama sıklığı, çiçeklenmeyi uzatma teknikleri ve kışa hazırlık rehberi.',sure:'5 dk'},
-  {id:97,cat:'İç Mekan',emoji:'🌿',bitki:'kalathea',title:'Kalathea Bakımı: Tropikal Desenli Yapraklar',desc:'Kalathea için doğru nem oranı, sulama suyu kalitesi, ışık ihtiyacı ve yaprak uçlarının kurumasını önleme.',sure:'6 dk'},
-  {id:98,cat:'Tıbbi Bitkiler',emoji:'🌸',bitki:'ekinezya',title:'Ekinezya Yetiştiriciliği: Bağışıklığı Güçlendiren Bitki',desc:'Ekinezya tohum ekimi, büyüme koşulları, hasat zamanı ve bağışıklık sistemini destekleyen kullanım şekilleri.',sure:'7 dk'},
-  {id:99,cat:'Meyve Ağaçları',emoji:'🫐',bitki:'dut',title:'Dut Ağacı Bakımı ve Meyve Hasadı',desc:'Dut ağacı budama zamanı, sulama ihtiyacı, hasat teknikleri ve dut pekmezi yapımı hakkında rehber.',sure:'6 dk'},
-  {id:100,cat:'Çiçekler',emoji:'💙',bitki:'ortanca',title:'Ortanca Bakımı: Renkli Çiçekler İçin Toprak Sırrı',desc:'Ortanca çiçek rengini belirleyen toprak pH\'ı, budama zamanı, sulama sıklığı ve kışa hazırlık rehberi.',sure:'6 dk'},
-  {id:101,cat:'Sebzeler',emoji:'🥔',bitki:'patates',title:'Patates Yetiştirme: Evde Saksıda Patates Rehberi',desc:'Saksıda patates yetiştirme yöntemi, tohum patates seçimi, toprak karışımı ve hasat zamanı belirleme teknikleri.',sure:'7 dk'},
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Araçları | BitkiDoktorum</title>
+<meta name="description" content="Gübre hesaplayıcı, sulama hesaplayıcı, bitki testi ve daha fazlası. BitkiDoktorum ücretsiz bitki bakım araçları.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<style>
+.arac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin:1.5rem 0}
+.arac-kart{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh)}
+.arac-kart h2{font-size:1.1rem;margin-bottom:1rem;color:var(--gd);display:flex;align-items:center;gap:.5rem}
+.hesap-satir{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.75rem}
+.hesap-satir label{font-size:.8rem;font-weight:600;color:var(--t2)}
+.hesap-satir select,.hesap-satir input{padding:.45rem .6rem;border:1px solid var(--br);border-radius:6px;font-size:.85rem;width:100%}
+.sonuc-kutu{background:var(--gp);border:1px solid var(--g);border-radius:8px;padding:.85rem;margin-top:.75rem;font-size:.85rem;line-height:1.7;display:none}
+.sonuc-kutu.goster{display:block}
+.hesap-btn{background:var(--g);color:#fff;border:none;border-radius:8px;padding:.5rem 1.2rem;cursor:pointer;font-size:.85rem;font-weight:600;margin-top:.5rem;width:100%}
+.hesap-btn:hover{background:var(--gd)}
+
+/* Quiz */
+.quiz-soru{margin-bottom:1rem}
+.quiz-soru p{font-weight:600;font-size:.9rem;margin-bottom:.5rem;color:var(--t1)}
+.quiz-secenekler{display:flex;flex-direction:column;gap:.4rem}
+.quiz-sec{background:#fff;border:1px solid var(--br);border-radius:8px;padding:.5rem .75rem;cursor:pointer;font-size:.83rem;text-align:left;transition:.15s}
+.quiz-sec:hover,.quiz-sec.aktif{background:var(--gp);border-color:var(--g);color:var(--gd)}
+.quiz-sonuc{background:var(--gp);border:2px solid var(--g);border-radius:var(--r);padding:1.25rem;text-align:center;display:none}
+.quiz-sonuc.goster{display:block}
+.quiz-sonuc .emoji{font-size:3rem}
+.quiz-sonuc h3{color:var(--gd);margin:.5rem 0 .25rem}
+
+/* Gelişmiş arama */
+.filtre-satir{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.75rem}
+@media(max-width:480px){.filtre-satir{grid-template-columns:1fr}}
+.arama-sonuc{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem;max-height:300px;overflow-y:auto}
+.bitki-chip{display:flex;align-items:center;gap:.3rem;background:#fff;border:1px solid var(--br);border-radius:20px;padding:.3rem .7rem;font-size:.78rem;text-decoration:none;color:var(--t1);transition:.15s}
+.bitki-chip:hover{border-color:var(--g);color:var(--gd)}
+.bos-mesaj{font-size:.83rem;color:var(--t3);padding:.5rem 0}
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Araçlar</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>🛠️ Bitki Bakım Araçları</h1>
+<p style="color:var(--t2);margin-bottom:1.5rem">Ücretsiz hesaplayıcılar, quiz ve gelişmiş arama.</p>
+
+<div class="arac-grid">
+
+<!-- GELİŞMİŞ ARAMA -->
+<div class="arac-kart" style="grid-column:1/-1">
+  <h2>🔍 Gelişmiş Bitki Arama</h2>
+  <div class="filtre-satir">
+    <div class="hesap-satir"><label>Sulama İsteği</label>
+      <select id="fSulama"><option value="">Hepsi</option><option value="low">Az 💧</option><option value="moderate">Orta 💧💧</option><option value="high">Çok 💧💧💧</option></select></div>
+    <div class="hesap-satir"><label>Güneş İsteği</label>
+      <select id="fGunes"><option value="">Hepsi</option><option value="full_sun">Tam Güneş ☀️</option><option value="partial_shade">Yarı Gölge 🌤️</option><option value="shade">Gölge 🌥️</option></select></div>
+    <div class="hesap-satir"><label>Bakım Zorluğu</label>
+      <select id="fZorluk"><option value="">Hepsi</option><option value="easy">Kolay ⭐</option><option value="medium">Orta ⭐⭐</option><option value="hard">Zor ⭐⭐⭐</option></select></div>
+    <div class="hesap-satir"><label>Kategori</label>
+      <select id="fKat"><option value="">Hepsi</option><option value="fruit">Meyve Ağaçları</option><option value="vegetable">Sebzeler</option><option value="flower">Çiçekler</option><option value="ornamental">Süs Bitkileri</option><option value="indoor">İç Mekan</option><option value="outdoor">Dış Mekan</option><option value="herb">Tıbbi & Aromatik</option></select></div>
+  </div>
+  <div class="hesap-satir"><label>Anahtar Kelime</label>
+    <input type="text" id="fKelime" placeholder="Bitki adı, etiket... (elma, tropikal, kuraklık...)" oninput="gelismisAra()"></div>
+  <button class="hesap-btn" onclick="gelismisAra()">🔍 Ara</button>
+  <div id="aramaInfo" style="font-size:.8rem;color:var(--t3);margin-top:.5rem"></div>
+  <div class="arama-sonuc" id="aramaSonuc"></div>
+</div>
+
+<!-- GÜBRE HESAPLAYICI -->
+<div class="arac-kart">
+  <h2>🌱 Gübre Hesaplayıcı</h2>
+  <div class="hesap-satir"><label>Bitki Türü</label>
+    <select id="gBitki">
+      <option value="meyve">Meyve Ağacı</option>
+      <option value="sebze">Sebze</option>
+      <option value="cicek">Çiçek / Süs Bitkisi</option>
+      <option value="ic_mekan">İç Mekan Bitkisi</option>
+      <option value="cim">Çim / Çimenlik</option>
+      <option value="kaktus">Kaktüs / Sukulent</option>
+    </select></div>
+  <div class="hesap-satir"><label>Alan / Saksı Boyutu</label>
+    <select id="gAlan">
+      <option value="saksı_kucuk">Küçük Saksı (1-3L)</option>
+      <option value="saksı_orta">Orta Saksı (5-10L)</option>
+      <option value="saksı_buyuk">Büyük Saksı (15-25L)</option>
+      <option value="5">5 m² bahçe</option>
+      <option value="10">10 m² bahçe</option>
+      <option value="25">25 m² bahçe</option>
+      <option value="50">50 m² bahçe</option>
+      <option value="100">100 m² bahçe</option>
+    </select></div>
+  <div class="hesap-satir"><label>Dönem</label>
+    <select id="gDonem">
+      <option value="ilkbahar">İlkbahar (Mart-Nisan)</option>
+      <option value="yaz">Yaz Ortası (Haziran-Temmuz)</option>
+      <option value="sonbahar">Sonbahar Hazırlık (Eylül-Ekim)</option>
+    </select></div>
+  <button class="hesap-btn" onclick="gubreHesapla()">Hesapla</button>
+  <div class="sonuc-kutu" id="gubreSonuc"></div>
+</div>
+
+<!-- SULAMA HESAPLAYICI -->
+<div class="arac-kart">
+  <h2>💧 Sulama Hesaplayıcı</h2>
+  <div class="hesap-satir"><label>Bitki Su İsteği</label>
+    <select id="sBitki">
+      <option value="low">Az (zeytin, kaktüs, lavanta)</option>
+      <option value="moderate">Orta (elma, gül, domates)</option>
+      <option value="high">Çok (orkide, marul, çilek)</option>
+    </select></div>
+  <div class="hesap-satir"><label>Mevsim / Sıcaklık</label>
+    <select id="sMevsim">
+      <option value="kis">Kış (0-10°C)</option>
+      <option value="ilkbahar">İlkbahar (10-20°C)</option>
+      <option value="yaz_ilk">Yaz Başı (20-28°C)</option>
+      <option value="yaz_sicak">Sıcak Yaz (28°C+)</option>
+    </select></div>
+  <div class="hesap-satir"><label>Konum</label>
+    <select id="sKonum">
+      <option value="dis">Dış Mekan / Bahçe</option>
+      <option value="saksı_dis">Dış Mekan Saksı</option>
+      <option value="ic">İç Mekan Saksı</option>
+    </select></div>
+  <button class="hesap-btn" onclick="sulamaHesapla()">Hesapla</button>
+  <div class="sonuc-kutu" id="sulamaSonuc"></div>
+</div>
+
+<!-- BİTKİ TESTİ / QUIZ -->
+<div class="arac-kart">
+  <h2>🧪 Sana Hangi Bitki Uyar?</h2>
+  <div id="quizAlan"></div>
+  <div class="quiz-sonuc" id="quizSonuc">
+    <div class="emoji" id="qEmoji"></div>
+    <h3 id="qIsim"></h3>
+    <p id="qAcik" style="font-size:.83rem;color:var(--t2);margin:.4rem 0 .75rem"></p>
+    <a id="qLink" href="#" class="btn btn-primary btn-sm">Detay →</a>
+    <button onclick="quizBaslat()" style="margin-left:.5rem" class="btn btn-outline btn-sm">Tekrar</button>
+  </div>
+</div>
+
+</div><!-- /arac-grid -->
+
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+
+<!-- YAZDIRMA BÖLÜMÜ -->
+<div class="arac-kart" style="margin-top:0">
+  <h2>🖨️ Bitki Bakım Kartı Yazdır</h2>
+  <p style="font-size:.83rem;color:var(--t2);margin-bottom:.75rem">Bir bitki seçin, bakım kartını yazdırın veya PDF olarak kaydedin.</p>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <select id="yazBitki" style="flex:1;padding:.45rem .6rem;border:1px solid var(--br);border-radius:6px;font-size:.85rem"></select>
+    <button class="hesap-btn" style="width:auto;flex-shrink:0" onclick="yazdir()">🖨️ Yazdır / PDF</button>
+  </div>
+</div>
+
+</div>
+
+<!-- YAZDIR IFRAME -->
+<div id="yazdirModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:2rem;max-width:500px;width:90%;max-height:80vh;overflow-y:auto" id="yazdirIcerik"></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Araçlar</h4><ul><li><a href="takvim.html">Bakım Takvimi</a></li><li><a href="karsilastir.html">Karşılaştır</a></li><li><a href="bolge.html">Bölge Rehberi</a></li><li><a href="araclar.html">Hesaplayıcılar</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+
+<script src="assets/app.js"></script>
+<script>
+// ── GELİŞMİŞ ARAMA ──
+function gelismisAra(){
+  var s=document.getElementById('fSulama').value;
+  var g=document.getElementById('fGunes').value;
+  var z=document.getElementById('fZorluk').value;
+  var k=document.getElementById('fKat').value;
+  var q=document.getElementById('fKelime').value.toLowerCase().trim();
+  var r=PLANT_DB.filter(function(p){
+    if(s && p.water!==s) return false;
+    if(g && p.sun!==g) return false;
+    if(z && p.difficulty!==z) return false;
+    if(k && p.cat!==k) return false;
+    if(q && !p.tr.toLowerCase().includes(q) && !p.en.toLowerCase().includes(q)
+       && !(p.tags||[]).some(function(t){return t.includes(q);})) return false;
+    return true;
+  });
+  document.getElementById('aramaInfo').textContent = r.length+' bitki bulundu';
+  if(!r.length){document.getElementById('aramaSonuc').innerHTML='<span class="bos-mesaj">Sonuç bulunamadı — filtreleri değiştirin.</span>';return;}
+  document.getElementById('aramaSonuc').innerHTML = r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="bitki-chip">'+p.emoji+' '+p.tr+'</a>';
+  }).join('');
+}
+['fSulama','fGunes','fZorluk','fKat'].forEach(function(id){document.getElementById(id).addEventListener('change',gelismisAra);});
+
+// ── GÜBRE HESAPLAYICI ──
+function gubreHesapla(){
+  var b=document.getElementById('gBitki').value;
+  var a=document.getElementById('gAlan').value;
+  var d=document.getElementById('gDonem').value;
+  var m='';
+  var GUBRE={
+    meyve:{
+      ilkbahar:{tip:'20-10-10 NPK (azot ağırlıklı)',gr:150,not:'Büyüme mevsimi başlangıcı. Kök bölgesine serpin, sulamayla karıştırın.'},
+      yaz:{tip:'Amonyum nitrat (%33 N)',gr:80,not:'Meyve büyüme dönemi. Aşırı azottan kaçının.'},
+      sonbahar:{tip:'Potasyum sülfat (0-0-50)',gr:100,not:'Kışa hazırlık. Azot vermeyin — yeni sürgün dona gider.'}
+    },
+    sebze:{
+      ilkbahar:{tip:'15-15-15 dengeli NPK',gr:40,not:'Dikim öncesi toprağa karıştırın.'},
+      yaz:{tip:'Potasyum nitrat (13-0-46)',gr:20,not:'Çiçeklenme + meyve dönemi. 2 haftada bir.'},
+      sonbahar:{tip:'Kompost / organik gübre',gr:300,not:'Kış sebzeleri için zemin hazırlığı.'}
+    },
+    cicek:{
+      ilkbahar:{tip:'Özel çiçek gübresi (5-10-10)',gr:30,not:'Çiçeklenmeyi teşvik eder. Azot az, fosfor çok.'},
+      yaz:{tip:'Dengeli sıvı gübre',gr:10,not:'Her 2-3 haftada bir. 10ml/L sulama suyuyla.'},
+      sonbahar:{tip:'Potasyum sülfat',gr:20,not:'Kış dayanıklılığı için. Azot tamamen kesin.'}
+    },
+    ic_mekan:{
+      ilkbahar:{tip:'Dengeli sıvı gübre (20-20-20)',gr:5,not:'5ml/L sulama suyuyla. Ayda 2 kez.'},
+      yaz:{tip:'Dengeli sıvı gübre',gr:5,not:'Büyüme dönemi. Ayda 1-2 kez.'},
+      sonbahar:{tip:'Gübre vermeyin',gr:0,not:'İç mekan bitkileri kış dinlenme döneminde gübre istemez.'}
+    },
+    cim:{
+      ilkbahar:{tip:'Yüksek azotlu çim gübresi (30-5-5)',gr:35,not:'1 m² için 35g. Yağmur öncesi veya sulama sonrası.'},
+      yaz:{tip:'Yavaş salınımlı çim gübresi',gr:30,not:'Sıcakta yanmaya dikkat — sabah erkenden uygulayın.'},
+      sonbahar:{tip:'Potasyum ağırlıklı kışlık gübre (5-10-20)',gr:30,not:'Kök gelişimi ve dona dayanıklılık.'}
+    },
+    kaktus:{
+      ilkbahar:{tip:'Kaktüs gübresi (5-10-10)',gr:2,not:'Yarım doz sıvı. 2ml/L sulama suyuyla. Ayda 1 kez.'},
+      yaz:{tip:'Kaktüs gübresi (5-10-10)',gr:2,not:'Büyüme dönemi maksimum 1 kez/ay.'},
+      sonbahar:{tip:'Gübre vermeyin',gr:0,not:'Kış dinlenme dönemi başlıyor. Hiç gübre vermeyin.'}
+    }
+  };
+  var info = GUBRE[b][d];
+  var alan_sayisal = parseFloat(a);
+  var saksı = a.startsWith('saksı');
+  var miktar='';
+  if(saksı){
+    var hacim = a==='saksı_kucuk'?2:a==='saksı_orta'?7:20;
+    miktar = (info.gr===0)?'—':info.gr+'ml/L sulama suyu veya '+Math.round(info.gr/10*hacim/10)+'g granül';
+  } else {
+    miktar = info.gr===0?'—':Math.round(info.gr*alan_sayisal)+'g ('+info.gr+'g/m²)';
+  }
+  m = '<strong>Önerilen Gübre:</strong> '+info.tip+'<br>'
+    +'<strong>Miktar:</strong> '+miktar+'<br>'
+    +'<strong>Uygulama:</strong> '+info.not;
+  var el=document.getElementById('gubreSonuc');
+  el.innerHTML=m; el.classList.add('goster');
+}
+
+// ── SULAMA HESAPLAYICI ──
+function sulamaHesapla(){
+  var b=document.getElementById('sBitki').value;
+  var m=document.getElementById('sMevsim').value;
+  var k=document.getElementById('sKonum').value;
+  var SULAMA={
+    low:{
+      kis:{dis:'3-4 haftada bir',saksı_dis:'Ayda bir',ic:'6 haftada bir'},
+      ilkbahar:{dis:'10-14 günde bir',saksı_dis:'2 haftada bir',ic:'3 haftada bir'},
+      yaz_ilk:{dis:'7-10 günde bir',saksı_dis:'Haftada bir',ic:'10 günde bir'},
+      yaz_sicak:{dis:'5-7 günde bir',saksı_dis:'5-6 günde bir',ic:'Haftada bir'}
+    },
+    moderate:{
+      kis:{dis:'2 haftada bir',saksı_dis:'10 günde bir',ic:'2 haftada bir'},
+      ilkbahar:{dis:'Haftada bir',saksı_dis:'5-7 günde bir',ic:'Haftada bir'},
+      yaz_ilk:{dis:'3-4 günde bir',saksı_dis:'2-3 günde bir',ic:'5 günde bir'},
+      yaz_sicak:{dis:'Günlük veya 2 günde bir',saksı_dis:'Günlük',ic:'3 günde bir'}
+    },
+    high:{
+      kis:{dis:'Haftada bir',saksı_dis:'5-7 günde bir',ic:'5-7 günde bir'},
+      ilkbahar:{dis:'2-3 günde bir',saksı_dis:'Günlük',ic:'2-3 günde bir'},
+      yaz_ilk:{dis:'Günlük',saksı_dis:'Günlük — sabah',ic:'Günlük'},
+      yaz_sicak:{dis:'Günlük — sabah + akşam',saksı_dis:'Sabah ve akşam',ic:'Günlük — toprak kuruma hızlı'}
+    }
+  };
+  var ipuc={
+    low:'💡 Az su isteyen bitkiler aşırı sulamaya karşı çok hassastır. Şüphe duyunca sulamayın.',
+    moderate:'💡 Parmağınızı toprağa 5cm sokun — hâlâ nemse sulama erteleyebilirsiniz.',
+    high:'💡 Bu bitkiler nemli toprak ister. Toprak yüzeyi kurur kurumaz sulayın.'
+  };
+  var siklık=SULAMA[b][m][k];
+  var el=document.getElementById('sulamaSonuc');
+  el.innerHTML='<strong>Sulama Sıklığı:</strong> '+siklık+'<br><br>'+ipuc[b]
+    +'<br><br>💡 <strong>Altın Kural:</strong> Sabah sulaması tercih edin — akşam sulama fungal hastalık riskini artırır.';
+  el.classList.add('goster');
+}
+
+// ── QUIZ ──
+var quizSorular=[
+  {s:'Ne kadar vaktiniz var?',
+   sec:[{t:'Çok az — haftada 5 dakika',v:'kolay'},
+        {t:'Orta — haftada 15-20 dk',v:'orta'},
+        {t:'Severim, her gün bakarım',v:'zor'}]},
+  {s:'Nerede yetiştirmek istiyorsunuz?',
+   sec:[{t:'Ev içinde (salon/yatak odası)',v:'ic'},
+        {t:'Balkon veya teras',v:'balkon'},
+        {t:'Bahçe / dış mekan',v:'dis'}]},
+  {s:'Ne amaçla istiyorsunuz?',
+   sec:[{t:'Dekorasyon / güzellik',v:'deko'},
+        {t:'Yemek veya sağlık için',v:'yiyecek'},
+        {t:'Çiçek görmek istiyorum',v:'cicek'}]},
+  {s:'Güneş durumunuz nasıl?',
+   sec:[{t:'Gölge / az ışık',v:'golge'},
+        {t:'Kısmen güneşli',v:'yari'},
+        {t:'Bol güneş alan yer',v:'gunes'}]},
 ];
+var quizCevaplar=[];
+var quizAdim=0;
+
+function quizBaslat(){
+  quizCevaplar=[];quizAdim=0;
+  document.getElementById('quizSonuc').classList.remove('goster');
+  quizRender();
+}
+
+function quizRender(){
+  if(quizAdim>=quizSorular.length){quizSonucGoster();return;}
+  var s=quizSorular[quizAdim];
+  var html='<div class="quiz-soru"><p>'+((quizAdim+1)+'/'+quizSorular.length+') ')+s.s+'</p>'
+    +'<div class="quiz-secenekler">'+s.sec.map(function(o,i){
+      return '<button class="quiz-sec" onclick="quizSec(\''+o.v+'\')">'+o.t+'</button>';
+    }).join('')+'</div></div>';
+  document.getElementById('quizAlan').innerHTML=html;
+}
+
+function quizSec(v){
+  quizCevaplar.push(v);
+  quizAdim++;
+  quizRender();
+}
+
+function quizSonucGoster(){
+  document.getElementById('quizAlan').innerHTML='';
+  var skorlar={};
+  var BitkiOneri=[
+    {id:'sansevieria',skor:function(c){return c[0]==='kolay'&&c[1]==='ic'?10:0},acik:'Az bakım, az ışık — mükemmel iç mekan bitkisi.'},
+    {id:'monstera',skor:function(c){return c[0]!=='kolay'&&c[1]==='ic'&&c[2]==='deko'?10:0},acik:'Tropikal güzellik, büyük dekoratif yapraklar.'},
+    {id:'lavanta',skor:function(c){return c[1]==='balkon'&&c[3]==='gunes'?10:0},acik:'Balkon için ideal, koku ve güzelliği bir arada.'},
+    {id:'domates',skor:function(c){return c[2]==='yiyecek'&&c[3]!=='golge'?10:0},acik:'Bahçede ya da büyük saksıda bol verim.'},
+    {id:'gul',skor:function(c){return c[2]==='cicek'&&c[3]==='gunes'?10:0},acik:'Çiçeklerin kraliçesi, bahçenin yıldızı.'},
+    {id:'nane',skor:function(c){return c[2]==='yiyecek'&&c[1]!=='dis'?10:0},acik:'Balkon ve mutfakta taze nane, çok kolay.'},
+    {id:'orkide',skor:function(c){return c[0]==='zor'&&c[1]==='ic'&&c[2]==='cicek'?10:0},acik:'Egzotik çiçekler için sabır ve özen gerekli.'},
+    {id:'kaktus',skor:function(c){return c[0]==='kolay'&&c[3]==='gunes'?10:0},acik:'En dayanıklı bitki — unutkanlara ideal!'},
+    {id:'mese',skor:function(c){return c[1]==='dis'&&c[0]!=='kolay'?10:0},acik:'Uzun ömürlü, gölge veren, görkemli ağaç.'},
+    {id:'begonia',skor:function(c){return c[1]==='balkon'&&c[2]==='cicek'?10:0},acik:'Balkonu renklendirir, uzun süre çiçek açar.'},
+  ];
+  var en=null,enSkor=-1;
+  BitkiOneri.forEach(function(b){
+    var s=b.skor(quizCevaplar);
+    if(s>enSkor){enSkor=s;en=b;}
+  });
+  if(!en) en=BitkiOneri[0];
+  var p=PLANT_DB.find(function(x){return x.id===en.id;});
+  if(!p) p=PLANT_DB[0];
+  document.getElementById('qEmoji').textContent=p.emoji;
+  document.getElementById('qIsim').textContent=p.tr+' ('+p.sci+')';
+  document.getElementById('qAcik').textContent=en.acik;
+  document.getElementById('qLink').href='bitki.html?id='+p.id;
+  document.getElementById('quizSonuc').classList.add('goster');
+}
+
+// ── YAZDIR ──
+(function(){
+  var sel=document.getElementById('yazBitki');
+  sel.innerHTML=PLANT_DB.map(function(p){return '<option value="'+p.id+'">'+p.emoji+' '+p.tr+'</option>';}).join('');
+})();
+
+function yazdir(){
+  var id=document.getElementById('yazBitki').value;
+  var p=PLANT_DB.find(function(x){return x.id===id;});
+  if(!p) return;
+  var WL={low:'Az 💧',moderate:'Orta 💧💧',high:'Çok 💧💧💧'};
+  var SL={full_sun:'Tam Güneş ☀️',partial_shade:'Yarı Gölge 🌤️',shade:'Gölge 🌥️'};
+  var DL={easy:'Kolay',medium:'Orta',hard:'Zor'};
+  var html='<div style="font-family:sans-serif;padding:1rem;max-width:420px">'
+    +'<div style="text-align:center;font-size:3rem">'+p.emoji+'</div>'
+    +'<h2 style="text-align:center;margin:.5rem 0;color:#166534">'+p.tr+'</h2>'
+    +'<p style="text-align:center;font-style:italic;color:#666;font-size:.85rem">'+p.sci+'</p>'
+    +'<hr style="margin:1rem 0">'
+    +'<table style="width:100%;border-collapse:collapse;font-size:.82rem">'
+    +[['Familya',p.family],['Köken',p.origin],['İklim',p.climate],
+      ['Sulama',WL[p.water]||p.water],['Güneş',SL[p.sun]||p.sun],
+      ['Zorluk',DL[p.difficulty]||p.difficulty],['Yükseklik',p.height],
+      ['Çiçeklenme',p.bloom],['Hasat',p.harvest||'–'],
+      ['Bölge',(p.regions?(Array.isArray(p.regions)?p.regions.join(', '):p.regions):'–')],
+      ['Gübreleme',p.fertilize||'–'],['Dikim',p.dikim||'–'],['Budama',p.budama||'–']
+    ].map(function(r){
+      return '<tr style="border-bottom:1px solid #eee">'
+        +'<td style="padding:.4rem .5rem;font-weight:600;color:#555;width:40%">'+r[0]+'</td>'
+        +'<td style="padding:.4rem .5rem">'+r[1]+'</td></tr>';
+    }).join('')
+    +'</table>'
+    +'<p style="font-size:.7rem;color:#999;margin-top:1rem;text-align:center">bitkidoktorum.com</p>'
+    +'<div style="display:flex;gap:.5rem;margin-top:1rem;justify-content:center">'
+    +'<button onclick="window.print()" style="background:#166534;color:#fff;border:none;border-radius:8px;padding:.5rem 1.2rem;cursor:pointer;font-size:.85rem">🖨️ Yazdır</button>'
+    +'<button onclick="document.getElementById(\'yazdirModal\').style.display=\'none\'" style="background:#eee;border:none;border-radius:8px;padding:.5rem 1.2rem;cursor:pointer;font-size:.85rem">Kapat</button>'
+    +'</div></div>';
+  document.getElementById('yazdirIcerik').innerHTML=html;
+  document.getElementById('yazdirModal').style.display='flex';
+}
+document.getElementById('yazdirModal').addEventListener('click',function(e){
+  if(e.target===this) this.style.display='none';
+});
+
+// Quiz başlat
+quizBaslat();
+gelismisAra();
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>
