@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Makale | BitkiDoktorum</title>
+<meta name="description" id="pageDesc" content="BitkiDoktorum bitki bakım makalesi">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html" class="active">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><a href="blog.html">Blog</a><span>›</span><span id="breadTitle">Makale</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+<div class="site-wrap">
+<div class="main-content" id="articleContent"><div class="loading-spinner"><div class="spinner"></div><span>Yükleniyor...</span></div></div>
+<aside class="sidebar">
+  <div class="ad-slot ad-slot-sidebar"><span class="ad-label">Reklam</span><small>300×600</small></div>
+  <div class="widget"><h3 class="widget-title">📝 Diğer Makaleler</h3><ul class="widget-list" id="otherArticles"></ul></div>
+  <div class="ad-slot ad-slot-rectangle"><span class="ad-label">Reklam</span><small>300×250</small></div>
+  <div class="widget" style="background:var(--gp)"><h3 class="widget-title">🔬 Hastalık Teşhisi</h3><p style="font-size:.82rem;margin-bottom:1rem">Bitkinizdeki sorunu AI ile teşhis edin.</p><a href="teshis.html" class="btn btn-amber btn-sm btn-block">Teşhis Yap →</a></div>
+</aside>
+</div>
+<div class="paylasim-bar">
+  <span>Paylaş:</span>
+  <button class="paylasim-btn paylasim-whatsapp" onclick="paylasim('whatsapp')">💬 WhatsApp</button>
+  <button class="paylasim-btn paylasim-twitter" onclick="paylasim('twitter')">🐦 Twitter</button>
+  <button class="paylasim-btn paylasim-facebook" onclick="paylasim('facebook')">📘 Facebook</button>
+  <button class="paylasim-btn paylasim-link" onclick="paylasim('link')">🔗 Kopyala</button>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="blog.html">Blog</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var DB = {
+1:{t:'Elma Ağacı Bakımı: Budama, Sulama ve Gübreleme Rehberi',b:'elma',c:'Meyve Ağaçları',s:[
+{h:'Elma Ağacı Neden Budanır?',p:'Elma ağacı budaması; ağacın şeklini düzenlemek, hava sirkülasyonunu artırmak, güneş ışığının meyvelere ulaşmasını sağlamak ve hastalık riskini azaltmak için yapılır. Doğru budama yapılmadığında ağaç aşırı vegetatif büyüme gösterir ve meyve verimi düşer. Yıllık budama ile ağacın üretken dalları korunur, yaşlı ve hastalıklı dallar uzaklaştırılır. Budamanın en önemli amacı, ağacın enerjisini dal büyümesinden meyve üretimine yönlendirmektir.'},
+{h:'Budama Zamanı ve Teknikleri',p:'Kış budaması Ocak-Şubat aylarında, ağaç dinlenme döneminde yapılır. Bu dönemde budama yaraları daha hızlı iyileşir ve hastalık riski azdır. Yaz budaması ise Haziran-Temmuz aylarında, gereksiz sürgünlerin uzaklaştırılması için yapılır. Kesim yerleri 45 derecelik açıyla yapılmalı ve temiz bir bıçak kullanılmalıdır. Tüm kesim yerlerine bahçe macunu sürülmesi enfeksiyon riskini azaltır.'},
+{h:'Sulama Programı',p:'Elma ağacı orta düzeyde suya ihtiyaç duyar. Genç ağaçlar haftada 2-3 kez, yetişkin ağaçlar ise toprak nemini koruyacak şekilde sulanmalıdır. Meyve gelişim döneminde (Haziran-Ağustos) sulama artırılmalıdır. Damlama sulama sistemi hem su tasarrufu sağlar hem de kök çürüklüğünü önler. Hasat öncesi sulamanın düzenlenmesi meyve kalitesini artırır.'},
+{h:'Gübreleme Programı',p:'İlkbaharda (Mart) azotlu gübre ile büyümeyi destekleyin. Yaz ortasında (Haziran) dengeli NPK gübresi uygulayın. Güz mevsiminde (Eylül-Ekim) potasyumlu gübre ile meyve kalitesini artırın. Organik gübre olarak yılda bir kez olgunlaşmış ahır gübresi veya kompost kullanılabilir. Gübrelemenin toprak tahlil sonuçlarına göre yapılması en doğru yaklaşımdır.'}
+]},
+2:{t:'Zeytin Hastalıkları: Teşhis ve Organik Tedavi Yöntemleri',b:'zeytin',c:'Meyve Ağaçları',s:[
+{h:'Zeytin Sineği Mücadelesi',p:'Zeytin sineği (Bactrocera oleae) zeytinin en tehlikeli zararlısıdır. Dişi sinekler meyvenin içine yumurta bırakır, larvalar meyve etini yiyerek hasar verir. Sarı yapışkan tuzaklar ve feromonlu tuzaklar ile popülasyon takibi yapılabilir. Organik mücadelede Spinosad etken maddeli preparatlar kullanılabilir. Hasat zamanlaması sineğin popülasyon yoğunluğuna göre ayarlanmalıdır.'},
+{h:'Halka Leke Hastalığı',p:'Spilocaea oleagina fungusunun neden olduğu bu hastalık, yapraklarda sarı çevreli kahverengi lekeler oluşturur. Şiddetli saldırılarda erken yaprak dökümüne yol açar. Bakır hidroksit veya bakır oksiklorür içerikli ilaçlarla sonbahar ve ilkbaharda önleyici ilaçlama yapılır. Bahçede nem oranını düşürmek ve hava sirkülasyonunu artırmak hastalığı azaltır.'},
+{h:'Verticillium Solgunluğu',p:'Toprak kaynaklı Verticillium dahliae fungusunun neden olduğu bu hastalıkta dallar aniden solar ve kurur. Etkilenen dallarda iletim demetlerinde kahverengileşme görülür. Kimyasal tedavisi mevcut değildir. Hastalıklı dallar kesilip imha edilmeli, toprak solarizasyonu uygulanmalıdır. Dayanıklı çeşit seçimi en etkili önlemdir.'},
+{h:'Organik Bahçe Yönetimi',p:'Zeytin bahçesinde organik yönetim için biyolojik çeşitliliği korumak önemlidir. Bakır sülfat ve kirecin karışımından oluşan bordo bulamacı organik onaylıdır. Neem yağı bazlı preparatlar zararlı böceklere karşı etkilidir. Budama ile hava sirkülasyonu artırılarak hastalık riski azaltılabilir. Düzenli zemin temizliği hastalık kaynaklarını ortadan kaldırır.'}
+]},
+3:{t:'Domates Yetiştirme: Hastalık Olmadan Bol Hasat Sırrı',b:'domates',c:'Sebzeler',s:[
+{h:'Toprak Hazırlığı ve Dikim',p:'Domates organik maddece zengin, iyi drene olan, pH değeri 6.0-6.8 arasında olan toprakları sever. Dikimden 2-3 hafta önce toprağa olgunlaşmış kompost karıştırın. Her metrekareye 3-4 kg organik gübre yeterlidir. Fide dikimi için toprak sıcaklığının en az 15°C olması gerekir. Fideler 60-80 cm aralıkla dikilmeli, derin dikilirse kök sistemi güçlenir.'},
+{h:'Sulama ve Gübreleme',p:'Domates düzenli sulama ister; toprak yüzeyinin 5 cm derinliği kuruyunca sulanmalıdır. Aşırı sulama kök çürüklüğüne, yetersiz sulama ise çiçek dökümüne ve çatlak meyveye neden olur. Fide döneminde azotlu gübre, çiçeklenme ile birlikte fosfor-potasyum ağırlıklı gübreleme yapılır. Kalsiyum eksikliği çiçek ucu çürüklüğüne yol açar; kireç taşı tozu bu sorunu giderir.'},
+{h:'Yaygın Domates Hastalıkları',p:'Erken yanıklık (Alternaria solani) yapraklarda koyu kahverengi halkalar oluşturur. Geç yanıklık (Phytophthora infestans) serin ve yağışlı havalarda hızla yayılır. Her iki hastalığa karşı bakır bazlı fungisitler kullanılır. Fusarium ve Verticillium solgunluklarına karşı dirençli çeşitler tercih edilmeli, ekim nöbeti uygulanmalıdır.'},
+{h:'Bol Hasat İpuçları',p:'Dönüşümlü ekim en etkili önlemlerden biridir; aynı alana art arda domates ekmekten kaçının. Bitkileri birbirine fazla yakın dikmeyerek hava sirkülasyonu sağlayın. Düzenli budama ve koltuk alma enerjiyi meyveye yönlendirir. Sabahları yapılan sulama yaprakların kurumayı sağlar. Hasat sonrası bitkisel artıkları bahçeden uzaklaştırın.'}
+]},
+4:{t:'Gül Bakımı: Mevsimlik Takvim ve Hastalık Önleme',b:'gul',c:'Çiçekler',s:[
+{h:'İlkbahar Bakımı',p:'Kış budamasını ilkbaharda tomurcuklar şişmeye başlayınca tamamlayın. Ölü ve hastalıklı dalları köke kadar kesin. Güçlü dalları 3-4 göz bırakarak budayın. İlk gübrelemeyi özel gül gübresiyle yapın. Siyah leke hastalığına karşı önleyici ilaçlamaya başlayın. Kök bölgesini malçlayarak nem korunur ve yabani ot engellenir.'},
+{h:'Yaz Bakımı',p:'Düzenli sulama çiçeklenmeyi uzatır; toprağı değil kökü sulayın. Solmuş çiçekleri keserek yeni çiçek tomurcuklarının oluşumunu teşvik edin. Her 3-4 haftada bir dengeli gübre uygulayın. Kırmızı örümcek ve yaprak bitine karşı haftalık kontrol yapın. Sabah sulaması yaprakların akşama kadar kurumasını sağlar ve hastalık riskini azaltır.'},
+{h:'Siyah Leke Hastalığı',p:'Diplocarpon rosae fungusunun neden olduğu siyah leke, yapraklarda siyah lekeler ve sarı hale oluşturarak erken yaprak dökümüne yol açar. Tetrakonazol veya mikobutanil içerikli fungisitlerle düzenli ilaçlama gerekir. Düşen yapraklar toplanıp imha edilmelidir. Sulama suyunun yapraklara değmemesi ve sabah sulaması hastalığı azaltır.'},
+{h:'Kışa Hazırlık',p:'Kasım ayında son gübrelemeyi yapın; azotlu gübreden kaçının. Budamayı ilkbahara bırakın, sadece hastalıklı dalları kesin. Kök boğazına 10-15 cm kalınlıkta olgunlaşmış kompost örtün. Soğuk bölgelerde hassas çeşitleri çuval veya jüt bezi ile sarın. Kışlık koruma önlemleri güllerin soğuk stresi yaşamadan çıkmasını sağlar.'}
+]},
+5:{t:'Monstera Bakımı: Sararmış Yaprakların Nedenleri',b:'monstera',c:'İç Mekan',s:[
+{h:'Aşırı Sulama Sorunu',p:'Monstera sarı yapraklarının en yaygın nedeni aşırı sulamadır. Toprak her sulama arası tamamen kurumamalı ama saksının alt kısmında sürekli su birikmemelidir. Parmağınızı toprağa 5 cm sokun; hâlâ nemse sulamayı erteleyin. Saksı altlığında biriken suyu boşaltın. Kış aylarında sulama sıklığı yarıya indirilmelidir.'},
+{h:'Işık İhtiyacı',p:'Doğrudan güneş ışığı Monstera yapraklarını yakar, ancak çok az ışık da sararmalara yol açar. İdeal konum parlak ama dolaylı ışık alan yerdir. Kuzey cepheli pencereler yetersiz kalabilir; bu durumda bitkiyi daha aydınlık bir noktaya taşıyın veya büyüme lambası kullanın. Yapraklardaki karakteristik delikler yeterli ışıkta daha belirgin olur.'},
+{h:'Besin Eksikliği',p:'Azot eksikliği önce alt yapraklarda sararma olarak kendini gösterir. İlkbahar ve yaz aylarında her 4-6 haftada bir dengeli sıvı gübre uygulayın. Kış aylarında gübrelemeyi durdurun. Toprak tamamen tükenmişse yeni toprakla saksı değişimi yapın. Sararmış yapraklar kesilirse bitki enerjisini yeni yapraklara yönlendirir.'},
+{h:'Kök Çürüklüğü ve Çözüm',p:'Uzun süreli aşırı sulamadan kaynaklanan kök çürüklüğünde tüm yapraklar sararabilir. Bitkiyi saksıdan çıkarın; kahverengi, yumuşak ve kötü kokulu kökler çürümüştür. Sağlıklı kökler beyaz ve sağlamdır. Çürük kökler steril makasla kesilir, bitki taze drenajlı toprağa aktarılır. Aktarım sonrası 1 hafta sulama yapılmaz.'}
+]},
+6:{t:'Lavanta Yetiştiriciliği ve Hasat Takvimi',b:'lavanta',c:'Çiçekler',s:[
+{h:'Lavanta İçin İdeal Koşullar',p:'Lavanta tam güneş alan, iyi drene olan kumlu-killi toprakları sever. pH değeri 6.5-7.5 arasında olmalıdır. Yüksek nem ve ağır killi topraklarda kök çürüklüğü görülür. Akdeniz iklimine uygun olsa da Türkiye\'nin iç bölgelerinde de yetişebilir. Don dayanıklılığı -15°C\'ye kadar çıkar; kışa hazırlık için drenaj kritiktir.'},
+{h:'Dikim ve Çoğaltma',p:'Lavanta tohum, çelik veya fide ile çoğaltılır. En kolay yöntem ilkbaharda alınan yarı odunsu çeliklerdir. Fideler 40-60 cm aralıkla dikilir. İlk yıl çiçeklenmesine izin vermemek bitkiyi güçlendirir. Toprak hazırlığında drenajı artırmak için kum veya perlit karıştırılabilir. Grup halinde dikim görsel etki açısından daha güçlüdür.'},
+{h:'Sulama ve Gübreleme',p:'Lavanta kuraklığa dayanıklıdır; olgunlaşmış bitkiler çok az su ister. Aşırı sulama en büyük hatadır. İlkbaharda dengeli bir gübre yeterlidir; azot fazlası çiçeklenmeyi azaltır. Yaz aylarında sulama tamamen kesilebilir. Saksıda yetiştiriliyorsa toprak kurudukça sulanır. Organik malç nem korumasına yardımcı olur.'},
+{h:'Hasat ve Kurutma',p:'Hasat zamanı çiçeklerin yüzde ellisi açıldığında yapılır, genellikle Haziran-Ağustos arası. Sabah erken saatlerde çiş kuruyunca hasat yapılır. Salkımlar bağlanarak serin ve hava akımlı bir yerde baş aşağı kurutulur. İki ila üç haftada kurur. Kuru lavanta bir ila iki yıl boyunca kokusu tazeliğini korur.'}
+]},
+7:{t:'Kiraz Ağacı Yetiştirme: Dikimden Hasada Rehber',b:'kiraz',c:'Meyve Ağaçları',s:[
+{h:'Dikim ve Çeşit Seçimi',p:'Kiraz ağacı sonbaharda yaprak döküldükten sonra veya ilkbaharda tomurcuklar şişmeden önce dikilir. Soğuk kışı seven bir meyve ağacıdır; yeterli soğuklama saatine ihtiyaç duyar. Dikim çukuru 60x60 cm açılır. Tozlayıcı çeşit seçimi çok önemlidir; çoğu kiraz çeşidi yabancı tozlanmaya ihtiyaç duyar. 0900 Ziraat, Lambert ve Regina popüler çeşitlerdir.'},
+{h:'Toprak ve Sulama',p:'Kiraz derin, kumlu-killi, iyi drene olan toprakları sever. Durgun su kök çürüklüğüne yol açar. Genç ağaçlar haftada bir, yetişkin ağaçlar ise toprak kuruyunca sulanır. Hasat öncesi düzensiz sulama meyve çatlamasına neden olur. Damla sulama sistemi en idealdir. Sulama zamanlaması çatlama sorununu önler.'},
+{h:'Budama Teknikleri',p:'Kiraz güçlü büyür; budama şekil vermek ve verim artırmak için gereklidir. İlk 3 yıl iskelet dal oluşturmaya odaklanılır. Yetişkin ağaçlarda hasat sonrası ve kış budaması yapılır. Tüm kesim yerleri bahçe macunu ile kapatılmalıdır. Aşırı budama verimi düşürür. İyi havalandırılmış taç yapısı hastalık riskini azaltır.'},
+{h:'Kiraz Sineği Mücadelesi',p:'Kiraz sineği (Rhagoletis cerasi) en önemli zararlıdır. Sarı yapışkan tuzaklar erken tespitte kullanılır. İlaçlama zamanı sinek çıkışı ile belirlenir; genellikle Mayıs başında başlar. Hasat öncesi son ilaçlamadan sonra bekleme süresine dikkat edilmelidir. Erken hasat yapan çeşitler daha az zarar görür.'}
+]},
+8:{t:'Nane Yetiştiriciliği: Balkon ve Mutfak Bahçesinde',b:'nane',c:'Tıbbi Bitkiler',s:[
+{h:'Nane Yetiştiriciliği Temelleri',p:'Nane çok yıllık, hızlı büyüyen aromatik bir bitkidir. Yarı gölgede de yetişir; sıcak öğle güneşinden korunmalıdır. Nemli, verimli toprakları sever. Bahçede kontrolsüz yayılır; saksıda yetiştirmek daha pratiktir. Rizomlarla kolayca çoğalır. Spearmint, peppermint ve Türk nanesi en yaygın çeşitlerdir.'},
+{h:'Saksı Seçimi ve Toprak',p:'Nane için en az 20 cm derinliğinde ve geniş bir saksı seçin. Drenaj delikleri mutlaka olmalıdır. Verimli bahçe toprağı, kompost ve perlit karışımı idealdir. Saksı çok küçük olursa bitki hızla tükenir. Yılda bir kez saksı yenilenmesi önerilir. Saksıyı çok büyük seçmek kök çürüklüğüne davetiye çıkarır.'},
+{h:'Sulama ve Bakım',p:'Toprak yüzeyi kuruyunca sulanır; aşırı sulamadan kaçınılır. Düzenli hasat bitkiyi diri tutar ve yeniden büyümesini teşvik eder. Çiçek gelmeden önce tepe kesilirse yaprak verimi artar. Ayda bir sıvı gübre uygulaması yeterlidir. Kışın dışarıda bırakılan saksılar don alabilir; iç mekana alınmalıdır.'},
+{h:'Hasat ve Kullanım',p:'Nane sabah erken saatlerde hasat edildiğinde en yoğun aromaya sahiptir. Dalların üst üçte birini kesin; bitki hızla yenilenir. Taze, kurutulmuş veya dondurulmuş kullanılabilir. Çay, limonata, salata ve yemeklerde kullanılır. Kurutma için havadar gölge tercih edilir. Dondurulmuş nane aromasını altı aya kadar korur.'}
+]},
+9:{t:'Karpuz Yetiştiriciliği: Büyük ve Tatlı Karpuz İpuçları',b:'karpuz',c:'Sebzeler',s:[
+{h:'Toprak ve İklim Gereksinimleri',p:'Karpuz sıcak, kumlu ve iyi drene olan toprakları sever. Toprak sıcaklığının en az 18°C olması gerekir. pH değeri 6.0-6.8 arasında ideal. Uzun ve sıcak yaz dönemi kaliteli karpuz için şarttır. Don karpuzu öldürür; son don tarihinden 2 hafta sonra dikim yapılmalıdır. Kumlu topraklar su geçirgenliği sayesinde kök gelişimini destekler.'},
+{h:'Sulama Yönetimi',p:'Karpuz büyüme döneminde düzenli sulama ister. Meyve oluşumuna kadar toprak nemli tutulur. Meyve büyüme döneminde su verilmesi meyveyi büyütür. Hasat öncesi 10-14 gün sulamanın azaltılması şeker oranını artırır. Damlama sulama en verimli yöntemdir; yapraklara su değmez, fungal hastalık riski azalır.'},
+{h:'Gübreleme Programı',p:'Dikim öncesi toprak analizi yapılmalıdır. Dikimde fosforlu gübre verilir. Büyüme döneminde azotlu gübre uygulanır. Meyve tutumundan sonra potasyumlu gübre şeker içeriğini artırır. Aşırı azot meyve tadını bozar, yaprak büyümesini aşırı teşvik eder. Organik gübre olarak kompost temel gübre olarak kullanılabilir.'},
+{h:'Olgunluk Belirleme ve Hasat',p:'Karpuzun olgunluğunu anlamak için birkaç yöntem vardır. Sap tutunma noktasının yanındaki dal kurumuşsa karpuz olgunlaşmıştır. Dip kısmındaki zemin rengi sarıya dönmüşse olgundur. Hafifçe vurulduğunda dolgun ve tok bir ses veriyorsa içi doludur. Hasat sabah erken yapılmalı, uzun sap bırakılarak meyve kesilmelidir.'}
+]},
+10:{t:'Aloe Vera Bakımı: Hem Dekoratif Hem Şifalı',b:'aloe',c:'İç Mekan',s:[
+{h:'Aloe Vera Bakım Temelleri',p:'Aloe vera az bakım isteyen, kuraklığa dayanıklı bir bitkidir. Tam güneş veya parlak dolaylı ışık ister. Sıcaklık 10-25°C arasında ideal. Yavaş büyür ama uzun ömürlüdür. Succulents grubuna ait olduğundan yapraklarında su depolar. Çocuklar ve evcil hayvanlar için hafif zehirlidir; ulaşamayacakları yerlerde tutulmalıdır.'},
+{h:'Sulama ve Toprak',p:'Aloe vera aşırı sulamaya karşı hassastır. Toprak tamamen kuruduktan sonra sulanmalıdır. Kış aylarında aylık bir kez sulama yeterlidir. Kaktüs ve sukulent toprağı ideal; iyi drene etmelidir. Saksı tabanında drenaj deliği şarttır. Altlıkta su birikmesi kök çürüklüğüne yol açar.'},
+{h:'Şifalı Kullanım Alanları',p:'Aloe vera jeli yanık ve güneş yanığı tedavisinde etkilidir. Yaprak kesildiğinde akan sarı renkli latex kullanılmaz; jel kısmı kullanılır. Cilt nemlendiricisi olarak doğal ürünlerde yaygın kullanılır. Saç bakımında nem sağlar. Sindirim sorunları için içilebilir aloe ürünleri mevcuttur. Ev yapımı ürünler için orta büyüklükteki yapraklar seçilmelidir.'},
+{h:'Çoğaltma ve Bakım',p:'Aloe vera yavru bitkiler (pup) oluşturarak çoğalır. Yavrular ana bitkiden ayrılarak ayrı saksılara dikilir. Çiçek sapları görüldüğünde bitkinin sağlıklı olduğu anlaşılır. Yılda bir kez ilkbaharda saksı değişimi yapılabilir. Yapraklarda kahverengileşme aşırı güneş veya soğuktan kaynaklanır. Kolay çoğaltılması ev bitkisi olarak popüler olmasını sağlar.'}
+]}
+};
+
+// Makale 11-101 için otomatik içerik
+var BLOG_LIST = [
+{id:11,t:'Çilek Yetiştiriciliği: Serada ve Açıkta Üretim',b:'cilek',c:'Meyve Ağaçları'},
+{id:12,t:'Biber Çeşitleri ve Yetiştiriciliği Rehberi',b:'biber',c:'Sebzeler'},
+{id:13,t:'Ceviz Ağacında Görülen Hastalıklar ve Çözümler',b:'ceviz',c:'Meyve Ağaçları'},
+{id:14,t:'Kayınvalide Dili Bakımı: Öldürülmesi Zor Bitki',b:'sansevieria',c:'İç Mekan'},
+{id:15,t:'Kekik Yetiştiriciliği ve Kurutma Teknikleri',b:'kekik',c:'Tıbbi Bitkiler'},
+{id:16,t:'Üzüm Bağı Kurma: Toprak Seçimi ve Çeşit Tercihi',b:'uzum',c:'Meyve Ağaçları'},
+{id:17,t:'Salatalık Sararmış Yapraklar: Neden Olur Nasıl Önlenir',b:'salatalik',c:'Sebzeler'},
+{id:18,t:'Orkide Bakımı: Yeniden Çiçek Açtırmanın 7 Kuralı',b:'orkide',c:'İç Mekan'},
+{id:19,t:'Biberiye Bakımı: Çok Yıllık Aromatik Bitkinin Sırları',b:'biberiye',c:'Tıbbi Bitkiler'},
+{id:20,t:'Şeftali Budaması: Mevsime Göre Yapılması Gerekenler',b:'seftali',c:'Meyve Ağaçları'},
+{id:21,t:'Kompost Yapımı: Evde Organik Gübre Üretimi',b:'domates',c:'Genel Bahçecilik'},
+{id:22,t:'Külleme Hastalığı: Tüm Bitkilerde Tanı ve Tedavi',b:'gul',c:'Hastalık Rehberi'},
+{id:23,t:'Yaprak Biti ile Organik Mücadele Yöntemleri',b:'domates',c:'Hastalık Rehberi'},
+{id:24,t:'Toprak pH Testi: Neden Önemli ve Nasıl Yapılır',b:'elma',c:'Genel Bahçecilik'},
+{id:25,t:'Damlama Sulama Sistemi Kurma Rehberi',b:'domates',c:'Genel Bahçecilik'},
+{id:26,t:'Pothos Bakımı: Sarkık Sarmaşığı Sağlıklı Tutma',b:'pothos',c:'İç Mekan'},
+{id:27,t:'Kaktüs Bakımı: Sulama Hataları ve Doğru Toprak',b:'kaktus',c:'İç Mekan'},
+{id:28,t:'Lale Soğanı Dikimi: Sonbaharda Yapılması Gerekenler',b:'lale',c:'Çiçekler'},
+{id:29,t:'Nar Ağacı Bakımı ve Hasat Zamanı Belirleme',b:'nar',c:'Meyve Ağaçları'},
+{id:30,t:'Gübre Çeşitleri: NPK Oranları ve Doğru Kullanım',b:'elma',c:'Genel Bahçecilik'},
+{id:31,t:'Havuç Yetiştiriciliği: Tohumdan Hasada Toprak Hazırlığı',b:'havuc',c:'Sebzeler'},
+{id:32,t:'Patates Hastalıkları: Geç Yanıklık ve Tedavisi',b:'patates',c:'Hastalık Rehberi'},
+{id:33,t:'Adaçayı Bakımı ve Şifalı Kullanım Alanları',b:'adacayi',c:'Tıbbi Bitkiler'},
+{id:34,t:'Begonvil Bakımı: Akdeniz\',b:'begonvil',c:'Çiçekler'},
+{id:35,t:'Meşe Ağacı Dikimi: Uzun Ömürlü Ağaç Yetiştirme',b:'mese',c:'Dış Mekan'},
+{id:36,t:'Kırmızı Örümcek Mücadelesi: Erken Tespit ve Tedavi',b:'domates',c:'Hastalık Rehberi'},
+{id:37,t:'Sarımsak Yetiştiriciliği: Sağlıklı Diş Elde Etme',b:'sarimsak',c:'Sebzeler'},
+{id:38,t:'Fesleğen Yetiştiriciliği: Marul ile Ortak Yetiştirme',b:'fesleen',c:'Tıbbi Bitkiler'},
+{id:39,t:'Ayçiçeği Yetiştiriciliği: Dev Çiçekler İçin Gübre',b:'ayicegi',c:'Çiçekler'},
+{id:40,t:'ZZ Bitkisi Bakımı: Unutkanlara Mükemmel Bitki',b:'zz',c:'İç Mekan'},
+{id:41,t:'Ihlamur Ağacı: Çiçek Hasadı ve Şifalı Çay Yapımı',b:'ihlamur',c:'Dış Mekan'},
+{id:42,t:'Mısır Yetiştiriciliği: Tatlı Mısır Hasadı İpuçları',b:'misir',c:'Sebzeler'},
+{id:43,t:'Melisa Çayı İçin Evde Melisa Yetiştirme',b:'melisa',c:'Tıbbi Bitkiler'},
+{id:44,t:'Palmiye Bakımı: Türkiye\',b:'palmiye',c:'Dış Mekan'},
+{id:45,t:'Fındık Bahçesinde Verim Artışı: Gübreleme Takvimi',b:'findik',c:'Meyve Ağaçları'},
+{id:46,t:'Patlıcan Hastalıkları: Külleme ve Yanıklık Tedavisi',b:'patlican',c:'Hastalık Rehberi'},
+{id:47,t:'Bambu Yetiştiriciliği: Hızlı Büyüyen Yeşil Perde',b:'bambu',c:'Dış Mekan'},
+{id:48,t:'Barış Zambağı Bakımı: Gölgede Çiçek Açan Bitki',b:'baris_zambagi',c:'İç Mekan'},
+{id:49,t:'Kivi Yetiştiriciliği: İklim ve Toprak Gereksinimleri',b:'kivi',c:'Meyve Ağaçları'},
+{id:50,t:'Sera Kurulumu: Küçük Bahçe İçin Ucuz Çözümler',b:'domates',c:'Genel Bahçecilik'},
+{id:51,t:'Kayısı Ağacında Don Zararı: Önleme Yolları',b:'kayisi',c:'Meyve Ağaçları'},
+{id:52,t:'Ispanak Yetiştiriciliği: 4 Mevsim Sürekli Hasat',b:'ispanak',c:'Sebzeler'},
+{id:53,t:'Soğan Yetiştiriciliği: Ekim Zamanı ve Gübreleme',b:'sogan',c:'Sebzeler'},
+{id:54,t:'Servi Ağacı Bakımı: Akdeniz Peyzajının Simgesi',b:'servi',c:'Dış Mekan'},
+{id:55,t:'Marul Çeşitleri ve Balkon Bahçesinde Yetiştirme',b:'marul',c:'Sebzeler'},
+{id:56,t:'Ayva Bakımı: Az Bakım Gerektiren Meyve',b:'ayva',c:'Meyve Ağaçları'},
+{id:57,t:'Sardunya Neden Sararır? Nedeni ve Çözümleri',b:'sardunya',c:'Çiçekler'},
+{id:58,t:'Erik Ağacı Bakımı: Budama Programı',b:'erik',c:'Meyve Ağaçları'},
+{id:59,t:'Brokoli Yetiştiriciliği: Kış Sebzeciliği Rehberi',b:'brokoli',c:'Sebzeler'},
+{id:60,t:'Kavun Bahçesi: Çeşit Seçimi ve Sulama',b:'kavun',c:'Sebzeler'},
+{id:61,t:'Organik Bahçecilik: Kimyasalsız Verimli Bahçe',b:'elma',c:'Genel Bahçecilik'},
+{id:62,t:'Bezelye Yetiştiriciliği: İlkbahar Bahçesinin Vazgeçilmezi',b:'bezelye',c:'Sebzeler'},
+{id:63,t:'Portakal Bahçesi Kurma: Narenciye Yetiştiriciliği',b:'portakal',c:'Meyve Ağaçları'},
+{id:64,t:'Maydanoz ve Dereotu: Balkonlarda Taze Ot',b:'maydanoz',c:'Tıbbi Bitkiler'},
+{id:65,t:'Fasulye Çeşitleri: Sırık ve Bodur Bakım Farkları',b:'fasulye',c:'Sebzeler'},
+{id:66,t:'Badem Ağacı Çiçeklenmesi ve Don Koruması',b:'badem',c:'Meyve Ağaçları'},
+{id:67,t:'Kabak Yetiştiriciliği: Saksıda ve Bahçede Bol Verim',b:'kabak',c:'Sebzeler'},
+{id:68,t:'Limon Ağacı Saksıda Yetiştirilir mi?',b:'limon',c:'Meyve Ağaçları'},
+{id:69,t:'Papatya Çayı İçin Bahçede Papatya Yetiştirme',b:'papatya',c:'Çiçekler'},
+{id:70,t:'Zambak Bakımı ve Soğanlı Bitkinin Çoğaltılması',b:'zambak',c:'Çiçekler'},
+{id:71,t:'Avokado Çekirdeğinden Fide Yetiştirme',b:'avokado',c:'Meyve Ağaçları'},
+{id:72,t:'Fide Yetiştirme: Tohum Ekiminden Şaşırtmaya',b:'domates',c:'Genel Bahçecilik'},
+{id:73,t:'Bahçede Ekim Takvimi: Hangi Ay Ne Ekilir',b:'elma',c:'Genel Bahçecilik'},
+{id:74,t:'Armut Hastalıkları: Ateş Yanıklığı Tedavisi',b:'armut',c:'Hastalık Rehberi'},
+{id:75,t:'Çam Ağacı Hastalıkları: Mantar ve Böcek',b:'cam',c:'Hastalık Rehberi'},
+{id:76,t:'Karanfil Yetiştiriciliği ve Kesme Çiçek Üretimi',b:'karanfil',c:'Çiçekler'},
+{id:77,t:'Toprak İyileştirme: Kil Toprağı Düzeltme Yolları',b:'elma',c:'Genel Bahçecilik'},
+{id:78,t:'Kış Budaması: Meyve Ağaçlarında Doğru Teknik',b:'elma',c:'Genel Bahçecilik'},
+{id:79,t:'Sulama Hataları: En Yaygın 8 Hata ve Çözümü',b:'domates',c:'Genel Bahçecilik'},
+{id:80,t:'Çilek Hastalıkları: Gri Küf ve Solgunluk Tedavisi',b:'cilek',c:'Hastalık Rehberi'},
+{id:81,t:'Sarı Yapraklar: Nedenleri ve Çözüm Rehberi',b:'monstera',c:'Hastalık Rehberi'},
+{id:82,t:'Meyve Ağaçlarında Aşılama Teknikleri',b:'kiraz',c:'Genel Bahçecilik'},
+{id:83,t:'Balkon Bahçeciliği: En Kolay 10 Sebze',b:'domates',c:'Genel Bahçecilik'},
+{id:84,t:'İncir Ağacı Budaması ve Verim Artırma',b:'incir',c:'Meyve Ağaçları'},
+{id:85,t:'Aromatik Bitki Bahçesi Nasıl Kurulur',b:'lavanta',c:'Tıbbi Bitkiler'},
+{id:86,t:'Beyazsinekle Organik Mücadele Yöntemleri',b:'domates',c:'Hastalık Rehberi'},
+{id:87,t:'Succulentler İçin Doğru Toprak Karışımı',b:'sukulent',c:'İç Mekan'},
+{id:88,t:'Mantar Gübresi: Avantajları ve Kullanım Rehberi',b:'domates',c:'Genel Bahçecilik'},
+{id:89,t:'Kuraklığa Dayanıklı Bahçe Bitkileri',b:'zeytin',c:'Genel Bahçecilik'},
+{id:90,t:'Ev Bitkilerinde Sinek Problemi: Organik Çözüm',b:'monstera',c:'Hastalık Rehberi'},
+{id:91,t:'Çay Bahçesi Kurma: Tıbbi Bitkilerle Dolu Bahçe',b:'nane',c:'Tıbbi Bitkiler'},
+{id:92,t:'Bağ Budaması: Üzümde Yıllık Bakım Takvimi',b:'uzum',c:'Meyve Ağaçları'},
+{id:93,t:'Enginar Yetiştiriciliği ve Hasadı',b:'enginar',c:'Sebzeler'},
+{id:94,t:'Bamya Yetiştiriciliği: Sıcak İklim Sebzesi',b:'bamya',c:'Sebzeler'},
+{id:95,t:'Mandalina Ağacı Bakımı ve İklim Gereksinimleri',b:'mandalina',c:'Meyve Ağaçları'},
+{id:96,t:'Kasımpatı Bakımı: Sonbaharın Rengi',b:'kasimpati',c:'Çiçekler'},
+{id:97,t:'Kalathea Bakımı: Tropikal Desenli Yapraklar',b:'kalathea',c:'İç Mekan'},
+{id:98,t:'Ekinezya Yetiştiriciliği: Bağışıklığı Güçlendiren Bitki',b:'ekinezya',c:'Tıbbi Bitkiler'},
+{id:99,t:'Dut Ağacı Bakımı ve Meyve Hasadı',b:'dut',c:'Meyve Ağaçları'},
+{id:100,t:'Ortanca Bakımı: Renkli Çiçekler İçin Toprak Sırrı',b:'ortanca',c:'Çiçekler'},
+{id:101,t:'Patates Yetiştirme: Evde Saksıda Patates Rehberi',b:'patates',c:'Sebzeler'},
+{id:102,t:'Şimşir Bakımı: Topiary ve Çit İçin Rehber',b:'simsir',c:'Dış Mekan'},
+{id:103,t:'Taflan Yetiştiriciliği: Karadeniz'in Herdem Yeşili',b:'taflan',c:'Dış Mekan'},
+{id:104,t:'Akçaağaç Bakımı: Sonbahar Renkleri İçin İpuçları',b:'acer',c:'Dış Mekan'},
+{id:105,t:'Erguvan Ağacı: İlkbaharın Mor Simgesi',b:'cercis',c:'Dış Mekan'},
+{id:106,t:'Leylak Bakımı ve Çoğaltma Teknikleri',b:'lilac',c:'Süs Bitkileri'},
+{id:107,t:'Manolya Yetiştiriciliği: Büyük Çiçekli Ağaç Bakımı',b:'magnolia',c:'Süs Bitkileri'},
+{id:108,t:'Mor Salkım (Wisteria) Bakımı ve Budama',b:'wisteria',c:'Süs Bitkileri'},
+{id:109,t:'Kamelya Bakımı: Kış Çiçeğinin Sırları',b:'camellia',c:'Süs Bitkileri'},
+{id:110,t:'Rododendron ve Azalea Bakımı: Asidik Toprak Rehberi',b:'rhododendron',c:'Süs Bitkileri'},
+{id:111,t:'Echeveria Sukulent Bakımı: Rozet Şeklinin Korunması',b:'echeveria',c:'Süs Bitkileri'},
+{id:112,t:'Flamingo Çiçeği (Anthurium) Bakımı',b:'anthurium',c:'İç Mekan'},
+{id:113,t:'Cennet Kuşu Bitkisi Bakımı ve Çiçek Açtırma',b:'bird_of_paradise',c:'Süs Bitkileri'},
+{id:114,t:'Aglaonema Bakımı: Gölgede Renkli Yapraklar',b:'aglonema',c:'İç Mekan'},
+{id:115,t:'Kauçuk Bitkisi Bakımı ve Çoğaltma',b:'rubber_plant',c:'İç Mekan'},
+{id:116,t:'Kroton Bakımı: Renkli Yapraklar İçin Işık ve Gübre',b:'croton',c:'İç Mekan'},
+{id:117,t:'Areka Palmiyesi Bakımı: İç Mekanda Tropikal Hava',b:'areca',c:'İç Mekan'},
+{id:118,t:'Bonsai Başlangıç Rehberi: Ficus Bonsai Bakımı',b:'bonsai_ficus',c:'Süs Bitkileri'},
+{id:119,t:'Dahlia (Yıldız Çiçeği) Yetiştiriciliği',b:'dahlia',c:'Süs Bitkileri'},
+{id:120,t:'Siklamen Bakımı: Kış Çiçeğini Yaşatma Rehberi',b:'cyclamen',c:'Süs Bitkileri'},
+{id:121,t:'Ginkgo Ağacı: Fosil Ağacın Bakımı',b:'ginkgo',c:'Dış Mekan'},
+{id:122,t:'Çınar Ağacı: Park ve Bahçe Peyzajının Devi',b:'platanus',c:'Dış Mekan'},
+{id:123,t:'Salkım Söğüt Bakımı: Su Kenarı Peyzajı',b:'salix_babylonica',c:'Dış Mekan'},
+{id:124,t:'Mazı (Thuja) Bakımı: Sık Çit ve Perde Ağacı',b:'thuja',c:'Dış Mekan'},
+{id:125,t:'Porsuk Ağacı: Bin Yıllık Ağacı Yetiştirme',b:'taxus',c:'Dış Mekan'},
+{id:126,t:'Ateş Dikeni (Pyracantha) Bakımı ve Terbiye',b:'pyracantha',c:'Dış Mekan'},
+{id:127,t:'Hanımeli Bakımı: Kokusu ve Sarmaşık Özellikleri',b:'lonicera',c:'Dış Mekan'},
+{id:128,t:'Beş Yapraklı Sarmaşık: Duvar Örtücü Bakımı',b:'parthenocissus',c:'Dış Mekan'},
+{id:129,t:'Mavi Çalı (Caryopteris) Bakımı ve Kelebek Çekimi',b:'caryopteris',c:'Dış Mekan'},
+{id:130,t:'Rus Adaçayı (Perovskia) Bakımı',b:'perovskia',c:'Dış Mekan'},
+{id:131,t:'Kartopu Çiçeği (Viburnum) Bakımı',b:'viburnum',c:'Dış Mekan'},
+{id:132,t:'İpek Ağacı (Albizia) Bakımı: Yaz Güzeli',b:'albizia',c:'Dış Mekan'},
+{id:133,t:'Paulovnya Yetiştiriciliği: Hızlı Büyüyen Ağaç',b:'paulownia',c:'Dış Mekan'},
+{id:134,t:'Sümbül Bakımı: Kokusu ile İlkbaharı Karşıla',b:'hyacinth',c:'Süs Bitkileri'},
+{id:135,t:'Nergis (Daffodil) Soğanı Bakımı',b:'narcissus',c:'Süs Bitkileri'},
+{id:136,t:'Glayöl Yetiştiriciliği: Uzun Çiçek Bakımı',b:'gladiolus',c:'Süs Bitkileri'},
+{id:137,t:'Süsen (Iris) Bakımı: Rizomlu Bitkinin Sırları',b:'iris',c:'Süs Bitkileri'},
+{id:138,t:'Kelebek Çalısı (Buddleja) Bakımı',b:'buddleja',c:'Süs Bitkileri'},
+{id:139,t:'Altın Çan (Forsythia) Bakımı: İlk Bahar Müjdecisi',b:'forsythia',c:'Süs Bitkileri'},
+{id:140,t:'Gerbera Yetiştiriciliği: Kesme Çiçek Üretimi',b:'gerbera',c:'Süs Bitkileri'},
+{id:141,t:'Noel Gülü (Helleborus) Bakımı: Kış Çiçeği',b:'helleborus',c:'Süs Bitkileri'},
+{id:142,t:'Anemon Yetiştiriciliği: Rengarenk Bahar Çiçeği',b:'anemone',c:'Süs Bitkileri'},
+{id:143,t:'Klematis Bakımı: Sarmaşık Çiçeğin Budama Sırları',b:'clematis',c:'Süs Bitkileri'},
+{id:144,t:'Trabzon Hurması (Diospyros) Yetiştiriciliği',b:'hurmali',c:'Dış Mekan'},
+{id:145,t:'Kocayemiş (Arbutus) Bakımı: Akdeniz'in Herdem Yeşili',b:'ıhlamur_kocayemiş',c:'Dış Mekan'},
+{id:146,t:'Kuşburnu Bakımı ve Kuşburnu Çayı',b:'kusgoznü',c:'Dış Mekan'},
+{id:147,t:'Kızılcık Yetiştiriciliği: Erken Çiçek ve Meyve',b:'cornus',c:'Dış Mekan'},
+{id:148,t:'Mürver Bakımı: Şifalı Meyveli Çalı',b:'sambucus',c:'Dış Mekan'},
+{id:149,t:'Atatürk Çiçeği (Poinsettia) Bakımı',b:'poinsettia',c:'Süs Bitkileri'},
+{id:150,t:'Primula Bakımı: Kış Renklerinin Sırrı',b:'primula',c:'Süs Bitkileri'}
+];
+
+function getGenericContent(m) {
+  var plant = PLANT_DB.find(function(p){return p.id===m.b;}) || {tr:m.b,sci:'',water:'moderate',sun:'full_sun',difficulty:'medium',soil:'Verimli toprak',height:'Değişken',lifespan:'Değişken',bloom:'İlkbahar',origin:'Değişken'};
+  var wl = {low:'Az sulama (kuraklığa dayanıklı)', moderate:'Orta düzeyde sulama', high:'Sık sulama gerektirir'};
+  var sl = {full_sun:'Tam güneş (günde 6+ saat)', partial_shade:'Yarı gölge (3-6 saat)', shade:'Gölge'};
+  var dl = {easy:'Kolay — yeni başlayanlar için ideal', medium:'Orta — temel bilgi gerektirir', hard:'Zor — deneyimli bahçeciler için'};
+  return [
+    {h:'Genel Özellikler ve Yetişme Koşulları', p: plant.tr+' bitkisi, '+plant.sci+' bilimsel adıyla bilinir. Yetişme koşulları incelendiğinde '+sl[plant.sun]+' tercih ettiği görülür. Toprak isteği bakımından '+plant.soil+' en uygun ortamı oluşturur. '+plant.origin+' kökenli bu bitki, Türkiye\'nin birçok bölgesinde başarıyla yetiştirilmektedir. Bakım zorluğu açısından '+dl[plant.difficulty]+' kategorisinde yer alır.'},
+    {h:'Sulama ve Gübreleme', p: plant.tr+' için sulama programı büyüme dönemine göre değişir. '+wl[plant.water]+'. İlkbahar ve yaz aylarında dengeli NPK gübresi uygulanır. Organik gübre olarak kompost veya ahır gübresi kullanılabilir. Gübrelemenin aşırıya kaçırılmaması, özellikle azot dengesinin korunması önemlidir. Toprak analizi yapılarak eksik besinler tespit edilmeli ve buna göre gübreleme yapılmalıdır.'},
+    {h:'Olası Hastalıklar ve Zararlılar', p: plant.tr+' yetiştiriciliğinde hastalık ve zararlı yönetimi önemlidir. Fungal hastalıklara karşı bakır bazlı ilaçlar koruyucu olarak kullanılır. Yaprak bitine karşı sabunlu su spreyi organik çözüm sağlar. Kırmızı örümcek nem artışı ve hava sirkülasyonuyla önlenebilir. Hastalıklı yaprak ve dalların erken müdahaleyle temizlenmesi salgın riskini azaltır. Düzenli kontrol ve erken teşhis en etkili mücadele yöntemidir.'},
+    {h:'Hasat ve Bakım İpuçları', p: plant.tr+' için optimum bakım takvimi mevsimsel olarak planlanmalıdır. İlkbaharda budama ve gübre uygulaması yapılır. Yaz aylarında düzenli sulama ve zararlı kontrolü sürdürülür. Sonbaharda hasat dönemi ve kışa hazırlık işlemleri gerçekleştirilir. Kışın ise bitkinin dinlenme döneminde gerekli koruma önlemleri alınır. Düzenli bakım, yüksek verim ve uzun ömürlü bitki sağlığının temelidir.'}
+  ];
+}
+
+var mid = parseInt(new URLSearchParams(window.location.search).get('id'));
+var ac = document.getElementById('articleContent');
+
+var makale = DB[mid];
+var meta = BLOG_LIST.find(function(x){return x.id===mid;});
+
+if(!makale && !meta){
+  ac.innerHTML = '<div class="info-box info-box-red"><h5>Makale bulunamadı</h5><p><a href="blog.html">Blog\'a dön</a></p></div>';
+} else {
+  var title = makale ? makale.t : meta.t;
+  var bitki = makale ? makale.b : meta.b;
+  var cat = makale ? makale.c : meta.c;
+  var sections = makale ? makale.s : getGenericContent(meta);
+
+  document.title = title + ' | BitkiDoktorum';
+  document.getElementById('pageDesc').content = title + ' hakkında kapsamlı rehber.';
+  document.getElementById('breadTitle').textContent = title.substring(0,50)+'...';
+
+  var html = '<article>';
+  html += '<div style="margin-bottom:1rem"><span style="font-size:.75rem;font-weight:700;text-transform:uppercase;color:var(--g);background:var(--gp);padding:.2rem .6rem;border-radius:3px">'+cat+'</span></div>';
+  html += '<h1 style="margin-bottom:.75rem">'+title+'</h1>';
+  html += '<div style="display:flex;gap:1rem;font-size:.8rem;color:var(--t3);margin-bottom:1.5rem;flex-wrap:wrap">';
+  html += '<span>📅 BitkiDoktorum Editörü</span><span>⏱ 7 dk okuma</span>';
+  html += '<a href="bitki.html?id='+bitki+'">🌿 Bitki sayfası</a></div>';
+  html += '<div class="ad-slot ad-slot-in-article"><span class="ad-label">Reklam</span><small>336×280</small></div>';
+
+  sections.forEach(function(s){
+    html += '<h2 style="margin:1.5rem 0 .75rem;color:var(--gd)">'+s.h+'</h2>';
+    html += '<p style="line-height:1.85;margin-bottom:1rem;color:var(--t1)">'+s.p+'</p>';
+  });
+
+  html += '<div class="info-box info-box-amber" style="margin-top:1.5rem"><h5>⚠️ Uyarı</h5><p style="margin:0;font-size:.83rem">Bu içerik bilgilendirme amaçlıdır. Ciddi sorunlarda ziraat mühendisine danışın.</p></div>';
+  html += '<div style="margin-top:1.5rem;padding:1.25rem;background:var(--gp);border-radius:var(--r);text-align:center"><h3>🔬 Bitkide Hastalık mı Var?</h3><p style="margin:.4rem 0 .85rem">Fotoğraf yükleyin, AI anında teşhis yapsın.</p><a href="teshis.html" class="btn btn-amber">Hastalık Teşhisi →</a></div>';
+  html += '<div class="ad-slot ad-slot-banner" style="margin-top:1.5rem"><span class="ad-label">Reklam</span><small>728×90</small></div>';
+  html += '<div style="margin-top:1.5rem"><a href="blog.html" class="btn btn-outline">← Tüm Makaleler</a></div>';
+  html += '</article>';
+
+  ac.innerHTML = html;
+
+  // Sidebar
+  document.getElementById('otherArticles').innerHTML = BLOG_LIST.filter(function(x){return x.id!==mid;}).slice(0,8).map(function(x){
+    return '<li><a href="makale.html?id='+x.id+'">'+x.t.substring(0,50)+'...</a></li>';
+  }).join('');
+}
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+<script>
+function paylasim(platform) {
+  var url = encodeURIComponent(window.location.href);
+  var baslik = encodeURIComponent(document.title);
+  var linkler = {
+    whatsapp: 'https://wa.me/?text=' + baslik + '%20' + url,
+    twitter:  'https://twitter.com/intent/tweet?text=' + baslik + '&url=' + url,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
+  };
+  if(platform === 'link') {
+    navigator.clipboard.writeText(window.location.href).then(function(){alert('Bağlantı kopyalandı!');});
+    return;
+  }
+  window.open(linkler[platform], '_blank', 'width=600,height=400');
+}
+</script>
+</body>
+</html>

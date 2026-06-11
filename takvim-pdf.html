@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Bakım Takvimi PDF İndir | BitkiDoktorum</title>
+<meta name="description" content="Aylık bitki bakım takvimini PDF olarak indirin. Yazdırın, buzdolabına asın. Ücretsiz.">
+<link rel="canonical" href="https://bitkidoktorum.com/takvim-pdf.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
+<script>(function(){var t=localStorage.getItem('bd_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+.pdf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.25rem 0}
+.pdf-kart{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh);text-align:center}
+.pdf-kart .emoji{font-size:2.5rem;margin-bottom:.5rem}
+.pdf-kart h3{font-size:.95rem;color:var(--gd);margin-bottom:.4rem}
+.pdf-kart p{font-size:.78rem;color:var(--t2);margin-bottom:.85rem;line-height:1.55}
+.pdf-kart .btn-pdf{background:var(--g);color:#fff;border:none;border-radius:8px;padding:.55rem 1.1rem;cursor:pointer;font-size:.85rem;font-weight:700;width:100%;transition:.15s}
+.pdf-kart .btn-pdf:hover{background:var(--gd)}
+.onizleme{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh);margin:1rem 0}
+#pdfOnizleme{overflow-x:auto}
+.tak-tablo{width:100%;border-collapse:collapse;font-size:.78rem;min-width:600px}
+.tak-tablo th{background:var(--g);color:#fff;padding:.5rem .6rem;text-align:left;font-size:.73rem}
+.tak-tablo td{padding:.45rem .6rem;border-bottom:1px solid #f0f0f0;vertical-align:top}
+.tak-tablo tr:nth-child(even) td{background:#f9fff9}
+.tak-ay{font-weight:700;color:var(--gd);white-space:nowrap}
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+@media print{
+  .site-header,.site-footer,.ad-slot,.btn-pdf,.pdf-grid,.onizleme h2,.onizleme>p,.breadcrumb{display:none!important}
+  body{font-size:11px}
+  .tak-tablo{font-size:10px}
+}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap"><button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button></div><div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div><div class="quick-search-box" id="qsBox"><div class="qs-input-wrap"><span style="font-size:1.1rem">🔍</span><input class="qs-input" id="qsInput" placeholder="Bitki adı yazın..." oninput="qsAra(this.value)" autocomplete="off"><button class="qs-close" onclick="qsKapat()">✕</button></div><div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div></div><button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button><div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><a href="takvim.html">Takvim</a><span>›</span><span>PDF İndir</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>🖨️ Bakım Takvimi PDF İndir</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Takvimi seçin, önizleyin, PDF olarak kaydedin veya yazdırın. Buzdolabına asın!</p>
+
+<div class="pdf-grid">
+  <div class="pdf-kart">
+    <div class="emoji">📅</div>
+    <h3>Yıllık Özet Takvim</h3>
+    <p>12 ay, tüm kategoriler. A4 sayfaya sığar. En popüler format.</p>
+    <button class="btn-pdf" onclick="onizle('yillik')">📄 Önizle & İndir</button>
+  </div>
+  <div class="pdf-kart">
+    <div class="emoji">🍎</div>
+    <h3>Meyve Ağaçları Takvimi</h3>
+    <p>Elma, kiraz, şeftali, zeytin — budama, gübreleme, hasat zamanları.</p>
+    <button class="btn-pdf" onclick="onizle('meyve')">📄 Önizle & İndir</button>
+  </div>
+  <div class="pdf-kart">
+    <div class="emoji">🥦</div>
+    <h3>Sebze Bahçesi Takvimi</h3>
+    <p>Domates, biber, salatalık, karpuz — ekim, dikim, hasat takvimi.</p>
+    <button class="btn-pdf" onclick="onizle('sebze')">📄 Önizle & İndir</button>
+  </div>
+  <div class="pdf-kart">
+    <div class="emoji">🌸</div>
+    <h3>Çiçek Bakım Takvimi</h3>
+    <p>Gül, lavanta, lale, begonvil — dikim, budama, gübreleme zamanları.</p>
+    <button class="btn-pdf" onclick="onizle('cicek')">📄 Önizle & İndir</button>
+  </div>
+</div>
+
+<div class="ad-slot" style="margin:.75rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+
+<div class="onizleme" id="onizlemeAlan" style="display:none">
+  <h2 style="margin-bottom:.5rem" id="onizlemeBaslik">Takvim Önizleme</h2>
+  <p style="font-size:.82rem;color:var(--t2);margin-bottom:.75rem">Tarayıcınızın yazdır diyaloğunda "PDF olarak kaydet" seçeneğini kullanın.</p>
+  <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Yazdır / PDF Kaydet</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('onizlemeAlan').style.display='none'">✕ Kapat</button>
+  </div>
+  <div id="pdfOnizleme"></div>
+</div>
+
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var AYLAR = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+var AYEMOJI = ['❄️','🌱','🌸','🌷','🌿','☀️','🍅','🍑','🍇','🍂','🌰','🌲'];
+
+var TAKVİM_DATA = {
+  yillik: {
+    baslik: '🌿 BitkiDoktorum — Yıllık Bitki Bakım Takvimi',
+    sutunlar: ['Ay','✂️ Budama','🌱 Gübreleme','💧 Sulama','🌿 Dikim','🍎 Hasat'],
+    satirlar: [
+      ['❄️ Ocak','Meyve ağacı kış budaması başlangıcı','Gübreleme yok','Azalt — kış dinlenmesi','Planla, tohum sipariş et','—'],
+      ['🌱 Şubat','Gül budaması hazırlığı, meyve ağacı budaması','Badem: 100g NPK','İç mekanda artır','Patates hazırlığı','—'],
+      ['🌸 Mart','Güller budanır (Mart başı)','Meyve ağacı: 150g 20-10-10','Sıklığı artır','Domates fidesi iç mekanda','—'],
+      ['🌷 Nisan','Son kış budaması fırsatı','Tüm ağaçlar gübrelenir','Düzenli sulama başlar','Dış mekana dikim başlar','Kiraz (geç)'],
+      ['🌿 Mayıs','Solmuş çiçekleri kes','Domates: dengeli NPK','Sıcaklar artıyor, artır','Tüm yaz sebzeleri','Kiraz, çilek'],
+      ['☀️ Haziran','Gül: solmuş çiçek kes','Domates: potasyum','Günlük veya 2 günde bir','Güz için tohum ek','Kiraz, çilek, kayısı'],
+      ['🍅 Temmuz','Meyve seyreltme','80g potasyum/ağaç','En yoğun dönem','—','Domates, şeftali, kayısı'],
+      ['🍑 Ağustos','Lavanta: hasat sonrası kısalt','Azotlu gübre yok','Sulama devam','Güz sebze fidesi hazırla','Elma (erken), üzüm'],
+      ['🍇 Eylül','Ortanca: solmuş başlar kes','Çim: potasyum kışlık','Yağışa göre azalt','Soğan, sarımsak, lale','Üzüm, elma, armut, nar'],
+      ['🍂 Ekim','Hafif şekil budaması','Son gübre: potasyum','Azalt','Fidan dikimi başlar','Zeytin, incir'],
+      ['🌰 Kasım','Bağ budaması başlayabilir','Gübreleme yok','Haftada bir yeterli','Fidan dikimi devam','Zeytin (zeytinyağlık)'],
+      ['🌲 Aralık','Meyve ağacı kış budaması','Gübreleme yok','Minimum','Tohum kataloğu incele','—'],
+    ]
+  },
+  meyve: {
+    baslik: '🍎 BitkiDoktorum — Meyve Ağaçları Bakım Takvimi',
+    sutunlar: ['Ay','Elma/Armut','Kiraz/Vişne','Şeftali/Kayısı','Zeytin','Üzüm/Asma'],
+    satirlar: [
+      ['❄️ Ocak','Kış budaması başlar','Kış budaması','Kış budaması','Budama yok','Budama planla'],
+      ['🌱 Şubat','Budama tamamla','Budama tamamla','Budama — don riski!','Kışlık bakım','—'],
+      ['🌸 Mart','150g 20-10-10 gübre','İlk gübre','İlk gübre, don örtüsü','—','Budama başlar'],
+      ['🌷 Nisan','Çiçeklenme, tozlaşma','Çiçeklenme, hasat hazırlığı','Çiçeklenme','Budama','Sürgün kontrol'],
+      ['🌿 Mayıs','Meyve seyreltme','🍒 Hasat başlar','Meyve gelişimi','200g amonyum nitrat','Yeşil budama'],
+      ['☀️ Haziran','Yaz budaması','🍒 Hasat sona erer','🍑 Kayısı hasadı','Sulama artır','Salkım seyreltme'],
+      ['🍅 Temmuz','80g potasyum','Bakıl','🍑 Şeftali hasadı','Sulama kritik','—'],
+      ['🍑 Ağustos','Erken elma hasadı','—','Geç şeftali','Yaz gübreleme yok','Sofralık üzüm hasadı'],
+      ['🍇 Eylül','🍎 Ana hasat','—','—','Olgunluk kontrol','🍇 Ana bağ bozumu'],
+      ['🍂 Ekim','Geç elma/armut','—','Fidan dikimi','🫒 Hasat başlar','Fidan dikimi'],
+      ['🌰 Kasım','Fidan dikimi','Fidan dikimi','—','🫒 Hasat devam','Budama başlayabilir'],
+      ['🌲 Aralık','Kış budaması','Kış budaması','Kış budaması','Hasat sona erer','Kış budaması'],
+    ]
+  },
+  sebze: {
+    baslik: '🥦 BitkiDoktorum — Sebze Bahçesi Takvimi',
+    sutunlar: ['Ay','Domates/Biber','Salatalık/Kabak','Karpuz/Kavun','Soğan/Sarımsak','Yapraklılar'],
+    satirlar: [
+      ['❄️ Ocak','Tohum siparişi ver','—','—','Kış soğanı bakımı','Kışlık ıspanak/marul'],
+      ['🌱 Şubat','İç mekanda fide ek','—','—','—','Ekim devam'],
+      ['🌸 Mart','Fide büyütme','İç mekanda fide','İç mekanda fide','—','Dış mekana marul ek'],
+      ['🌷 Nisan','Akdeniz/Ege: dışa dik','Hazırlık','—','Yaz soğanı ek','Marul, ıspanak bol'],
+      ['🌿 Mayıs','Tüm Türkiye: dışa dik','🥒 Dışa dik','Dışa dik','—','Hasat yoğunlaşır'],
+      ['☀️ Haziran','Koltuk al, gübrele','🥒 Hasat başlar','Büyüme dönemi','—','Yazlık ara ekim'],
+      ['🍅 Temmuz','🍅 Yoğun hasat','🥒 Hasat devam','🍉 Hasat başlar','—','—'],
+      ['🍑 Ağustos','🍅 Hasat devam','Hasat devam','🍉 Ana hasat','—','Güz için fide hazırla'],
+      ['🍇 Eylül','Son hasat','Son hasat','Son hasat','🧄 Sarımsak ek!','Brokoli/lahana dik'],
+      ['🍂 Ekim','Sezon sonu','—','—','🧅 Soğan ek','Kışlık ıspanak/marul'],
+      ['🌰 Kasım','—','—','—','Bakım devam','Hasat devam'],
+      ['🌲 Aralık','Planlama yap','—','—','—','Kışlık hasat'],
+    ]
+  },
+  cicek: {
+    baslik: '🌸 BitkiDoktorum — Çiçek ve Süs Bitkileri Takvimi',
+    sutunlar: ['Ay','Gül','Lavanta','Lale/Sümbül','Begonvil','İç Mekan Çiçek'],
+    satirlar: [
+      ['❄️ Ocak','Hafif şekil budaması','Kış dinlenmesi','Soğan toprakta','İçeride kışla','Sulama azalt'],
+      ['🌱 Şubat','Budama hazırlığı','—','İlk filizler','Hazırlık','—'],
+      ['🌸 Mart','✂️ Ana budama + gübre','Toprak hazırlığı','🌷 Açmaya başlar','Dışa çıkarma hazırlığı','Gübrelemeye başla'],
+      ['🌷 Nisan','Büyüme hızlı, gübrele','Fide dikimi','🌷 Tam çiçek','Dışa çıkar, gübrele','Sulama artır'],
+      ['🌿 Mayıs','İlk çiçekler, solmuşları kes','Büyüme','Soğan kurumaya bırak','Çiçeklenme başlar','Bol çiçek dönemi'],
+      ['☀️ Haziran','Düzenli kes, gübrele','💜 Hasat zamanı','Soğanları çıkar, sakla','🌺 Yoğun çiçek','Balkona çıkar'],
+      ['🍅 Temmuz','Sıcakta stres var','Hasat sonrası kısalt','—','Çiçeklenme devam','Serin tut'],
+      ['🍑 Ağustos','Gübreleme azalt','Bakım','—','Çiçeklenme devam','Yazlık bakım'],
+      ['🍇 Eylül','Son gübre: potasyum','—','Yeni soğan ek zamanı','İçeri alma hazırlığı','İçeri al'],
+      ['🍂 Ekim','Yaprak dökümü','—','🌷 Soğan ek (son şans)','İçeri al','Kış bakımına geç'],
+      ['🌰 Kasım','Kışa hazırlık','—','Soğan toprakta','Kışlık bakım','Sulama azalt'],
+      ['🌲 Aralık','Dinlenme','Dinlenme','Soğan toprakta','Minimum bakım','Minimum bakım'],
+    ]
+  }
+};
+
+function onizle(tip){
+  var data = TAKVİM_DATA[tip];
+  var alan = document.getElementById('onizlemeAlan');
+  document.getElementById('onizlemeBaslik').textContent = data.baslik;
+  
+  var html = '<div id="printArea"><div style="text-align:center;margin-bottom:1rem;border-bottom:2px solid #2d7a2d;padding-bottom:.75rem">'
+    +'<div style="font-size:1.5rem">🌿 BitkiDoktorum</div>'
+    +'<div style="font-size:1rem;font-weight:700;color:#166534">'+data.baslik.replace(/^[^\s]+ /,'')+'</div>'
+    +'<div style="font-size:.75rem;color:#555">bitkidoktorum.com | © 2025</div></div>'
+    +'<table class="tak-tablo"><thead><tr>'
+    +data.sutunlar.map(function(s){return '<th>'+s+'</th>';}).join('')
+    +'</tr></thead><tbody>'
+    +data.satirlar.map(function(satir){
+      return '<tr><td class="tak-ay">'+satir[0]+'</td>'
+        +satir.slice(1).map(function(h){return '<td>'+h+'</td>';}).join('')
+        +'</tr>';
+    }).join('')
+    +'</tbody></table>'
+    +'<div style="text-align:center;font-size:.7rem;color:#999;margin-top:.75rem">bitkidoktorum.com — Türkiye\'nin Bitki Ansiklopedisi</div>'
+    +'</div>';
+  
+  document.getElementById('pdfOnizleme').innerHTML = html;
+  alan.style.display = 'block';
+  alan.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function qsAc(){document.getElementById('qsBox').classList.add('acik');document.getElementById('qsOverlay').classList.add('acik');setTimeout(function(){document.getElementById('qsInput').focus();},50);}
+function qsKapat(){document.getElementById('qsBox').classList.remove('acik');document.getElementById('qsOverlay').classList.remove('acik');document.getElementById('qsInput').value='';document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';}
+function qsAra(q){q=q.trim().toLowerCase();var el=document.getElementById('qsSonuclar');if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);}).slice(0,12);if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı</div>';return;}el.innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()"><span class="qs-item-emoji">'+p.emoji+'</span><div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div><div class="qs-item-sci">'+p.sci+'</div></div></a>';}).join('');}
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();qsAc();}if(e.key==='Escape')qsKapat();});
+function dmToggle(){var cur=document.documentElement.getAttribute('data-theme')||'light';var nxt=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',nxt);localStorage.setItem('bd_theme',nxt);document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık':'🌙 Koyu';});}
+var t=localStorage.getItem('bd_theme')||'light';document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=t==='dark'?'☀️ Açık':'🌙 Koyu';});
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}</script>
+</body>
+</html>

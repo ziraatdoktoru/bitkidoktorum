@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sık Sorulan Sorular | BitkiDoktorum</title>
+<meta name="description" content="BitkiDoktorum SSS. Bitki bakımı, sulama, gübreleme, hastalık teşhisi hakkında en çok sorulan sorular.">
+<link rel="canonical" href="https://bitkidoktorum.com/sss.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
+<script>(function(){var t=localStorage.getItem('bd_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Bitkimi ne sıklıkla sulamalıyım?","acceptedAnswer":{"@type":"Answer","text":"Bitki türüne ve mevsimine göre değişir. Parmak testini kullanın: toprağa 5cm sokun, hâlâ nemse sulama ertelenebilir. Genel olarak yaz aylarında daha sık, kışın daha seyrek sulayın."}},
+{"@type":"Question","name":"Yapraklarım neden sarıyor?","acceptedAnswer":{"@type":"Answer","text":"Sarı yaprakların birçok sebebi olabilir: aşırı sulama, yetersiz sulama, azot eksikliği, demir eksikliği veya hastalık. Alt yapraklarda sararma genellikle normaldir. Tüm bitkide sararma sorun işaretidir."}},
+{"@type":"Question","name":"NPK gübre nedir?","acceptedAnswer":{"@type":"Answer","text":"NPK; Azot (N), Fosfor (P) ve Potasyum (K) harflerinin kısaltmasıdır. Gübre etiketindeki üç rakam bu elementlerin oranını gösterir. Örneğin 15-15-15 dengeli bir gübredir."}}
+]}
+</script>
+<style>
+.sss-item{background:#fff;border:1px solid var(--br);border-radius:var(--r);margin-bottom:.6rem;overflow:hidden;box-shadow:var(--sh)}
+.sss-soru{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.1rem;cursor:pointer;font-weight:700;font-size:.9rem;color:var(--gd);gap:.75rem}
+.sss-soru:hover{background:var(--gp)}
+.sss-ok{font-size:.8rem;color:var(--t3);transition:transform .25s;flex-shrink:0}
+.sss-item.acik .sss-ok{transform:rotate(180deg)}
+.sss-cevap{display:none;padding:0 1.1rem 1rem;font-size:.84rem;color:var(--t2);line-height:1.7;border-top:1px solid var(--br)}
+.sss-item.acik .sss-cevap{display:block}
+.kat-filtre{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.kat-btn{padding:.3rem .75rem;border:1px solid var(--br);border-radius:20px;background:#fff;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--t2);transition:.15s}
+.kat-btn.aktif,.kat-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap"><button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button></div><div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div><div class="quick-search-box" id="qsBox"><div class="qs-input-wrap"><span style="font-size:1.1rem">🔍</span><input class="qs-input" id="qsInput" placeholder="Bitki adı yazın..." oninput="qsAra(this.value)" autocomplete="off"><button class="qs-close" onclick="qsKapat()">✕</button></div><div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div></div><button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button><div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>SSS</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+<div class="container" style="padding:1.5rem 1rem;max-width:820px">
+<h1>❓ Sık Sorulan Sorular</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Bitki bakımı hakkında en çok merak edilenler.</p>
+<div class="kat-filtre" id="katFiltre"></div>
+<div class="ad-slot" style="margin:.5rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+<div id="sssListe"></div>
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+<div class="info-box info-box-green" style="margin-top:1rem">
+  <h5>💬 Sorunuzu bulamadınız mı?</h5>
+  <p style="font-size:.83rem">AI hastalık teşhis aracımızı deneyin veya <a href="iletisim.html">iletişim sayfasından</a> bize ulaşın.</p>
+</div>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var SSS = [
+  {k:'sulama',s:'Bitkimi ne sıklıkla sulamalıyım?',c:'Bitki türüne ve mevsimine göre değişir. En güvenilir yöntem parmak testidir: toprağa 5cm sokun, hâlâ nemse sulama ertelenebilir. Yaz aylarında daha sık, kışın daha seyrek sulayın. Kaktüs ve sukulentler 2-4 haftada bir, tropikaller haftada bir, sebzeler ise 2-3 günde bir.'},
+  {k:'sulama',s:'Neden sabah sulaması önerilir?',c:'Sabah sulaması yaprakların gün boyunca kurumasını sağlar. Akşam sulaması yaprakları gece boyunca nemli bırakır, bu da fungal hastalıkların (külleme, gri küf) gelişmesine zemin hazırlar.'},
+  {k:'sulama',s:'Saksı altlığındaki suyu ne yapayım?',c:'Saksı altlığında biriken suyu 30 dakika içinde boşaltın. Durgun su kök çürüklüğünün en yaygın sebebidir. Bitkinin suyu emip emmediğini kontrol edin, emmiyorsa boşaltın.'},
+  {k:'gubre',s:'NPK gübre nedir, nasıl okurum?',c:'NPK; Azot (N), Fosfor (P) ve Potasyum (K) harflerinin kısaltmasıdır. Gübre etiketindeki üç rakam bu elementlerin yüzde oranını gösterir. Örn: 20-10-10 → %20 azot, %10 fosfor, %10 potasyum. Yaprak büyümesi için azot, çiçek ve meyve için fosfor-potasyum ağırlıklı tercih edin.'},
+  {k:'gubre',s:'Kışın gübre vermeli miyim?',c:'Hayır. Dışarıdaki bitkiler kışın dinlenme dönemine girer. Bu dönemde azotlu gübre yeni sürgün oluşturur, bu sürgünler soğuğa karşı çok hassastır ve donar. İç mekan bitkilerine de Aralık-Ocak arası gübre vermeyin.'},
+  {k:'gubre',s:'Organik mi kimyasal gübre mi kullanmalıyım?',c:'İkisinin de yeri var. Organik gübre (kompost, solucan gübresi) yavaş salınır, toprağı canlı tutar ve uzun vadeli fayda sağlar. Kimyasal gübre hızlı etki eder. İdeal: kışa girerken organik, büyüme döneminde kimyasal veya ikisini dönüşümlü kullanın.'},
+  {k:'hastalik',s:'Yapraklarım neden sarıyor?',c:'Sarı yaprakların birçok sebebi olabilir: aşırı sulama (en yaygın), yetersiz sulama, azot eksikliği, demir eksikliği (genç yapraklar sarıyor, damarlar yeşil kalıyor), aşırı doğrudan güneş veya hastalık. Alt yapraklarda hafif sararma genellikle normaldir. Tüm bitkide ani sararma sorun işaretidir.'},
+  {k:'hastalik',s:'Yaprak altında beyaz toz var, ne yapayım?',c:'Bu büyük olasılıkla külleme (powdery mildew) adlı mantar hastalığıdır. Tedavi: bikarbonat spreyi (1 çay kaşığı soda + 1 litre su), neem yağı veya bakır bazlı fungisit. Etkilenen yaprakları kesin. Hava sirkülasyonunu artırın ve sabah sulayın.'},
+  {k:'hastalik',s:'Bitkimi suluyorum ama solar, neden?',c:'Sulayınca düzelmeyen solar büyük olasılıkla kök çürüklüğüdür. Saksıdan çıkarın, köklere bakın. Kahverengi ve yumuşak kökler çürümüş demektir. Sağlıklı kökler beyaz ve serttir. Çürük kökleri kesin, taze toprağa alın.'},
+  {k:'hastalik',s:'Yaprak bitine karşı organik ne kullanabilirim?',c:'En etkili organik yöntemler: sabunlu su spreyi (1 çay kaşığı sıvı sabun + 1 litre su, haftada 2-3 kez), neem yağı spreyi (%2 konsantrasyon), sarımsak-biber suyu spreyi veya güçlü su spreyi ile yıkama. Uğur böceği gibi doğal düşmanları teşvik edin.'},
+  {k:'bakim',s:'Bitkimi ne zaman saksı değiştirmeliyim?',c:'Kökler drenaj deliklerinden çıkıyorsa, bitki hızla kuruyor ve sulama sık sık gerekiyorsa, saksı şişiyorsa veya bitki büyümesi duraksadıysa saksı değiştirme zamanı gelmiştir. İlkbahar değişimi için en uygun dönemdir.'},
+  {k:'bakim',s:'Budama ne zaman yapılmalı?',c:'Genel kural: çiçekli bitkiler çiçek döneminden sonra, meyve ağaçları yaprak döküldükten sonra (kış sonu, Ocak-Şubat), güller ise Mart başında budanır. Lavanta ve biberiye gibi otsu bitkiler hasat sonrası kısaltılır.'},
+  {k:'bakim',s:'İç mekan bitkilerinin yaprakları tozlanıyor, ne yapayım?',c:'Yaprakları nemli, yumuşak bezle düzenli silin. Toz ışık emilimini azaltır ve zararlılara barınak oluşturur. Büyük yapraklı bitkilerde (monstera, kauçuk) özellikle önemlidir. Ayda bir duş altında yıkamak da işe yarar.'},
+  {k:'bakim',s:'Bitkimi balkondan içeri almalı mıyım?',c:'Gece sıcaklığı 5°C\'nin altına düşecekse tropikaller içeri alınmalıdır. Narenciye -3°C\'de zarar görür. Begonvil ve sardunya soğuğa hassastır. Kaktüs ve sukulentler kuru ortamda -5°C\'ye kadar dayanabilir. Akdeniz bitkilerinin çoğu Türkiye kışına dayanır.'},
+  {k:'site',s:'BitkiDoktorum\'u kim yönetiyor?',c:'BitkiDoktorum, Türkiye\'nin en kapsamlı bitki ansiklopedisi olmayı hedefleyen, bitki severler tarafından oluşturulan bir platform. AI destekli hastalık teşhisi, 244+ bitki ansiklopedisi ve bakım araçlarıyla ücretsiz hizmet sunuyoruz.'},
+  {k:'site',s:'AI teşhis nasıl çalışıyor?',c:'Bitkinin fotoğrafını yüklediğinizde yapay zeka sistemi görüntüyü analiz ederek olası hastalık ve zararlıları tespit eder. Tedavi önerisi de sunar. Kesin tanı için mutlaka bir uzman görüşü alın — AI teşhis yardımcıdır, yer değiştirmez.'},
+  {k:'site',s:'Site tamamen ücretsiz mi?',c:'Evet. Tüm özellikler; ansiklopedi, AI teşhis, bakım takvimi, hesaplayıcılar ve blog tamamen ücretsizdir. Site reklam geliriyle sürdürülmektedir.'},
+];
+
+var KATLAR = [{id:'hepsi',l:'Tümü'},{id:'sulama',l:'💧 Sulama'},{id:'gubre',l:'🌱 Gübreleme'},{id:'hastalik',l:'🔬 Hastalık'},{id:'bakim',l:'✂️ Bakım'},{id:'site',l:'🌐 Site'}];
+var aktif='hepsi', acikIdx=null;
+
+function render(){
+  var liste=SSS.filter(function(s){return aktif==='hepsi'||s.k===aktif;});
+  document.getElementById('sssListe').innerHTML=liste.map(function(s,i){
+    var ac=acikIdx===i;
+    return '<div class="sss-item'+(ac?' acik':'')+'" onclick="toggle('+i+')">'
+      +'<div class="sss-soru">'+s.s+'<span class="sss-ok">▼</span></div>'
+      +'<div class="sss-cevap">'+s.c+'</div></div>';
+  }).join('');
+}
+function toggle(i){acikIdx=(acikIdx===i)?null:i;render();}
+function secKat(k){aktif=k;acikIdx=null;document.querySelectorAll('.kat-btn').forEach(function(b){b.classList.toggle('aktif',b.dataset.k===k);});render();}
+document.getElementById('katFiltre').innerHTML=KATLAR.map(function(k){return '<button class="kat-btn'+(aktif===k.id?' aktif':'')+'" data-k="'+k.id+'" onclick="secKat(\''+k.id+'\')">'+k.l+'</button>';}).join('');
+render();
+</script>
+<script>
+function qsAc(){document.getElementById('qsBox').classList.add('acik');document.getElementById('qsOverlay').classList.add('acik');setTimeout(function(){document.getElementById('qsInput').focus();},50);}
+function qsKapat(){document.getElementById('qsBox').classList.remove('acik');document.getElementById('qsOverlay').classList.remove('acik');document.getElementById('qsInput').value='';document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';}
+function qsAra(q){q=q.trim().toLowerCase();var el=document.getElementById('qsSonuclar');if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);}).slice(0,12);if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı</div>';return;}el.innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()"><span class="qs-item-emoji">'+p.emoji+'</span><div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div><div class="qs-item-sci">'+p.sci+'</div></div></a>';}).join('');}
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();qsAc();}if(e.key==='Escape')qsKapat();});
+function dmToggle(){var cur=document.documentElement.getAttribute('data-theme')||'light';var nxt=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',nxt);localStorage.setItem('bd_theme',nxt);document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık':'🌙 Koyu';});}
+var t=localStorage.getItem('bd_theme')||'light';document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=t==='dark'?'☀️ Açık':'🌙 Koyu';});
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}</script>
+</body>
+</html>

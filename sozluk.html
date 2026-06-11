@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Terimleri Sözlüğü | BitkiDoktorum</title>
+<meta name="description" content="Bahçecilik ve bitki bakımında kullanılan 100+ terim. NPK, rizom, kambiyum, pH ve daha fazlası.">
+<link rel="canonical" href="https://bitkidoktorum.com/sozluk.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
+<style>
+.harf-bar{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1.25rem}
+.harf-btn{width:34px;height:34px;border:1px solid var(--br);border-radius:6px;background:#fff;cursor:pointer;font-weight:700;font-size:.85rem;color:var(--t2);transition:.15s;display:flex;align-items:center;justify-content:center}
+.harf-btn:hover,.harf-btn.aktif{background:var(--g);color:#fff;border-color:var(--g)}
+.harf-btn.bos{opacity:.3;cursor:default;pointer-events:none}
+.ara-input{width:100%;padding:.5rem .75rem;border:1px solid var(--br);border-radius:8px;font-size:.9rem;margin-bottom:1rem}
+.sozluk-grup{margin-bottom:1.5rem}
+.sozluk-harf{font-size:1.4rem;font-weight:700;color:var(--gd);padding:.4rem .8rem;background:var(--gp);border-radius:8px;display:inline-block;margin-bottom:.75rem}
+.terim-kart{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:.85rem 1rem;margin-bottom:.5rem;box-shadow:var(--sh)}
+.terim-kart dt{font-weight:700;font-size:.92rem;color:var(--gd);margin-bottom:.3rem}
+.terim-kart .ingilis{font-size:.75rem;color:var(--t3);font-style:italic;margin-left:.5rem;font-weight:400}
+.terim-kart dd{font-size:.83rem;color:var(--t2);line-height:1.65;margin:0}
+.terim-kart .kategori{display:inline-block;font-size:.68rem;background:var(--gp);color:var(--gd);border-radius:10px;padding:.1rem .45rem;margin-top:.3rem}
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"DefinedTermSet","name":"Bitki Terimleri Sözlüğü | BitkiDoktorum","url":"https://bitkidoktorum.com/sozluk.html"}
+</script>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap"><button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button></div><div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div><div class="quick-search-box" id="qsBox"><div class="qs-input-wrap"><span style="font-size:1.1rem">🔍</span><input class="qs-input" id="qsInput" placeholder="Bitki adı yazın..." oninput="qsAra(this.value)" autocomplete="off"><button class="qs-close" onclick="qsKapat()">✕</button></div><div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div></div><button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Bitki Sözlüğü</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+<div class="container" style="padding:1.5rem 1rem">
+<h1>📖 Bitki Terimleri Sözlüğü</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Bahçecilik ve bitki biliminde kullanılan terimlerin Türkçe açıklamaları.</p>
+<input type="text" class="ara-input" id="araInput" placeholder="Terim ara... (rizom, pH, NPK, kambiyum...)" oninput="render()">
+<div class="harf-bar" id="harfBar"></div>
+<div class="ad-slot" style="margin:.5rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+<div id="icerik"></div>
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var TERIMLER = [
+  {t:'Aerob',i:'Aerobic',k:'Toprak',a:'Oksijen varlığında gerçekleşen süreç. Aerob bakteriler oksijen gerektirir. Sağlıklı toprak aerob ortam sağlar.'},
+  {t:'Aklimatizasyon',i:'Acclimatization',k:'Bakım',a:'Bitkinin yeni bir ortama (ışık, nem, sıcaklık) alıştırılma süreci. Tropikal bitkiyi güneşe çıkarırken yavaş yavaş alıştırmak gerekir.'},
+  {t:'Allelopati',i:'Allelopathy',k:'Ekoloji',a:'Bazı bitkilerin salgıladığı kimyasallarla diğer bitkilerin büyümesini engellemesi. Ceviz ağacı altında az bitki büyümesinin nedeni.'},
+  {t:'Antosiyanin',i:'Anthocyanin',k:'Biyokimya',a:'Bitkilere kırmızı, mor ve mavi renk veren pigmentler. Sonbahar yaprak renklenmesinden, kırmızı lahanaya kadar pek çok yerde bulunur.'},
+  {t:'Apikal Meristem',i:'Apical Meristem',k:'Anatomi',a:'Kök ve sürgün ucunda bulunan aktif hücre bölünme bölgesi. Bitkinin uzunluk büyümesi buradan gerçekleşir.'},
+  {t:'Azot (N)',i:'Nitrogen',k:'Beslenme',a:'NPK\'nın N\'si. Yaprak ve gövde büyümesinden sorumlu. Eksikliğinde yapraklar sararır. Aşırısında çok yaprak, az meyve olur.'},
+  {t:'Brix',i:'Brix',k:'Hasat',a:'Meyvedeki şeker oranını ölçen birim. Refraktometre ile ölçülür. Üzümde 18+ brix şarap kalitesi için idealdir.'},
+  {t:'Budama',i:'Pruning',k:'Bakım',a:'Bitki şeklini vermek, hasta kısımları temizlemek veya verimi artırmak için dal ve sürgünleri kesmek.'},
+  {t:'Çelikle Çoğaltma',i:'Cutting Propagation',k:'Üretim',a:'Ana bitkiden kesilen dal parçasının köklendirilerek yeni bitki elde etme yöntemi. Gül, pelargonium ve pek çok çalı için yaygın.'},
+  {t:'Çiçek Tozu (Polen)',i:'Pollen',k:'Botanik',a:'Erkek organ olan anterde üretilen ve döllenmeyi sağlayan toz yapılı üreme hücresi.'},
+  {t:'Döllenme',i:'Fertilization',k:'Botanik',a:'Çiçek tozunun yumurtalığa ulaşarak tohum oluşturması süreci. Rüzgar, böcek veya insan eliyle gerçekleşir.'},
+  {t:'Dormansi',i:'Dormancy',k:'Fizyoloji',a:'Bitkinin büyümeyi durdurduğu dinlenme dönemi. Kışın soğuk iklim bitkilerinde görülür. Bu dönemde az su, az gübre.'},
+  {t:'Drip Sulama',i:'Drip Irrigation',k:'Sulama',a:'Damlama sulama sistemi. Suyu doğrudan kök bölgesine iletir. Su tasarrufu sağlar, yaprak hastalığını azaltır.'},
+  {t:'Edafon',i:'Edaphon',k:'Toprak',a:'Toprakta yaşayan tüm canlıların bütünü. Solucan, bakteri, mantar, böcek... Edafon zenginliği toprak sağlığının göstergesi.'},
+  {t:'Ekim Nöbeti',i:'Crop Rotation',k:'Tarım',a:'Aynı tarhoya art arda farklı bitkiler ekmek. Hastalık birikmesini önler, toprağı dengeler.'},
+  {t:'Endosperm',i:'Endosperm',k:'Botanik',a:'Tohumun içindeki besin deposu. Çimlenme sırasında filiz bu besinlerle beslenir.'},
+  {t:'Epidermis',i:'Epidermis',k:'Anatomi',a:'Bitkinin en dış hücre tabakası. Yaprak yüzeyinde su kaybını önleyen kütikul ile kaplıdır.'},
+  {t:'Etiolasyon',i:'Etiolation',k:'Fizyoloji',a:'Yetersiz ışıkta bitkinin uzayarak soluklaşması. "Işık arayan" bitki uzar ama zayıf kalır.'},
+  {t:'Fide',i:'Seedling',k:'Üretim',a:'Tohumdan çimlenmiş genç bitki. Nakle hazır olmadan önce belirli büyüklüğe ulaşması gerekir.'},
+  {t:'Fitoplankton',i:'Phytoplankton',k:'Ekoloji',a:'Su ortamında fotosentez yapan mikroskobik bitkisel organizmalar. Okyanusların temel üreticileri.'},
+  {t:'Florükasyon',i:'Foliation',k:'Botanik',a:'İlkbaharda tomurcukların açılarak yaprakların gelişmesi süreci.'},
+  {t:'Fotosentez',i:'Photosynthesis',k:'Fizyoloji',a:'Bitkilerin güneş ışığı, CO₂ ve suyu kullanarak glikoz ve oksijen üretmesi. Tüm bitki yaşamının temelidir.'},
+  {t:'Fosfor (P)',i:'Phosphorus',k:'Beslenme',a:'NPK\'nın P\'si. Kök gelişimi, çiçeklenme ve meyve tutumu için kritik. Eksikliğinde yapraklar morumsu görünür.'},
+  {t:'Fungisit',i:'Fungicide',k:'Tarım',a:'Mantar hastalıklarına karşı kullanılan kimyasal veya organik ilaç. Bakır sülfat, mancozeb örnek verilebilir.'},
+  {t:'Gece Ölçüsü',i:'Night Temperature',k:'İklim',a:'Geceleri sıcaklığın gündüzden 8-10°C düşük olması pek çok bitkinin (domates, gül) çiçeklenmesini teşvik eder.'},
+  {t:'Geotropizm',i:'Geotropism',k:'Fizyoloji',a:'Bitkinin yerçekimine tepkisi. Kökler aşağı (pozitif geotropizm), gövdeler yukarı (negatif) büyür.'},
+  {t:'Greft / Aşı',i:'Grafting',k:'Üretim',a:'Bir bitkinin dalını başka bir bitkinin gövdesine birleştirme yöntemi. Meyve ağaçlarında, gülde yaygın.'},
+  {t:'Güneş Yanığı',i:'Sunscald',k:'Hasar',a:'Aşırı doğrudan güneş ışığından kaynaklanan yaprak hasarı. İç mekan bitkisini aniden dışarıya çıkarınca oluşur.'},
+  {t:'Hidroponik',i:'Hydroponics',k:'Üretim',a:'Topraksız yetiştiriciliği. Bitkiler besin maddesi içeren su içinde büyür. Hızlı büyüme, verimli alan kullanımı.'},
+  {t:'Humus',i:'Humus',k:'Toprak',a:'Organik maddelerin tamamen ayrışmasıyla oluşan koyu renkli toprak bileşeni. Toprağın besin ve su tutma kapasitesini artırır.'},
+  {t:'İnsektisit',i:'Insecticide',k:'Tarım',a:'Böcek zararlılarına karşı kullanılan ilaç. Organik (piretrin, neem) veya kimyasal olabilir.'},
+  {t:'Kambiyum',i:'Cambium',k:'Anatomi',a:'Ağaç gövdesinde kabuk ile odun arasındaki ince hücre tabakası. Yıllık halkaları oluşturur, aşı tutmasını sağlar.'},
+  {t:'Klorofil',i:'Chlorophyll',k:'Biyokimya',a:'Yapraklara yeşil rengi veren ve güneş ışığını yakalayan pigment. Fotosentezin ana molekülü.'},
+  {t:'Kloroz',i:'Chlorosis',k:'Hastalık',a:'Yapraklarda yetersiz klorofil nedeniyle sararma. Genellikle demir, manganez veya azot eksikliğinden kaynaklanır.'},
+  {t:'Kompost',i:'Compost',k:'Toprak',a:'Organik atıkların (yaprak, meyve kabuğu, kahve telvesi) kontrollü ayrışmasıyla elde edilen doğal gübre.'},
+  {t:'Koltuk Alma',i:'Suckering',k:'Bakım',a:'Domatesde ana gövde ile yan dal arasından çıkan sürgünleri kesmek. Verimi ve meyve kalitesini artırır.'},
+  {t:'Kök Topağı',i:'Root Ball',k:'Bakım',a:'Saksıdan çıkarılan bitkinin kökleriyle birlikte gelen toprak kümesi. Nakil sırasında zarar görmemeli.'},
+  {t:'Lateral Kök',i:'Lateral Root',k:'Anatomi',a:'Ana kökten yana doğru çıkan ikincil kökler. Su ve besin emilimini artırır.'},
+  {t:'Lignin',i:'Lignin',k:'Biyokimya',a:'Bitki hücre duvarını sertleştiren madde. Odun yapısını oluşturur, bitkiye mekanik destek sağlar.'},
+  {t:'Lipit',i:'Lipid',k:'Biyokimya',a:'Tohumda depolanan yağ. Çimlenme sırasında enerji kaynağı olarak kullanılır.'},
+  {t:'Malç',i:'Mulch',k:'Bakım',a:'Toprağı örtmek için kullanılan organik (saman, ağaç kabuğu) veya inorganik materyal. Nem korur, yabani ot engeller.'},
+  {t:'Meristem',i:'Meristem',k:'Anatomi',a:'Bitkide aktif hücre bölünmesinin gerçekleştiği bölge. Büyüme ve yenilenme buradan olur.'},
+  {t:'Nematod',i:'Nematode',k:'Zararlı',a:'Toprakta yaşayan mikroskobik solucan. Bazı türleri bitki köklerine zarar verir, bazıları faydalıdır.'},
+  {t:'NPK',i:'NPK',k:'Beslenme',a:'Gübredeki azot (N), fosfor (P) ve potasyum (K) oranını gösteren üç rakamlı etiket. Örn: 15-15-15.'},
+  {t:'Odunlaşma',i:'Lignification',k:'Fizyoloji',a:'Bitkinin genç yeşil dokularının zamanla sertleşip oduna dönüşmesi. Gül ve lavantada odunlaşmış kısımlar kesilmez.'},
+  {t:'Osmozis',i:'Osmosis',k:'Fizyoloji',a:'Suyun yarı geçirgen zardan yüksek konsantrasyona doğru geçişi. Kökler suyu bu yolla topraktan emer.'},
+  {t:'Parazit Bitki',i:'Parasitic Plant',k:'Ekoloji',a:'Başka bitkilerden besin alan bitki. Ökse otu, küsküt örnek verilebilir. Konukçu bitkiye zarar verir.'},
+  {t:'Perikarp',i:'Pericarp',k:'Botanik',a:'Meyvenin tohumu çevreleyen et kısmı. Elmanın yenilen kısmı, kirazın et kısmı perikarptır.'},
+  {t:'Perlit',i:'Perlite',k:'Toprak',a:'Volkanik orijinli beyaz toprak katkısı. Geçirgenliği artırır, kök çürüklüğünü önler. Saksı karışımında kullanılır.'},
+  {t:'Pestisit',i:'Pesticide',k:'Tarım',a:'Zararlı böcek, mantar veya yabani otlara karşı kullanılan kimyasal veya organik ilaçların genel adı.'},
+  {t:'pH',i:'pH',k:'Toprak',a:'Toprağın asit-baz dengesi. 0-14 arası ölçülür. 7 nötr, altı asidik, üstü bazik. Çoğu bitki 6-7 pH\'ı sever.'},
+  {t:'Fototropizm',i:'Phototropism',k:'Fizyoloji',a:'Bitkinin ışığa doğru büyümesi. Pencere kenarındaki bitkilerin tek yöne eğilmesinin nedeni.'},
+  {t:'Pistil',i:'Pistil',k:'Botanik',a:'Çiçeğin dişi organı. Stigma (tepecik), stil (boyuncuk) ve yumurtalıktan oluşur.'},
+  {t:'Polen',i:'Pollen',k:'Botanik',a:'Erkek üreme hücresi. Rüzgar, böcek veya insan yoluyla dişi organa taşınır ve döllenmeyi sağlar.'},
+  {t:'Potasyum (K)',i:'Potassium',k:'Beslenme',a:'NPK\'nın K\'sı. Meyve kalitesi, dona dayanıklılık ve genel bitki sağlığı için kritik. Eksikliğinde yaprak kenarları yanar.'},
+  {t:'Rizom',i:'Rhizome',k:'Botanik',a:'Toprak altında yatay büyüyen gövde. Zencefil, süsen, nane rizomla çoğalır. Besin depolar.'},
+  {t:'Solarizasyon',i:'Soil Solarization',k:'Toprak',a:'Toprağı güneş ısısıyla dezenfekte etme yöntemi. Şeffaf plastik örtü altında 4-6 hafta. Hastalık ve yabani ot tohumlarını öldürür.'},
+  {t:'Stoma',i:'Stomata',k:'Anatomi',a:'Yaprak yüzeyindeki mikroskobik gözenekler. CO₂ alışverişi ve terleme (transpirasyon) buradan gerçekleşir.'},
+  {t:'Stres Sulaması',i:'Stress Watering',k:'Sulama',a:'Karpuz ve kavunda hasattan 10 gün önce sulamayı azaltmak. Şeker oranını artırır.'},
+  {t:'Sürgün',i:'Shoot',k:'Anatomi',a:'Bitkinin toprak üstündeki genç büyüme kısmı. Yaprak, çiçek ve meyve sürgünlerden gelişir.'},
+  {t:'Tomurcuk',i:'Bud',k:'Botanik',a:'Henüz açılmamış yaprak veya çiçek taslağı. Uç tomurcuk (apikal) uzamayı, yan tomurcuklar dallanmayı sağlar.'},
+  {t:'Toprak Yapısı',i:'Soil Structure',k:'Toprak',a:'Toprak parçacıklarının bir araya gelme biçimi. İyi yapılı toprak su ve havayı dengeli tutar, kökler kolayca uzar.'},
+  {t:'Transpirasyon',i:'Transpiration',k:'Fizyoloji',a:'Yapraklardaki stoma gözeneklerinden su buharı olarak suyun atmosfere salınması. Bitki içinde su hareketini sağlar.'},
+  {t:'Turgor',i:'Turgor',k:'Fizyoloji',a:'Hücrelerin su dolduğunda şişip gerilmesi. Bitkinin dik durmasını sağlar. Su kaybında turgor düşer, bitki solar.'},
+  {t:'Tüylü Kök',i:'Root Hair',k:'Anatomi',a:'Kök yüzeyindeki ince tüy benzeri uzantılar. Emilim yüzeyini artırır, su ve mineral alımında kilit rol oynar.'},
+  {t:'Uskumru Gübresi',i:'Fish Emulsion',k:'Beslenme',a:'Balık atıklarından elde edilen organik sıvı gübre. Hızlı etkili azot kaynağı, toprak canlılığını artırır.'},
+  {t:'Vernalizasyon',i:'Vernalization',k:'Fizyoloji',a:'Bazı bitkilerin çiçeklenebilmek için belirli süre soğuğa ihtiyaç duyması. Lale soğanlarının kışa ihtiyacı bu yüzden.'},
+  {t:'Xilem',i:'Xylem',k:'Anatomi',a:'Bitkide kökteki suyu ve mineralleri yapraklara taşıyan iletim dokusu. Odunu oluşturan temel yapı.'},
+  {t:'Yabani Ot',i:'Weed',k:'Tarım',a:'İstenmeyen yerde büyüyen bitki. Su ve besin çalar, zararlılara barınak olur. Küçükken sökmek kolaylaştırır.'},
+  {t:'Yağ Bezi',i:'Oil Gland',k:'Anatomi',a:'Lavanta, biberiye gibi aromatik bitkilerde uçucu yağ üreten ve depolayan özel hücre yapıları.'},
+  {t:'Yaprak Koltukaltı',i:'Leaf Axil',k:'Anatomi',a:'Yaprak sapı ile gövde arasındaki köşe. Yan tomurcuklar ve yan dallar buradan çıkar.'},
+  {t:'Yavaş Salınımlı Gübre',i:'Slow-release Fertilizer',k:'Beslenme',a:'Besinleri uzun süre boyunca yavaş yavaş salan gübre tipi. 3-6 ay etkili. Aşırı dozdan korur.'},
+  {t:'Yeşil Gübre',i:'Green Manure',k:'Toprak',a:'Toprağa karıştırmak için yetiştirilen ve toprak organik maddesini artıran bitkiler. Baklagiller, yulaf örnek verilebilir.'},
+  {t:'Zararlı',i:'Pest',k:'Tarım',a:'Bitkilere zarar veren böcek, nematod veya diğer organizmalar. Yaprak biti, kırmızı örümcek, beyaz sinek en yaygınları.'},
+  {t:'Zeolit',i:'Zeolite',k:'Toprak',a:'Toprağa katılan mineral katkı. Su ve besinleri tutar, yavaş yavaş salar. Saksı karışımlarında kullanılır.'},
+];
+
+var aktifHarf = null;
+
+function render(){
+  var ara = document.getElementById('araInput').value.toLowerCase().trim();
+  var liste = TERIMLER.filter(function(t){
+    if(aktifHarf && !t.t.startsWith(aktifHarf)) return false;
+    if(ara) return t.t.toLowerCase().includes(ara) || t.a.toLowerCase().includes(ara) || (t.i||'').toLowerCase().includes(ara);
+    return true;
+  }).sort(function(a,b){return a.t.localeCompare(b.t,'tr');});
+
+  if(!liste.length){
+    document.getElementById('icerik').innerHTML='<p style="color:var(--t3);text-align:center;padding:2rem">Sonuç bulunamadı.</p>';
+    return;
+  }
+
+  var gruplar = {};
+  liste.forEach(function(t){
+    var harf = t.t.charAt(0).toUpperCase();
+    if(!gruplar[harf]) gruplar[harf]=[];
+    gruplar[harf].push(t);
+  });
+
+  document.getElementById('icerik').innerHTML = Object.keys(gruplar).sort(function(a,b){return a.localeCompare(b,'tr');}).map(function(harf){
+    return '<div class="sozluk-grup"><div class="sozluk-harf">'+harf+'</div>'
+      +'<dl>'+gruplar[harf].map(function(t){
+        return '<div class="terim-kart">'
+          +'<dt>'+t.t+(t.i?'<span class="ingilis">'+t.i+'</span>':'')+'</dt>'
+          +'<dd>'+t.a+'</dd>'
+          +'<span class="kategori">'+t.k+'</span>'
+          +'</div>';
+      }).join('')+'</dl></div>';
+  }).join('');
+}
+
+function harfSec(h){
+  aktifHarf = (aktifHarf===h)?null:h;
+  document.querySelectorAll('.harf-btn').forEach(function(b){b.classList.toggle('aktif',b.dataset.h===h&&aktifHarf===h);});
+  render();
+}
+
+// Harf bar
+var harfler = [...new Set(TERIMLER.map(function(t){return t.t.charAt(0).toUpperCase();}))].sort(function(a,b){return a.localeCompare(b,'tr');});
+var tumHarfler = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'.split('');
+document.getElementById('harfBar').innerHTML = tumHarfler.map(function(h){
+  var var_mi = harfler.includes(h);
+  return '<button class="harf-btn'+(var_mi?'':' bos')+'" data-h="'+h+'" onclick="harfSec(\''+h+'\')">'+h+'</button>';
+}).join('');
+
+render();
+</script>
+<script>
+function qsAc(){document.getElementById('qsBox').classList.add('acik');document.getElementById('qsOverlay').classList.add('acik');setTimeout(function(){document.getElementById('qsInput').focus();},50);}
+function qsKapat(){document.getElementById('qsBox').classList.remove('acik');document.getElementById('qsOverlay').classList.remove('acik');document.getElementById('qsInput').value='';document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';}
+function qsAra(q){q=q.trim().toLowerCase();var el=document.getElementById('qsSonuclar');if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);}).slice(0,12);if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı</div>';return;}el.innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()"><span class="qs-item-emoji">'+p.emoji+'</span><div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div><div class="qs-item-sci">'+p.sci+'</div></div></a>';}).join('');}
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();qsAc();}if(e.key==='Escape')qsKapat();});
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

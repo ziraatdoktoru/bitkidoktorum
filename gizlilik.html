@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Detayı | BitkiDoktorum</title>
+<meta name="description" id="pageDesc" content="BitkiDoktorum bitki bakım rehberi">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html" class="active">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><a href="ansiklopedi.html">Ansiklopedi</a><span>›</span><span id="breadTitle">Bitki</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+<div class="site-wrap">
+<div class="main-content"><div id="plantContent"><div class="loading-spinner"><div class="spinner"></div><span>Yükleniyor...</span></div></div></div>
+<aside class="sidebar">
+<div class="ad-slot ad-slot-sidebar"><span class="ad-label">Reklam</span><small>300×600</small></div>
+<div class="widget"><h3 class="widget-title">🌿 Benzer Bitkiler</h3><ul class="widget-list" id="simPlants"></ul></div>
+<div class="ad-slot ad-slot-rectangle"><span class="ad-label">Reklam</span><small>300×250</small></div>
+<div class="widget" style="background:var(--gp)"><h3 class="widget-title">🔬 Hastalık Teşhisi</h3><p style="font-size:.82rem;margin-bottom:1rem">Bitkinizdeki sorunu AI ile teşhis edin.</p><a href="teshis.html" class="btn btn-amber btn-sm btn-block">Teşhis Yap →</a></div>
+</aside>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="ansiklopedi.html">Ansiklopedi</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+const pid = new URLSearchParams(window.location.search).get('id');
+const plant = PLANT_DB.find(p => p.id === pid);
+const pc = document.getElementById('plantContent');
+
+// Dil değişince yeniden render
+window.onLangChange = () => { if (plant) renderPlant(); };
+
+if (!plant) {
+  pc.innerHTML = '<div class="info-box info-box-red"><h5>Bitki bulunamadı</h5><p><a href="ansiklopedi.html">Ansiklopediye dön</a></p></div>';
+} else {
+  renderPlant();
+}
+
+function renderPlant() {
+  const tr = currentLang === 'tr';
+  const name = tr ? plant.tr : plant.en;
+  document.title = name + (tr ? ' Bakımı' : ' Care Guide') + ' | BitkiDoktorum';
+  document.getElementById('pageDesc').content = name + ' (' + plant.sci + ') ' + (tr ? 'bakımı, yetiştiriciliği, hastalıkları.' : 'care, growing guide, diseases.');
+  document.getElementById('breadTitle').textContent = name;
+  const cat = CATEGORIES.find(c => c.id === plant.cat);
+  const catName = cat ? (tr ? cat.tr : cat.en) : plant.cat;
+  const wl = {low: tr?'Az (Kuraklığa Dayanıklı)':'Low (Drought Resistant)', moderate: tr?'Orta':'Moderate', high: tr?'Çok (Sık Sulama)':'High (Frequent)'};
+  const sl = {full_sun: tr?'Tam Güneş (6+ saat)':'Full Sun (6+ hrs)', partial_shade: tr?'Yarı Gölge':'Partial Shade', shade: tr?'Gölge':'Shade'};
+  const dl = {easy: tr?'Kolay':'Easy', medium: tr?'Orta':'Medium', hard: tr?'Zor':'Hard'};
+
+  pc.innerHTML = `
+    <div style="background:linear-gradient(135deg,var(--gp),white);padding:2rem;border-radius:var(--r);margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="font-size:5rem;flex-shrink:0;line-height:1">${plant.emoji}</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.45rem">
+          <span class="badge badge-green">${catName}</span>
+          ${(plant.tags||[]).slice(0,3).map(t=>`<span class="badge badge-blue">${t}</span>`).join('')}
+        </div>
+        <h1 style="margin-bottom:.2rem">${name}</h1>
+        <p style="font-style:italic;color:var(--t3);margin-bottom:.65rem">${plant.sci} · ${plant.family}</p>
+        <div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1rem">
+          <span class="badge badge-green">💧 ${wl[plant.water]||plant.water}</span>
+          <span class="badge badge-amber">☀️ ${sl[plant.sun]||plant.sun}</span>
+          <span class="badge badge-blue">${dl[plant.difficulty]||plant.difficulty}</span>
+        </div>
+        <div class="plant-info-grid">
+          <div class="plant-info-item"><div class="icon">📏</div><div class="label">${tr?'Boy':'Height'}</div><div class="value">${plant.height}</div></div>
+          <div class="plant-info-item"><div class="icon">⏳</div><div class="label">${tr?'Ömür':'Lifespan'}</div><div class="value">${plant.lifespan}</div></div>
+          <div class="plant-info-item"><div class="icon">🌸</div><div class="label">${tr?'Çiçeklenme':'Bloom'}</div><div class="value">${plant.bloom}</div></div>
+          <div class="plant-info-item"><div class="icon">🌍</div><div class="label">${tr?'Anavatanı':'Origin'}</div><div class="value">${plant.origin}</div></div>
+          <div class="plant-info-item"><div class="icon">🌡</div><div class="label">${tr?'İklim':'Climate'}</div><div class="value">${plant.climate}</div></div>
+          <div class="plant-info-item"><div class="icon">🪨</div><div class="label">${tr?'Toprak':'Soil'}</div><div class="value">${plant.soil}</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ad-slot ad-slot-in-article"><span class="ad-label">Reklam</span><small>336×280</small></div>
+    <h2 style="margin-bottom:.85rem">📋 ${tr?'Bakım Rehberi':'Care Guide'}</h2>
+    <table class="care-table">
+      <tr><td>💧 ${tr?'Sulama':'Watering'}</td><td>${wl[plant.water]||plant.water}</td></tr>
+      <tr><td>☀️ ${tr?'Işık':'Light'}</td><td>${sl[plant.sun]||plant.sun}</td></tr>
+      <tr><td>🪨 ${tr?'Toprak':'Soil'}</td><td>${plant.soil}</td></tr>
+      <tr><td>🌱 ${tr?'Bakım':'Care'}</td><td>${dl[plant.difficulty]||plant.difficulty}</td></tr>
+      <tr><td>📏 ${tr?'Boy':'Height'}</td><td>${plant.height}</td></tr>
+      <tr><td>⏳ ${tr?'Ömür':'Lifespan'}</td><td>${plant.lifespan}</td></tr>
+      <tr><td>🌸 ${tr?'Çiçeklenme':'Bloom'}</td><td>${plant.bloom}</td></tr>
+      ${plant.harvest&&plant.harvest!=='–'?`<tr><td>🍎 ${tr?'Hasat':'Harvest'}</td><td>${plant.harvest}</td></tr>`:''}
+      <tr><td>🌍 ${tr?'Anavatanı':'Origin'}</td><td>${plant.origin}</td></tr>
+      <tr><td>🌡 ${tr?'İklim':'Climate'}</td><td>${plant.climate}</td></tr>
+      <tr><td>🌿 ${tr?'Familya':'Family'}</td><td>${plant.family}</td></tr>
+    </table>
+    <div style="background:white;border:1px solid var(--br);border-radius:var(--r);padding:1.35rem;margin:1.5rem 0">
+      <h3 style="margin-bottom:.75rem">🤖 AI ${tr?'Destekli Detaylı Bilgi':'Powered Detailed Info'}</h3>
+      <button class="btn btn-primary" id="aiBtn" onclick="loadAI()">${tr?'📚 Detaylı Bilgi Yükle':'📚 Load Detailed Info'}</button>
+      <div id="aiContent" style="margin-top:1rem"></div>
+    </div>
+    <div class="info-box info-box-amber"><h5>⚠️ ${tr?'Önemli':'Notice'}</h5><p style="margin:0;font-size:.83rem">${tr?'Yerel koşullar sonuçları etkileyebilir. Ciddi sorunlarda ziraat mühendisine danışın.':'Local conditions may vary. Consult an agronomist for serious issues.'}</p></div>
+    <div style="margin-top:1.25rem;padding:1.35rem;background:var(--gp);border-radius:var(--r);text-align:center">
+      <h3>🔬 ${tr?'Bitkide Hastalık mı Var?':'Disease on Your Plant?'}</h3>
+      <p style="margin:.5rem 0 1rem">${tr?'Fotoğraf yükleyin, AI teşhis yapsın.':'Upload a photo, let AI diagnose.'}</p>
+      <a href="teshis.html" class="btn btn-amber">${tr?'Hastalık Teşhisi →':'Disease Diagnosis →'}</a>
+    </div>
+    <div class="ad-slot ad-slot-banner" style="margin-top:1.25rem"><span class="ad-label">Reklam</span><small>728×90</small></div>`;
+
+  document.getElementById('simPlants').innerHTML = PLANT_DB.filter(p=>p.cat===plant.cat&&p.id!==plant.id).slice(0,6)
+    .map(p=>`<li><a href="bitki.html?id=${p.id}">${p.emoji} ${tr?p.tr:p.en}</a></li>`).join('');
+}
+
+async function loadAI() {
+  const btn = document.getElementById('aiBtn');
+  const c = document.getElementById('aiContent');
+  const tr = currentLang === 'tr';
+  btn.disabled = true;
+  btn.textContent = tr ? '⏳ Yükleniyor...' : '⏳ Loading...';
+  c.innerHTML = `<div class="loading-spinner" style="padding:1rem"><div class="spinner"></div><span>${tr?'Akademik kaynaklar taranıyor...':'Searching academic sources...'}</span></div>`;
+  const name = tr ? plant.tr : plant.en;
+  const sources = await fetchAcademic(`${name} ${plant.sci} cultivation care disease`, 4);
+  const ctx = sources.slice(0,3).map((p,i)=>`[${i+1}] ${p.title} (${p.year||'?'})`).join('\n');
+  const prompt = `You are an expert botanist. Write a comprehensive guide about "${name}" (${plant.sci}) in ${tr?'Turkish':'English'}.
+Academic sources: ${ctx||'use your knowledge'}
+ONLY return JSON:
+{"intro":"150 words general description","care":{"watering":"detail","fertilizing":"detail","pruning":"detail","repotting":"detail"},"diseases":["disease 1 and treatment","disease 2","disease 3"],"pests":["pest 1","pest 2"],"tips":["tip 1","tip 2","tip 3","tip 4","tip 5"],"fact":"interesting fact"}`;
+  try {
+    const raw = await callClaude(prompt);
+    const d = parseJSON(raw);
+    c.innerHTML = `<p>${d.intro||''}</p>
+      ${d.care?`<h4 style="color:var(--gd);margin:1rem 0 .65rem">🌱 ${tr?'Bakım':'Care'}</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem">${Object.entries(d.care).map(([k,v])=>`<div class="info-box info-box-green" style="margin:0"><h5>${k==='watering'?'💧'+(tr?' Sulama':' Watering'):k==='fertilizing'?'🌿'+(tr?' Gübreleme':' Fertilizing'):k==='pruning'?'✂️'+(tr?' Budama':' Pruning'):'🪴'+(tr?' Saksı':' Repotting')}</h5><p style="margin:0;font-size:.82rem">${v}</p></div>`).join('')}</div>`:''}
+      ${d.diseases?.length?`<h4 style="color:var(--red);margin:1rem 0 .5rem">🦠 ${tr?'Hastalıklar':'Diseases'}</h4><ul>${d.diseases.map(x=>`<li style="font-size:.85rem;margin-bottom:.3rem">${x}</li>`).join('')}</ul>`:''}
+      ${d.tips?.length?`<div class="info-box info-box-green" style="margin-top:.85rem"><h5>💡 ${tr?'İpuçları':'Tips'}</h5><ul style="margin:0">${d.tips.map(t=>`<li style="font-size:.83rem">${t}</li>`).join('')}</ul></div>`:''}
+      ${d.fact?`<div class="info-box info-box-amber" style="margin-top:.85rem"><h5>🌟 ${tr?'İlginç Bilgi':'Fun Fact'}</h5><p style="margin:0;font-size:.83rem">${d.fact}</p></div>`:''}
+      ${sourcesHTML(sources)}`;
+    btn.style.display = 'none';
+  } catch(e) {
+    c.innerHTML = `<p style="color:var(--red)">${e.message}</p>`;
+    btn.disabled = false;
+    btn.textContent = tr ? '📚 Tekrar Dene' : '📚 Try Again';
+  }
+}
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

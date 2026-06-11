@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Bakım İpuçları | BitkiDoktorum</title>
+<meta name="description" content="100+ uzman bitki bakım ipucu. Sulama, gübreleme, hastalık önleme, budama ve daha fazlası.">
+<link rel="canonical" href="https://bitkidoktorum.com/ipuclari.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
+<style>
+.ipuc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.25rem 0}
+.ipuc-kart{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--sh);border-left:4px solid var(--g)}
+.ipuc-kart.kategori-sulama{border-left-color:#3b82f6}
+.ipuc-kart.kategori-gubre{border-left-color:#22c55e}
+.ipuc-kart.kategori-hastalik{border-left-color:#ef4444}
+.ipuc-kart.kategori-budama{border-left-color:#f59e0b}
+.ipuc-kart.kategori-genel{border-left-color:#8b5cf6}
+.ipuc-kart.kategori-icmekan{border-left-color:#06b6d4}
+.ipuc-ust{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.4rem}
+.ipuc-emoji{font-size:1.4rem;flex-shrink:0;margin-top:.1rem}
+.ipuc-baslik{font-weight:700;font-size:.88rem;color:var(--gd)}
+.ipuc-metin{font-size:.8rem;color:var(--t2);line-height:1.65}
+.kat-filtre{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.kat-btn{padding:.3rem .75rem;border:1px solid var(--br);border-radius:20px;background:#fff;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--t2);transition:.15s}
+.kat-btn.aktif,.kat-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.arama-input{width:100%;padding:.5rem .75rem;border:1px solid var(--br);border-radius:8px;font-size:.85rem;margin-bottom:1rem}
+.sonuc-sayisi{font-size:.8rem;color:var(--t3);margin-bottom:.75rem}
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Bakım İpuçları</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>💡 Bitki Bakım İpuçları</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Uzmanlardan 100+ altın kural. Bitkilerinizin daha sağlıklı büyümesi için.</p>
+
+<input type="text" class="arama-input" id="aramaInput" placeholder="İpucu ara... (sulama, gübre, hastalık...)" oninput="filtrele()">
+
+<div class="kat-filtre" id="katFiltre"></div>
+<div class="sonuc-sayisi" id="sonucSay"></div>
+<div class="ad-slot" style="margin:.5rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+<div class="ipuc-grid" id="ipucGrid"></div>
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var IPUCLARI = [
+  {k:'sulama',e:'💧',b:'Sabah sulama altın kural',m:'Bitkileri daima sabah erkenden sulayın. Akşam sulaması yaprakları nemli bırakır, fungal hastalıklara davet çıkarır.'},
+  {k:'sulama',e:'💧',b:'Parmak testi',m:'Sulamadan önce parmağınızı toprağa 5cm sokun. Hâlâ nemse sulama ertelenebilir. Bu basit test aşırı sulamayı önler.'},
+  {k:'sulama',e:'💧',b:'Kök sulayın, yaprak değil',m:'Suyu doğrudan kök bölgesine verin. Yaprakları ıslatmak leke ve hastalığa yol açar. Damla sulama idealdir.'},
+  {k:'sulama',e:'💧',b:'Saksıda drenaj şart',m:'Saksı altlığında biriken suyu 30 dakika içinde boşaltın. Durgun su kök çürüklüğünün 1 numaralı sebebidir.'},
+  {k:'sulama',e:'💧',b:'Kışın sulama azaltın',m:'Çoğu bitki kışın dinlenir. İç mekan bitkilerinde sulama sıklığını yarıya indirin. Kaktüs ve sukulent aylık sulamaya geçin.'},
+  {k:'sulama',e:'💧',b:'Oda sıcaklığında su',m:'Soğuk musluk suyu tropikal bitkilerin köklerini şoke eder. Suyu bir gece bekletin, hem ısısı dengelenir hem klor uçar.'},
+  {k:'sulama',e:'💧',b:'Toprak tipi sulama sıklığını belirler',m:'Kumlu toprak çabuk kurur — daha sık sulama. Killi toprak nem tutar — daha seyrek. Toprağınızı tanıyın.'},
+  {k:'gubre',e:'🌱',b:'NPK\'yı anlayın',m:'N=Azot (yaprak büyüme), P=Fosfor (kök ve çiçek), K=Potasyum (meyve ve dayanıklılık). İhtiyaca göre seçin.'},
+  {k:'gubre',e:'🌱',b:'Kışın gübre vermeyin',m:'Dışarıdaki bitkiler kış dinlenme döneminde gübre istemez. Azot yeni sürgün oluşturur, bu sürgünler dona gider.'},
+  {k:'gubre',e:'🌱',b:'Az çok daha iyidir',m:'Aşırı gübre yaprak yanması, tuzlanma ve kök hasarına yol açar. Dozun yarısıyla başlayın, bitkinin tepkisini izleyin.'},
+  {k:'gubre',e:'🌱',b:'Organik vs kimyasal',m:'Organik gübre yavaş salınır, toprağı besler. Kimyasal hızlı etki eder ama toprak yapısını bozabilir. İkisini dönüşümlü kullanın.'},
+  {k:'gubre',e:'🌱',b:'Çiçek için fosfor',m:'Çiçeklenmeyi artırmak istiyorsanız fosfor ağırlıklı gübre kullanın (düşük ilk rakam, yüksek ikinci: 5-15-10 gibi).'},
+  {k:'gubre',e:'🌱',b:'Meyve için potasyum',m:'Meyve büyüme döneminde potasyum verin. Hem meyve iriliğini hem şeker oranını artırır. Potasyum sülfat idealdir.'},
+  {k:'gubre',e:'🌱',b:'Gübreden önce sulayın',m:'Kuru toprağa gübre vermeyin — kök yanmasına yol açar. Önce sulayın, toprak nemli iken gübre uygulayın.'},
+  {k:'hastalik',e:'🔬',b:'Erken teşhis hayat kurtarır',m:'Haftada bir bitkilerinizi kontrol edin. Yaprak altlarına, gövde dibine bakın. Erken fark edilen hastalık kolayca tedavi edilir.'},
+  {k:'hastalik',e:'🔬',b:'Külleme nasıl önlenir',m:'Hava sirkülasyonunu artırın, bitkileri çok sık dikmeyin. Sabah sulaması yapın. Külleme başlarsa bikarbonat spreyi deneyin.'},
+  {k:'hastalik',e:'🔬',b:'Yaprak biti organik mücadele',m:'Sabunlu su (1 çay kaşığı sıvı sabun + 1L su) spreyi yaprak bitine karşı etkilidir. Haftada 2-3 kez uygulayın.'},
+  {k:'hastalik',e:'🔬',b:'Kırmızı örümcek belirtileri',m:'Yapraklarda sarı lekeler, altında ince ağ görüyorsanız kırmızı örümcek var. Nem artırın, neem yağı uygulayın.'},
+  {k:'hastalik',e:'🔬',b:'Sarı yaprak her zaman sorun değil',m:'Alt yapraklarda doğal sararma normaldir. Ama tüm bitkide sararmaysa: sulama hatası, besin eksikliği veya hastalık olabilir.'},
+  {k:'hastalik',e:'🔬',b:'Hastalıklı bitkileri izole edin',m:'Yeni aldığınız veya hasta olan bitkileri hemen diğerlerinden ayırın. Çoğu hastalık ve zararlı komşu bitkiye atlayabilir.'},
+  {k:'hastalik',e:'🔬',b:'Bakır bazlı fungisit',m:'Mantar hastalıklarına karşı bakır sülfat veya bakır hidroksit içerikli preparatlar hem organik hem etkilidir. Yağmur öncesi uygulayın.'},
+  {k:'budama',e:'✂️',b:'Temiz alet, sağlıklı bitki',m:'Her budamadan önce makasınızı %70 alkolle sterilize edin. Kirli alet hastalığı bitkiden bitkiye taşır.'},
+  {k:'budama',e:'✂️',b:'45 derece açıyla kesin',m:'Dal kesimlerini 45 derecelik açıyla yapın. Su birikimine engel olur, yara çabuk iyileşir.'},
+  {k:'budama',e:'✂️',b:'Meyve ağacı kış budaması',m:'Meyve ağaçlarını yapraklar döküldükten sonra, yeni tomurcuklar açmadan önce budayın. Ocak-Şubat ideal dönemdir.'},
+  {k:'budama',e:'✂️',b:'Solmuş çiçekleri kesin',m:'Güllerde ve diğer çiçeklerde solmuş başları düzenli kesin. Yeni çiçeklenme teşvik edilir, tohum bağlaması önlenir.'},
+  {k:'budama',e:'✂️',b:'Yara macunu kullanın',m:'2cm üzerindeki tüm kesim yerlerine bahçe macunu sürün. Mantar ve bakterilerin girmesini önler.'},
+  {k:'budama',e:'✂️',b:'Lavanta budaması',m:'Lavantayı çiçek hasadından sonra yeşil kısımların 1/3\'ü kadar kısaltın. Odunlaşmış kısımları kesmeyin — ölür.'},
+  {k:'genel',e:'🌿',b:'Toprak pH\'ı önemlidir',m:'pH 6-7 çoğu bitki için idealdir. Asidik seven bitkiler (orkide, kamelya) pH 5-6 ister. Basit test kitleriyle ölçebilirsiniz.'},
+  {k:'genel',e:'🌿',b:'Kompost altın gübredir',m:'Ev kompostu toprağa yapı, hava ve besin katar. Meyve kabuğu, kahve telvesi, yaprak — hepsini kompost yapın.'},
+  {k:'genel',e:'🌿',b:'Ekim nöbeti uygulayın',m:'Aynı yere art arda aynı sebzeyi ekmeyin. Hastalık ve zararlıların birikmesini önler, toprağı dengeler.'},
+  {k:'genel',e:'🌿',b:'Malç kullanın',m:'Kök bölgesini malçlayın — nem korur, yabani ot engeller, toprak sıcaklığını dengeler. Saman, çam kabuğu veya kompost.'},
+  {k:'genel',e:'🌿',b:'Hava sirkülasyonu sağlayın',m:'Bitkiler arası mesafeye dikkat edin. Sık dikim fungal hastalıklara zemin hazırlar. Çalıları da seyreltme budamasıyla havalandırın.'},
+  {k:'genel',e:'🌿',b:'Fide alırken dikkat',m:'Güçlü kök sistemi olan fideler seçin. Soluk, sararmış veya böcek izli fideler almayın — hasta bitkiyle başlamayın.'},
+  {k:'genel',e:'🌿',b:'Yabani otları geciktirmeyin',m:'Yabani otlar su ve besin çalar, zararlılara barınak olur. Küçükken kolayca sökülebilir — bekletmeyin.'},
+  {k:'genel',e:'🌿',b:'Toprağı sıkıştırmayın',m:'Bitki köklerinin üzerinde yürümeyin. Sıkışmış toprakta oksijen azalır, kökler gelişemez. Yürüme yolları bırakın.'},
+  {k:'icmekan',e:'🪴',b:'Işık yönü önemli',m:'Güney pencere en fazla ışık alır. Tropikal bitkiler için ideal. Kuzey pencere gölge seven bitkiler için uygundur.'},
+  {k:'icmekan',e:'🪴',b:'Nem artırın',m:'Isıtma kışın havayı kurutur. Bitkinin yanına su dolu bir kap koyun veya taşlı-sulu bir tepsi üzerine saksıyı yerleştirin.'},
+  {k:'icmekan',e:'🪴',b:'Saksı boyutu kritik',m:'Çok büyük saksı fazla toprağı nemli tutar, kök çürümesine davet çıkarır. Saksı, kök topağından 2-3cm büyük olmalı.'},
+  {k:'icmekan',e:'🪴',b:'Yaprakları silin',m:'İç mekan bitkilerinin yapraklarını nemli bezle düzenli silin. Toz ışık emilimini azaltır. Aynı zamanda zararlı kontrol de olur.'},
+  {k:'icmekan',e:'🪴',b:'Radyatörden uzak tutun',m:'Isıtma cihazlarının üstü veya yanı çok kuru ve sıcaktır. Tropikal bitkiler bile bu aşırı koşullardan zarar görür.'},
+  {k:'icmekan',e:'🪴',b:'Mevsimsel döndürme',m:'Saksıyı her 2-3 haftada bir çeyrek döndürün. Bitki tek yöne büyümez, dengeli gelişir.'},
+  {k:'icmekan',e:'🪴',b:'Yaz aylarında balkona çıkarın',m:'İç mekan bitkilerinin çoğu yaz aylarında balkona veya bahçeye çıkmaktan fayda görür. Doğrudan güneşe değil, parlak gölgeye koyun.'},
+  {k:'genel',e:'🌿',b:'Tohum saklama',m:'Hasat ettiğiniz tohumları kağıt zarfta, serin ve kuru yerde saklayın. Plastik torba nemlenir, tohum çürür.'},
+  {k:'genel',e:'🌿',b:'Kafein ve çay telvesi',m:'Soğuk kahve ve çay telvesi asit seven bitkilerin (orkide, kamelya, fern) toprağına karıştırılabilir — doğal asitleştirici.'},
+  {k:'sulama',e:'💧',b:'Yağmur suyu kullanın',m:'Yağmur suyu klorsuzdur, pH bitkiler için idealdir. Bir fıçıya biriktirin. Özellikle orkide ve tropikal bitkiler için mükemmel.'},
+  {k:'hastalik',e:'🔬',b:'Neem yağı mucizesi',m:'Neem yağı organik onaylı, geniş spektrumlu bir ilaçtır. Yaprak biti, kırmızı örümcek, un biti ve mantar hastalıklarına karşı etkilidir.'},
+  {k:'budama',e:'✂️',b:'Domates koltuk alma',m:'Domates ana gövde ve ilk iki koldan oluşan V şekline budanırsa verim ve meyve kalitesi önemli ölçüde artar.'},
+  {k:'gubre',e:'🌱',b:'Sararmış yaprak gübre eksikliği mi?',m:'Azot eksikliğinde önce yaşlı yapraklar sararır. Demir eksikliğinde genç yapraklar sararır, damarlar yeşil kalır. Doğru teşhis şart.'},
+  {k:'genel',e:'🌿',b:'Güneş yanığı',m:'İç mekan bitkisini aniden güneşe koymayın. Önce birkaç hafta gölgeli dışarıda alıştırın — aksi hâlde yapraklar yanar.'},
+  {k:'icmekan',e:'🪴',b:'Kışlık dinlenme',m:'Tropikal bitkiler bile kışın daha az büyür. Serin ve az ışıklı ortam normaldir — panikleyip aşırı sulama veya gübre vermeyin.'},
+  {k:'budama',e:'✂️',b:'Gül koltuk alma yok',m:'Gül, domatesin aksine koltuk almaz. Güllerde sadece solmuş çiçekleri ve çapraz, hastalıklı dalları kesin.'},
+  {k:'hastalik',e:'🔬',b:'Kök çürüklüğü fark etmek',m:'Bitki soluyorsa, suladıktan sonra da iyileşmiyorsa — kök çürüklüğü olabilir. Saksıdan çıkarın, kahverengi yumuşak kökleri kesin, taze toprağa alın.'},
+];
+
+var KATEGORILER = [
+  {id:'hepsi',label:'Tümü'},
+  {id:'sulama',label:'💧 Sulama'},
+  {id:'gubre',label:'🌱 Gübreleme'},
+  {id:'hastalik',label:'🔬 Hastalık'},
+  {id:'budama',label:'✂️ Budama'},
+  {id:'genel',label:'🌿 Genel'},
+  {id:'icmekan',label:'🪴 İç Mekan'},
+];
+
+var aktifKat = 'hepsi', aramaQ = '';
+
+function filtrele(){
+  aramaQ = document.getElementById('aramaInput').value.toLowerCase().trim();
+  render();
+}
+
+function secKat(k){ aktifKat=k; renderKatFiltre(); render(); }
+
+function renderKatFiltre(){
+  document.getElementById('katFiltre').innerHTML = KATEGORILER.map(function(k){
+    return '<button class="kat-btn'+(aktifKat===k.id?' aktif':'')+'" onclick="secKat(\''+k.id+'\')">'+k.label+'</button>';
+  }).join('');
+}
+
+function render(){
+  var liste = IPUCLARI.filter(function(ip){
+    var katOk = aktifKat==='hepsi' || ip.k===aktifKat;
+    var aramaOk = !aramaQ || ip.b.toLowerCase().includes(aramaQ) || ip.m.toLowerCase().includes(aramaQ);
+    return katOk && aramaOk;
+  });
+  document.getElementById('sonucSay').textContent = liste.length + ' ipucu gösteriliyor';
+  document.getElementById('ipucGrid').innerHTML = liste.map(function(ip){
+    return '<div class="ipuc-kart kategori-'+ip.k+'">'
+      +'<div class="ipuc-ust"><span class="ipuc-emoji">'+ip.e+'</span>'
+      +'<span class="ipuc-baslik">'+ip.b+'</span></div>'
+      +'<div class="ipuc-metin">'+ip.m+'</div></div>';
+  }).join('');
+  if(!liste.length) document.getElementById('ipucGrid').innerHTML='<p style="color:var(--t3);grid-column:1/-1;text-align:center;padding:2rem">Sonuç bulunamadı.</p>';
+}
+
+renderKatFiltre(); render();
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gizlilik Politikası | BitkiDoktorum</title>
+<meta name="description" content="BitkiDoktorum gizlilik politikası. Kişisel verileriniz hakkında bilgi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>İletişim</span></div></div></nav>
+<div class="container-sm" style="padding:3rem 1.25rem">
+<h1>🔒 Gizlilik Politikası</h1><p style="color:var(--t3)">Son güncelleme: Ocak 2025</p>
+<div class="ad-slot ad-slot-in-article"><span class="ad-label">Reklam</span><small>336×280</small></div>
+<h2>1. Topladığımız Bilgiler</h2>
+<p>BitkiDoktorum sitemizi ziyaret ettiğinizde şu bilgiler anonim olarak toplanabilir: IP adresi ve tarayıcı bilgileri, ziyaret edilen sayfalar, kullanılan arama terimleri. Sitemiz herhangi bir üyelik veya kayıt sistemi içermemektedir.</p>
+<h2>2. Çerezler</h2>
+<p>Sitemiz şu amaçlarla çerez kullanmaktadır:</p>
+<ul><li><strong>Dil tercihi:</strong> Seçtiğiniz dili (TR/EN) hatırlamak için localStorage kullanılır</li><li><strong>Blog içerikleri:</strong> Oluşturulan blog yazıları yalnızca kendi tarayıcınızda saklanır</li><li><strong>Google AdSense:</strong> Kişiselleştirilmiş reklamlar için</li></ul>
+<h2>3. Google AdSense</h2>
+<p>Sitemiz Google AdSense reklam ağını kullanmaktadır. Detaylar için: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p>
+<p>Kişiselleştirilmiş reklam tercihlerinizi <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Reklam Ayarları</a>'ndan düzenleyebilirsiniz.</p>
+<h2>4. Üçüncü Taraf Hizmetler</h2>
+<ul><li><strong>Anthropic Claude API:</strong> Hastalık teşhisi ve içerik üretimi</li><li><strong>Semantic Scholar API:</strong> Akademik makale araştırması</li><li><strong>Google Fonts:</strong> Yazı tipi hizmetleri</li></ul>
+<h2>5. Veri Güvenliği</h2>
+<p>Sitemiz HTTPS protokolü kullanmaktadır. Yüklenen fotoğraflar analiz sonrasında silinmekte, sunucularımızda saklanmamaktadır.</p>
+<h2>6. KVKK Haklarınız</h2>
+<p>Kişisel verilerinizin işlenip işlenmediğini öğrenme, bilgi talep etme, düzeltme ve silme haklarına sahipsiniz. <a href="iletisim.html">İletişim</a> sayfamızı kullanabilirsiniz.</p>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="blog.html">Blog</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script src="assets/app.js"></script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "functions": {
+    "api/diagnose.js": { "maxDuration": 30 },
+    "api/blog.js": { "maxDuration": 30 }
+  }
+}

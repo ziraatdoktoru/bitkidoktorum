@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hakkımızda | BitkiDoktorum</title>
+<meta name="description" content="BitkiDoktorum hakkında bilgi. Türkiye'nin en kapsamlı bitki ansiklopedisi ve AI destekli hastalık teşhis platformu.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html" class="active">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Hakkımızda</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+<div class="site-wrap">
+<div class="main-content">
+<h1>🌿 BitkiDoktorum Hakkında</h1>
+<p style="font-size:1.05rem;color:var(--t2);margin-bottom:1.5rem">Türkiye'nin en kapsamlı bitki ansiklopedisi ve AI destekli hastalık teşhis platformu.</p>
+
+<div class="info-box info-box-green" style="margin-bottom:1.5rem">
+<h3>Misyonumuz</h3>
+<p>BitkiDoktorum, Türkiye'deki çiftçilere, bahçe meraklılarına ve bitki severlere doğru, güncel ve kullanışlı bilgi sunmayı hedefler. 135'ten fazla bitki türü hakkında bakım rehberleri, hastalık bilgileri ve yetiştirme ipuçları ile kullanıcılarımıza kapsamlı bir kaynak sağlıyoruz.</p>
+</div>
+
+<h2>Ne Sunuyoruz?</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem">
+<div class="info-box info-box-green" style="margin:0">
+<h5>🌿 Bitki Ansiklopedisi</h5>
+<p style="margin:0;font-size:.85rem">135+ bitki türü hakkında detaylı bakım rehberleri, sulama, gübreleme ve hasat bilgileri.</p>
+</div>
+<div class="info-box info-box-green" style="margin:0">
+<h5>🔬 AI Hastalık Teşhisi</h5>
+<p style="margin:0;font-size:.85rem">Bitkinizdeki hastalığı fotoğraf yükleyerek yapay zeka destekli sistemimizle anında teşhis edin.</p>
+</div>
+<div class="info-box info-box-green" style="margin:0">
+<h5>📝 Uzman Blog</h5>
+<p style="margin:0;font-size:.85rem">101 uzman makale ile bitki bakımı, hastalık yönetimi ve organik tarım hakkında kapsamlı bilgiler.</p>
+</div>
+<div class="info-box info-box-green" style="margin:0">
+<h5>🌍 Türkçe İçerik</h5>
+<p style="margin:0;font-size:.85rem">Türkiye iklimine ve koşullarına özel, Türkçe hazırlanmış içerikler ve pratik öneriler.</p>
+</div>
+</div>
+
+<h2>Neden BitkiDoktorum?</h2>
+<ul style="line-height:2">
+<li>✅ 135+ bitki türü hakkında kapsamlı bilgi</li>
+<li>✅ AI destekli fotoğraflı hastalık teşhisi</li>
+<li>✅ Akademik kaynaklara dayalı güvenilir içerik</li>
+<li>✅ Türkiye iklimine özel yetiştirme tavsiyeleri</li>
+<li>✅ Sürekli güncellenen blog ve rehberler</li>
+<li>✅ Tamamen ücretsiz kullanım</li>
+</ul>
+
+<div class="info-box info-box-amber" style="margin-top:1.5rem">
+<h5>⚠️ Önemli Not</h5>
+<p style="margin:0;font-size:.85rem">BitkiDoktorum bilgilendirme amaçlıdır. Ciddi tarımsal sorunlarda yetkili bir ziraat mühendisine başvurmanızı öneririz.</p>
+</div>
+
+<div style="margin-top:1.5rem;text-align:center">
+<a href="ansiklopedi.html" class="btn btn-primary" style="margin-right:.5rem">🌿 Ansiklopediyi Keşfet</a>
+<a href="teshis.html" class="btn btn-amber">🔬 Hastalık Teşhisi Yap</a>
+</div>
+</div>
+<aside class="sidebar">
+<div class="ad-slot ad-slot-sidebar"><span class="ad-label">Reklam</span><small>300×600</small></div>
+<div class="widget"><h3 class="widget-title">🔗 Hızlı Bağlantılar</h3><ul class="widget-list"><li><a href="ansiklopedi.html">🌿 Bitki Ansiklopedisi</a></li><li><a href="blog.html">📝 Blog</a></li><li><a href="teshis.html">🔬 Hastalık Teşhisi</a></li><li><a href="iletisim.html">📧 İletişim</a></li><li><a href="gizlilik.html">🔒 Gizlilik Politikası</a></li></ul></div>
+</aside>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="ansiklopedi.html">Ansiklopedi</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

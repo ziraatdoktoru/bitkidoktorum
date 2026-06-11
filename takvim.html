@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Bakım Takvimi | BitkiDoktorum</title>
+<meta name="description" content="Aylık bitki bakım takvimi. Hangi ayda ne yapılır? Budama, gübreleme, sulama, dikim zamanları.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.takvim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0}
+@media(max-width:700px){.takvim-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.takvim-grid{grid-template-columns:1fr}}
+.ay-kart{background:#fff;border:2px solid var(--br);border-radius:var(--r);padding:1rem;cursor:pointer;transition:.2s;box-shadow:var(--sh)}
+.ay-kart:hover,.ay-kart.aktif{border-color:var(--g);background:var(--gp)}
+.ay-kart .ay-adi{font-weight:700;font-size:1rem;color:var(--gd);margin-bottom:.3rem}
+.ay-kart .ay-emoji{font-size:1.5rem;margin-bottom:.3rem}
+.ay-kart .ay-ozet{font-size:.72rem;color:var(--t2)}
+.gorev-listesi{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh)}
+.gorev-kategori{margin-bottom:1rem}
+.gorev-kategori h4{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem;padding:.3rem .6rem;border-radius:4px;display:inline-block}
+.cat-budama{background:#ffeaa7;color:#856404}
+.cat-gubre{background:#d4edda;color:#155724}
+.cat-sulama{background:#cce5ff;color:#004085}
+.cat-dikim{background:#f8d7da;color:#721c24}
+.cat-hasat{background:#fff3cd;color:#856404}
+.cat-koruma{background:#e2e3e5;color:#383d41}
+.gorev-item{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;border-bottom:1px solid #f0f0f0;font-size:.83rem}
+.gorev-item:last-child{border-bottom:none}
+.gorev-item .bitki-adi{font-weight:600;color:var(--gd);min-width:90px}
+.gorev-item .gorev-acik{color:var(--t1)}
+.filtre-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.filtre-btn{padding:.3rem .7rem;border:1px solid var(--br);border-radius:20px;background:#fff;cursor:pointer;font-size:.78rem;transition:.15s}
+.filtre-btn.aktif,.filtre-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Bakım Takvimi</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>📅 Aylık Bitki Bakım Takvimi</h1>
+<p style="margin-bottom:.75rem"><a href="takvim-pdf.html" class="btn btn-secondary btn-sm">🖨️ PDF İndir / Yazdır</a></p>
+<p style="color:var(--t2);margin-bottom:1.5rem">Hangi ayda hangi bitkiye ne yapılır? Tıkla, öğren.</p>
+
+<div class="takvim-grid" id="ayGrid"></div>
+
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+
+<div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-bottom:.75rem">
+  <strong style="font-size:.85rem">Filtre:</strong>
+  <div class="filtre-bar" id="filtreBar"></div>
+</div>
+
+<div class="gorev-listesi" id="gorevListesi">
+  <p style="color:var(--t3);text-align:center;padding:2rem">Yukarıdan bir ay seçin</p>
+</div>
+
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="ansiklopedi.html">Ansiklopedi</a></li><li><a href="blog.html">Blog</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+
+<script src="assets/app.js"></script>
+<script>
+var AYLAR = [
+  {ad:'Ocak',emoji:'❄️',ozet:'Kış budaması, iç mekan bakımı'},
+  {ad:'Şubat',emoji:'🌱',ozet:'Tohum hazırlığı, badem çiçeklenmesi'},
+  {ad:'Mart',emoji:'🌸',ozet:'Gülleri buda, ilk gübreleme'},
+  {ad:'Nisan',emoji:'🌷',ozet:'Dikim sezonu, ilkbahar gübreleme'},
+  {ad:'Mayıs',emoji:'🌿',ozet:'Yaz sebze dikimi, çiçeklenme'},
+  {ad:'Haziran',emoji:'☀️',ozet:'Sulama artır, haşere kontrol'},
+  {ad:'Temmuz',emoji:'🍅',ozet:'Yaz hasadı, kuraklık önlemleri'},
+  {ad:'Ağustos',emoji:'🍑',ozet:'Şeftali/kayısı hasadı, lavanta'},
+  {ad:'Eylül',emoji:'🍇',ozet:'Üzüm hasadı, sonbahar dikimi'},
+  {ad:'Ekim',emoji:'🍂',ozet:'Soğan dikimi, kış hazırlığı'},
+  {ad:'Kasım',emoji:'🌰',ozet:'Fidan dikimi, gübre azalt'},
+  {ad:'Aralık',emoji:'🌲',ozet:'Dinlenme dönemi, alet bakımı'},
+];
+
+var GOREVLER = {
+  1:[
+    {kat:'budama',bitki:'Elma/Armut',gorev:'Kış budaması yapın — ölü ve çapraz dalları kesin. Yaralara bahçe macunu sürün.'},
+    {kat:'budama',bitki:'Üzüm',gorev:'Kış budaması için en uygun zaman. Bir yıllık dalları 2-3 gözden kesin.'},
+    {kat:'budama',bitki:'Gül',gorev:'Hafif şekil budaması yapılabilir, asıl budama Şubat-Marta bırakın.'},
+    {kat:'sulama',bitki:'İç Mekan Bitkileri',gorev:'Sulama sıklığını yarıya indirin. Kış dinlenme dönemi. Orkide, kaktüs az su.'},
+    {kat:'koruma',bitki:'Narenciye',gorev:'Kışa karşı fleece örtü veya kışlığa alın. -3°C altında risk var.'},
+    {kat:'koruma',bitki:'Begonvil',gorev:'Soğuk bölgelerde budayıp saksıyı içeri alın.'},
+    {kat:'dikim',bitki:'Ispanak/Marul',gorev:'Serin mevsim sebzeleri için açık hava ekimi (Akdeniz/Ege kıyıları).'},
+    {kat:'gubre',bitki:'Tüm Bitkiler',gorev:'Kış ayında dışarıdaki bitkilere gübre vermeyin — kök yanması yapar.'},
+  ],
+  2:[
+    {kat:'budama',bitki:'Gül',gorev:'Şubat sonu — güllerin asıl kış budaması için hazırlanın.'},
+    {kat:'budama',bitki:'Meyve Ağaçları',gorev:'Elma, armut, kiraz kış budamasını tamamlayın.'},
+    {kat:'dikim',bitki:'Patates',gorev:'İç Anadolu hariç patates tohumu hazırlığı başlatın.'},
+    {kat:'dikim',bitki:'Bezelye',gorev:'Bezelye tohumunu doğrudan yere ekin — soğuğa dayanıklıdır.'},
+    {kat:'gubre',bitki:'Badem',gorev:'Badem çiçek açmadan önce ilk gübrelemeyi yapın (dengeli NPK).'},
+    {kat:'sulama',bitki:'Orkide',gorev:'Haftada bir sulama. Çiçek tomurcukları oluşuyorsa daha serin ortam.'},
+    {kat:'koruma',bitki:'Tüm Bahçe',gorev:'Son don tarihi geçmeden dış mekan dikimi yapmayın.'},
+  ],
+  3:[
+    {kat:'budama',bitki:'Gül',gorev:'Mart başı — gülleri budayın: güçlü dalları 3-4 gözden, zayıfları dipten kesin.'},
+    {kat:'budama',bitki:'Lavanta',gorev:'Geçen yılın odunlaşmış kısımlarını hafifçe kısaltın.'},
+    {kat:'gubre',bitki:'Elma/Armut',gorev:'İlk bahar gübresi: 150g/ağaç 20-10-10 NPK. Kök bölgesine uygulayın.'},
+    {kat:'gubre',bitki:'Gül',gorev:'Budama sonrası özel gül gübresi veya dengeli NPK uygulayın.'},
+    {kat:'dikim',bitki:'Domates/Biber Fidesi',gorev:'Mart içinde iç mekanda domates ve biber tohumu ekin (fide yetiştirme).'},
+    {kat:'dikim',bitki:'Sarımsak',gorev:'Ekim yapılmadıysa Mart başı son şans. Diş dikimine devam.'},
+    {kat:'sulama',bitki:'Tüm Dış Mekan',gorev:'Sulama sıklığını artırmaya başlayın. Toprak kuruyunca sulayın.'},
+    {kat:'koruma',bitki:'Kayısı/Badem',gorev:'Geç don riski var — çiçekli ağaçları soğuk gecelerde örtün.'},
+  ],
+  4:[
+    {kat:'dikim',bitki:'Domates/Biber/Patlıcan',gorev:'Akdeniz/Ege\'de açığa dikim başlar. İç Anadolu\'da May\'a bekleyin.'},
+    {kat:'dikim',bitki:'Lale Soğanı',gorev:'Bu ay son — toprak ısınmadan önce lale soğanlarını çıkarın.'},
+    {kat:'dikim',bitki:'Salatalık/Kabak',gorev:'Sıcaklık 15°C+ ise tohumu doğrudan ekin.'},
+    {kat:'gubre',bitki:'Tüm Meyve Ağaçları',gorev:'Büyüme sezonu gübrelemesi. Amonyum nitrat veya dengeli NPK.'},
+    {kat:'gubre',bitki:'Çim/Çimenlik',gorev:'Çim gübresi (yüksek azot 30-0-4) ilk uygulaması.'},
+    {kat:'budama',bitki:'Kış Budaması Kalan',gorev:'Nisan başı son şans — yapraklar açmadan önce tamamlayın.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'Düzenli sulama programı başlatın. Sabah sulaması tercih edin.'},
+    {kat:'koruma',bitki:'Domates Fidesi',gorev:'Geceleri soğuk olursa fideler için tünel/örtü kullanın.'},
+  ],
+  5:[
+    {kat:'dikim',bitki:'Tüm Yaz Sebzeleri',gorev:'Tüm Türkiye\'de yaz sebze dikimi güvenli. Domates, biber, salatalık.'},
+    {kat:'dikim',bitki:'Ayçiçeği',gorev:'Ayçiçeği tohumunu doğrudan ekin — hızlı çimlenir.'},
+    {kat:'gubre',bitki:'Domates',gorev:'Dikimden 3 hafta sonra ilk gübre: dengeli NPK. Çiçeklenince potasyum.'},
+    {kat:'gubre',bitki:'Zeytin',gorev:'Mayıs zeytin gübrelemesi: 200g/ağaç amonyum nitrat.'},
+    {kat:'budama',bitki:'Ilık Çalılar',gorev:'Forsythia, weigela gibi çiçek döken çalıları çiçek sonrası budayın.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'Sıcaklar artıyor — sulama sıklığını artırın, sabah sulaması şart.'},
+    {kat:'hasat',bitki:'Çilek',gorev:'İlk çilek hasadı. Kırmızılaşan meyveleri sabah erkenden toplayın.'},
+    {kat:'koruma',bitki:'Domates',gorev:'Koltuk alma başlatın — tek gövde yetiştiriciliği için yan sürgünleri kesin.'},
+  ],
+  6:[
+    {kat:'hasat',bitki:'Kiraz/Vişne',gorev:'Kiraz hasadı — sap ile birlikte toplayın, hasarlı meyve bırakmayın.'},
+    {kat:'hasat',bitki:'Çilek',gorev:'Yoğun hasat dönemi. Hastalıklı meyveleri hemen uzaklaştırın.'},
+    {kat:'hasat',bitki:'Kayısı',gorev:'Erken çeşitler olgunlaşmaya başlar. Karatavuk hasarına dikkat.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'Yaz sulaması — domates ve salatalık için günlük veya 2 günde bir.'},
+    {kat:'gubre',bitki:'Domates/Biber',gorev:'Çiçeklenme + meyve tutumu: potasyum ağırlıklı gübre (0-0-60).'},
+    {kat:'koruma',bitki:'Kırmızı Örümcek',gorev:'Sıcak ve kuru havada kırmızı örümcek patlar — yaprak altlarını kontrol.'},
+    {kat:'budama',bitki:'Gül',gorev:'Solmuş çiçekleri kesin — yeni çiçeklenmeyi teşvik eder.'},
+    {kat:'dikim',bitki:'Güz Sebzeleri İçin Tohum',gorev:'Temmuz hasadı için şimdi salatalık/kabak ekmeye devam.'},
+  ],
+  7:[
+    {kat:'hasat',bitki:'Domates',gorev:'Yoğun domates hasadı. Düzenli hasat verimi artırır.'},
+    {kat:'hasat',bitki:'Şeftali/Nektarin',gorev:'Şeftali olgunlaşması — hafifçe baskı uygulandığında yumuşuyorsa hasat edin.'},
+    {kat:'hasat',bitki:'Kayısı',gorev:'Ana kayısı hasadı. İşleme veya kurutma için hızlı hareket.'},
+    {kat:'hasat',bitki:'Lavanta',gorev:'Çiçeklerin yarısı açıkken en iyi aroma. Sabah erken hasat.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'En sıcak dönem — damla sulama idealdir. Yaprak ıslatmaktan kaçının.'},
+    {kat:'gubre',bitki:'Meyve Ağaçları',gorev:'Temmuz gübrelemesi: 80g/ağaç potasyum sülfat. Meyve kalitesini artırır.'},
+    {kat:'koruma',bitki:'Karpuz/Kavun',gorev:'Hasat öncesi 10 gün sulamayı azaltın — şeker oranı artar.'},
+    {kat:'budama',bitki:'Meyve Ağaçları (Yaz)',gorev:'Aşırı iç dalları seyreltin — meyvelere ışık ve hava ulaşsın.'},
+  ],
+  8:[
+    {kat:'hasat',bitki:'Elma (Erken)',gorev:'Erken elma çeşitleri olgunlaşır. Ağustos elması taze tüketilmeli.'},
+    {kat:'hasat',bitki:'Üzüm (Sofralık)',gorev:'Sofralık üzüm hasadı başlar. Şeker ölçümü için refraktometre kullanın.'},
+    {kat:'hasat',bitki:'Şeftali',gorev:'Ana şeftali hasadı dönemi. Meyveleri dikkatlice hasat edin.'},
+    {kat:'budama',bitki:'Lavanta',gorev:'Hasat sonrası lavantayı 1/3 kısaltın — kışa sağlıklı girecek.'},
+    {kat:'gubre',bitki:'Meyve Ağaçları',gorev:'Ağustos\'ta azotlu gübre vermeyin — yeni sürgün oluşur, kışa hazırlanamaz.'},
+    {kat:'dikim',bitki:'Sonbahar Sebzeleri',gorev:'Ispanak, marul, brokoli fidesi hazırlığı — Eylül dikimi için.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'Sulama devam — sıcaklar Eylül\'e kadar sürer.'},
+    {kat:'koruma',bitki:'Domates',gorev:'Geç yanıklık için bakır bazlı ilaç uygulayın, yağmurlu havalarda.'},
+  ],
+  9:[
+    {kat:'hasat',bitki:'Üzüm',gorev:'Ana bağ bozumu dönemi. Şarap üzümü olgunluğu için brix ölçün.'},
+    {kat:'hasat',bitki:'Elma/Armut',gorev:'Orta ve geç çeşitler. Tohumun rengi kahverengi olunca hasat zamanı.'},
+    {kat:'hasat',bitki:'Nar',gorev:'Nar kabuğu renk değiştirince hazır. Çatlamadan önce toplayın.'},
+    {kat:'dikim',bitki:'Soğan/Sarımsak',gorev:'Sonbahar soğan ve sarımsak dikiminin en uygun zamanı.'},
+    {kat:'dikim',bitki:'Ispanak/Marul/Brokoli',gorev:'Sonbahar-kış sebzeleri için fide dikimi.'},
+    {kat:'gubre',bitki:'Çimenlik',gorev:'Sonbahar çim gübresi — potasyum ağırlıklı kışa hazırlık.'},
+    {kat:'budama',bitki:'Ortanca',gorev:'Solmuş çiçek başlarını kesin, ana budamayı ilkbahara bırakın.'},
+    {kat:'dikim',bitki:'Çiçek Soğanları',gorev:'Lale, sümbül, nergis, çiğdem soğanlarını ekin (15cm derine).'},
+  ],
+  10:[
+    {kat:'dikim',bitki:'Meyve Fidanı',gorev:'Meyve ağacı dikimi için en uygun ay. Toprak soğumadan köklenir.'},
+    {kat:'dikim',bitki:'Lale/Nergis/Sümbül',gorev:'Soğanları ekin — 10-15cm derine, 10-15cm aralıkla.'},
+    {kat:'dikim',bitki:'Sarımsak',gorev:'Ekim ayı sarımsak dikimidir. Diş ucunu yukarı bakacak şekilde.'},
+    {kat:'gubre',bitki:'Meyve Ağaçları',gorev:'Son gübre: potasyum sülfat. Azot vermeyin — büyüme durmalı.'},
+    {kat:'koruma',bitki:'Narenciye',gorev:'Akdeniz dışında narenciyeyi kışa hazırlayın, soğuktan koruyun.'},
+    {kat:'budama',bitki:'Çalılar',gorev:'Hafif şekil budaması yapılabilir, sert budamayı ilkbahara bırakın.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'Yağışlara göre sulama azaltın. Kış yağmurları sulamayı karşılar.'},
+    {kat:'koruma',bitki:'Saksı Bitkiler',gorev:'Dışarıdaki saksıları içeri alın veya kökleri izole edin.'},
+  ],
+  11:[
+    {kat:'dikim',bitki:'Meyve Ağacı',gorev:'Kasım — fidan dikimi devam eder. Yaprak döktükten sonra en ideal.'},
+    {kat:'budama',bitki:'Asma/Üzüm',gorev:'Yapraklar döküldükten sonra ilk bağ budaması başlayabilir.'},
+    {kat:'koruma',bitki:'Tüm Bahçe',gorev:'Don beklenen gecelerde hassas bitkileri örtün. Tünel kurabilirsiniz.'},
+    {kat:'gubre',bitki:'Tüm Bitkiler',gorev:'Kasımda gübre vermeyin — bitkiler dinlenme dönemine giriyor.'},
+    {kat:'sulama',bitki:'Tüm Bahçe',gorev:'Yağış yoksa haftada bir sulama yeterli. İç mekanda da azaltın.'},
+    {kat:'hasat',bitki:'Zeytin',gorev:'Zeytinyağlık çeşitler kasımda olgunlaşır — %25 renk değişiminde hasat.'},
+    {kat:'koruma',bitki:'İç Mekan',gorev:'Isıtma nedeniyle nem düşer — pisleme veya nemlendirici kullanın.'},
+  ],
+  12:[
+    {kat:'budama',bitki:'Meyve Ağaçları',gorev:'Aralıkta kış budaması başlayabilir — yapraklar tamamen döktükten sonra.'},
+    {kat:'koruma',bitki:'Tüm Bahçe',gorev:'Ağır kar yükü çalı/konifer dallarını kırabilir — gerekirse fırçalayın.'},
+    {kat:'koruma',bitki:'İç Mekan',gorev:'Pencere kenarındaki bitkiler soğuktan etkilenebilir — içe çekin.'},
+    {kat:'sulama',bitki:'İç Mekan',gorev:'Kış minimumu — sukulent/kaktüs aylık, tropikal 2 haftada bir.'},
+    {kat:'gubre',bitki:'İç Mekan',gorev:'İç mekanda da gübre vermeyin Aralık-Ocak arası.'},
+    {kat:'dikim',bitki:'Planlama',gorev:'Gelecek yıl için tohum kataloğu inceleyin, sipariş verin.'},
+    {kat:'koruma',bitki:'Narenciye',gorev:'Saksıdaki limon/portakal için kışlık bakım — az sulama, az ışık.'},
+  ],
+};
+
+var KATEGORILER = [
+  {id:'budama',label:'✂️ Budama',cls:'cat-budama'},
+  {id:'gubre',label:'🌱 Gübreleme',cls:'cat-gubre'},
+  {id:'sulama',label:'💧 Sulama',cls:'cat-sulama'},
+  {id:'dikim',label:'🌿 Dikim',cls:'cat-dikim'},
+  {id:'hasat',label:'🍎 Hasat',cls:'cat-hasat'},
+  {id:'koruma',label:'🛡️ Koruma',cls:'cat-koruma'},
+];
+
+var secilenAy = new Date().getMonth() + 1;
+var secilenKat = 'hepsi';
+
+function renderAylar(){
+  document.getElementById('ayGrid').innerHTML = AYLAR.map(function(a,i){
+    var idx = i+1;
+    return '<div class="ay-kart'+(secilenAy===idx?' aktif':'')+'" onclick="secAy('+idx+')">'
+      +'<div class="ay-emoji">'+a.emoji+'</div>'
+      +'<div class="ay-adi">'+a.ad+'</div>'
+      +'<div class="ay-ozet">'+a.ozet+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderFiltre(){
+  document.getElementById('filtreBar').innerHTML =
+    '<button class="filtre-btn'+(secilenKat==='hepsi'?' aktif':'')+'" onclick="secKat(\'hepsi\')">Tümü</button>' +
+    KATEGORILER.map(function(k){
+      return '<button class="filtre-btn'+(secilenKat===k.id?' aktif':'')+'" onclick="secKat(\''+k.id+'\')">'+k.label+'</button>';
+    }).join('');
+}
+
+function renderGorevler(){
+  var gorevler = (GOREVLER[secilenAy]||[]).filter(function(g){
+    return secilenKat==='hepsi' || g.kat===secilenKat;
+  });
+  if(!gorevler.length){
+    document.getElementById('gorevListesi').innerHTML = '<p style="color:var(--t3);text-align:center;padding:2rem">Bu filtrede görev yok</p>';
+    return;
+  }
+  var gruplar = {};
+  gorevler.forEach(function(g){ if(!gruplar[g.kat]) gruplar[g.kat]=[]; gruplar[g.kat].push(g); });
+  var html = '<h3 style="margin-bottom:1rem">'+AYLAR[secilenAy-1].emoji+' '+AYLAR[secilenAy-1].ad+' Yapılacaklar</h3>';
+  KATEGORILER.forEach(function(k){
+    if(!gruplar[k.id]) return;
+    html += '<div class="gorev-kategori"><h4 class="'+k.cls+'">'+k.label+'</h4>';
+    gruplar[k.id].forEach(function(g){
+      html += '<div class="gorev-item"><span class="bitki-adi">'+g.bitki+'</span><span class="gorev-acik">'+g.gorev+'</span></div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('gorevListesi').innerHTML = html;
+}
+
+function secAy(ay){ secilenAy=ay; renderAylar(); renderGorevler(); }
+function secKat(kat){ secilenKat=kat; renderFiltre(); renderGorevler(); }
+
+renderAylar();
+renderFiltre();
+renderGorevler();
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

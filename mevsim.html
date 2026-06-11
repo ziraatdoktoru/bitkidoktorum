@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mevsimlik Bitki Önerileri | BitkiDoktorum</title>
+<meta name="description" content="İlkbahar, yaz, sonbahar ve kış için en uygun bitkiler. Mevsime göre bitki seçin, başarıyla yetiştirin.">
+<link rel="canonical" href="https://bitkidoktorum.com/mevsim.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
+<style>
+.mevsim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0}
+@media(max-width:700px){.mevsim-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.mevsim-grid{grid-template-columns:1fr}}
+.mv-kart{border-radius:var(--r);padding:1.25rem;cursor:pointer;transition:.2s;box-shadow:var(--sh);border:2px solid transparent}
+.mv-kart:hover,.mv-kart.aktif{transform:translateY(-3px);border-color:currentColor}
+.mv-ilkbahar{background:#ecfdf5;color:#166534}
+.mv-yaz{background:#fefce8;color:#854d0e}
+.mv-sonbahar{background:#fff7ed;color:#9a3412}
+.mv-kis{background:#eff6ff;color:#1e40af}
+.mv-kart .mv-emoji{font-size:2.5rem;margin-bottom:.5rem}
+.mv-kart .mv-ad{font-weight:700;font-size:1rem}
+.mv-kart .mv-ozet{font-size:.75rem;opacity:.8;margin-top:.25rem}
+.mv-kart .mv-sayi{font-size:.72rem;font-weight:700;margin-top:.5rem;background:rgba(255,255,255,.5);border-radius:10px;padding:.15rem .5rem;display:inline-block}
+.icerik-alan{margin-top:1.5rem}
+.icerik-baslik{font-size:1.1rem;font-weight:700;color:var(--gd);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.icerik-acik{font-size:.85rem;color:var(--t2);margin-bottom:1rem;line-height:1.6}
+.ipucu-liste{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
+.ipucu-item{background:#fff;border-left:3px solid var(--g);border-radius:0 8px 8px 0;padding:.6rem .9rem;font-size:.83rem;color:var(--t1)}
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Mevsimlik Bitkiler</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>🌸 Mevsimlik Bitki Önerileri</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Hangi mevsimde hangi bitkiyi yetiştireceğinizi bilin, başarı garantili olsun.</p>
+
+<div class="mevsim-grid" id="mevsimGrid"></div>
+<div class="ad-slot" style="margin:.75rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+<div class="icerik-alan" id="icerikAlan"><p style="color:var(--t3);text-align:center;padding:2rem">Yukarıdan bir mevsim seçin</p></div>
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var MEVSIMLER = {
+  ilkbahar:{
+    emoji:'🌸', ad:'İlkbahar', ozet:'Mart · Nisan · Mayıs', cls:'mv-ilkbahar',
+    acik:'İlkbahar, bitki yetiştirmenin en heyecanlı mevsimidir. Hava ısınmaya başlar, toprak canlanır. Pek çok sebze ve çiçek için dikim zamanıdır.',
+    bitkiler:['lale','gul','lavanta','kiraz','kayisi','cilek','bezelye','ispanak','marul','brokoli','sardunya','menekse','narcissus','hyacinth','forsythia'],
+    ipuclari:[
+      'Son don tarihini öğrenin — bölgenize göre Mart sonu veya Nisan başı.',
+      'Domates ve biber fidelerini iç mekanda yetiştirmeye başlayın.',
+      'Soğanlı çiçekler (lale, sümbül) açmaya başlar — gübrelemelerini ihmal etmeyin.',
+      'Meyve ağaçlarında son kış budamasını tamamlayın.',
+      'Toprak 10°C üzerine çıkınca dış mekan dikimlerini başlatabilirsiniz.',
+    ]
+  },
+  yaz:{
+    emoji:'☀️', ad:'Yaz', ozet:'Haziran · Temmuz · Ağustos', cls:'mv-yaz',
+    acik:'Yaz aylarında sulama kritiktir. Sıcaklığa dayanıklı bitkiler bu mevsimde zirveye ulaşır. Hasat dönemi başlar.',
+    bitkiler:['domates','karpuz','kavun','salatalik','biber','patlican','misir','bamya','kabak','fasulye','ayicegi','begonvil','petunya','verbena','lavanta'],
+    ipuclari:[
+      'Sabah erken saatte sulama yapın — akşam sulaması fungal hastalığa davet çıkarır.',
+      'Karpuz hasatında dip kısmı sarıya dönünce ve sap kururunca toplayın.',
+      'Domates koltuk alma ile verimi artırın.',
+      'Lavanta çiçeklerin yarısı açıkken hasat edin — en yoğun aroma bu dönemde.',
+      'Sıcak yaz günlerinde kapasiteye dikkat — aşırı sıcakta çiçeklenme durabilir.',
+    ]
+  },
+  sonbahar:{
+    emoji:'🍂', ad:'Sonbahar', ozet:'Eylül · Ekim · Kasım', cls:'mv-sonbahar',
+    acik:'Sonbahar hem hasat hem de dikim mevsimidir. Soğan dikimi, fidan dikimi ve kış sebzeciliği için altın dönem.',
+    bitkiler:['nar','uzum','elma','armut','sarimsak','sogan','ispanak','lahana','brokoli','lale','narcissus','hyacinth','crocus','anemone','kasimpati'],
+    ipuclari:[
+      'Soğan ve sarımsak Ekim ayında ekilir — en önemli sonbahar görevi.',
+      'Çiçek soğanları (lale, nergis, sümbül) 10-15cm derinliğe dikin.',
+      'Meyve fidanı dikimi için en uygun zaman sonbahardır.',
+      'Bağ bozumu için üzüm brix ölçümü yapın — 18+ brix ideal tatlılıktır.',
+      'Narenciyeyi kışa hazırlayın — Akdeniz dışında koruma gerekli.',
+    ]
+  },
+  kis:{
+    emoji:'❄️', ad:'Kış', ozet:'Aralık · Ocak · Şubat', cls:'mv-kis',
+    acik:'Kış, çoğu bitkinin dinlenme dönemidir. Fakat iç mekan bitkileri, kışlık sebzeler ve erken çiçekler bu mevsimde ilgi bekler.',
+    bitkiler:['simsir','taxus','thuja','mahonia','sarcococca','helleborus','cyclamen','primula','camellia','bonsai_ficus','sansevieria','zz','pothos','monstera','orchide'],
+    ipuclari:[
+      'İç mekan bitkilerinde sulama sıklığını yarıya indirin.',
+      'Kış budamasını Ocak-Şubat\'ta yapın — ağaçlar dinlenmede.',
+      'Badem ve kayısı erken çiçeklenir — geç dona karşı hazırlıklı olun.',
+      'Çiçek soğanlarını serin ve karanlıkta saklayın.',
+      'Gelecek yıl için tohum kataloğu inceleyin, sipariş verin.',
+    ]
+  }
+};
+
+var aktifMevsim = null;
+
+function buMevsim(){
+  var ay = new Date().getMonth()+1;
+  if(ay>=3&&ay<=5) return 'ilkbahar';
+  if(ay>=6&&ay<=8) return 'yaz';
+  if(ay>=9&&ay<=11) return 'sonbahar';
+  return 'kis';
+}
+
+function renderMevsimler(){
+  document.getElementById('mevsimGrid').innerHTML = Object.keys(MEVSIMLER).map(function(k){
+    var m = MEVSIMLER[k];
+    var sayi = m.bitkiler.length;
+    return '<div class="mv-kart '+m.cls+(aktifMevsim===k?' aktif':'')+'" onclick="secMevsim(\''+k+'\''+')">'
+      +'<div class="mv-emoji">'+m.emoji+'</div>'
+      +'<div class="mv-ad">'+m.ad+'</div>'
+      +'<div class="mv-ozet">'+m.ozet+'</div>'
+      +'<span class="mv-sayi">'+sayi+' bitki</span>'
+      +'</div>';
+  }).join('');
+}
+
+function secMevsim(k){
+  aktifMevsim = k;
+  renderMevsimler();
+  var m = MEVSIMLER[k];
+  var bitkiler = m.bitkiler.map(function(id){
+    return PLANT_DB.find(function(p){return p.id===id;});
+  }).filter(Boolean);
+
+  var html = '<h2 class="icerik-baslik">'+m.emoji+' '+m.ad+' Bitkileri</h2>'
+    +'<p class="icerik-acik">'+m.acik+'</p>'
+    +'<h3 style="font-size:.9rem;font-weight:700;color:var(--gd);margin-bottom:.75rem">💡 '+m.ad+' Bakım İpuçları</h3>'
+    +'<div class="ipucu-liste">'+m.ipuclari.map(function(ip){return '<div class="ipucu-item">'+ip+'</div>';}).join('')+'</div>'
+    +'<h3 style="font-size:.9rem;font-weight:700;color:var(--gd);margin-bottom:.75rem">🌿 Önerilen Bitkiler</h3>'
+    +'<div class="grid-3">'+bitkiler.map(function(p){return plantCardHTML(p);}).join('')+'</div>';
+  document.getElementById('icerikAlan').innerHTML = html;
+}
+
+renderMevsimler();
+secMevsim(buMevsim());
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

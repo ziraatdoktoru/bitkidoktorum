@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Hastalık Kütüphanesi | BitkiDoktorum</title>
+<meta name="description" content="50+ bitki hastalığı ve zararlısı. Belirtiler, nedenler ve organik tedavi yöntemleri.">
+<link rel="canonical" href="https://bitkidoktorum.com/hastalik.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
+<style>
+.hst-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;margin:1.25rem 0}
+.hst-kart{background:#fff;border:1px solid var(--br);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);cursor:pointer;transition:.2s}
+.hst-kart:hover{transform:translateY(-2px);box-shadow:var(--shm)}
+.hst-kart.acik .hst-detay{display:block}
+.hst-ust{display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem}
+.hst-emoji{font-size:2rem;flex-shrink:0}
+.hst-bilgi{flex:1}
+.hst-baslik{font-weight:700;font-size:.92rem;color:var(--gd)}
+.hst-tip{font-size:.72rem;margin-top:.2rem}
+.hst-etiket{display:inline-block;padding:.15rem .5rem;border-radius:10px;font-size:.7rem;font-weight:600}
+.tip-mantar{background:#fde8e8;color:#991b1b}
+.tip-bakteri{background:#fef3c7;color:#92400e}
+.tip-virus{background:#ede9fe;color:#5b21b6}
+.tip-zarali{background:#dbeafe;color:#1e40af}
+.tip-beslenme{background:#d1fae5;color:#065f46}
+.tip-cevre{background:#f3f4f6;color:#374151}
+.hst-detay{display:none;padding:0 1rem 1rem;border-top:1px solid var(--br)}
+.hst-bolum{margin-top:.75rem}
+.hst-bolum h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--t3);margin-bottom:.35rem}
+.hst-bolum p,.hst-bolum li{font-size:.82rem;color:var(--t2);line-height:1.65}
+.hst-bolum ul{padding-left:1.2rem}
+.kat-bar{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+.kat-btn{padding:.3rem .75rem;border:1px solid var(--br);border-radius:20px;background:#fff;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--t2);transition:.15s}
+.kat-btn.aktif,.kat-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.ara-input{width:100%;padding:.5rem .75rem;border:1px solid var(--br);border-radius:8px;font-size:.85rem;margin-bottom:.75rem}
+.hst-ok{margin-left:auto;font-size:.8rem;color:var(--t3);transition:.2s}
+.hst-kart.acik .hst-ok{transform:rotate(180deg)}
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MedicalWebPage","name":"Bitki Hastalık Kütüphanesi | BitkiDoktorum","url":"https://bitkidoktorum.com/hastalik.html"}
+</script>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Hastalık Kütüphanesi</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>🔬 Bitki Hastalık Kütüphanesi</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">50+ hastalık ve zararlı. Belirtileri tanıyın, organik yöntemlerle tedavi edin.</p>
+
+<input type="text" class="ara-input" id="araInput" placeholder="Hastalık adı ara... (külleme, yaprak biti, kök çürüklüğü...)" oninput="renderHst()">
+<div class="kat-bar" id="katBar"></div>
+<div class="ad-slot" style="margin:.5rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+<div style="font-size:.8rem;color:var(--t3);margin-bottom:.75rem" id="sayiInfo"></div>
+<div class="hst-grid" id="hstGrid"></div>
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+<p style="font-size:.78rem;color:var(--t3);margin-top:.5rem">💡 Hastalık teşhisinde emin değil misiniz? <a href="teshis.html">AI Teşhis aracını</a> deneyin.</p>
+</div>
+
+<div class="paylasim-bar">
+  <span>Paylaş:</span>
+  <button class="paylasim-btn paylasim-whatsapp" onclick="paylasim('whatsapp')">💬 WhatsApp</button>
+  <button class="paylasim-btn paylasim-twitter" onclick="paylasim('twitter')">🐦 Twitter</button>
+  <button class="paylasim-btn paylasim-facebook" onclick="paylasim('facebook')">📘 Facebook</button>
+  <button class="paylasim-btn paylasim-link" onclick="paylasim('link')">🔗 Kopyala</button>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Araçlar</h4><ul><li><a href="teshis.html">AI Teşhis</a></li><li><a href="hastalik.html">Hastalık Kütüphanesi</a></li><li><a href="araclar.html">Hesaplayıcılar</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+<script src="assets/app.js"></script>
+<script>
+var HASTALIKLAR = [
+  {id:'kulleme',e:'🤍',ad:'Külleme (Powdery Mildew)',tip:'mantar',
+   etkili:['gül','kavun','karpuz','kabak','elma','üzüm','domates'],
+   belirtiler:'Yapraklarda un gibi beyaz toz tabakası. Önce üst yüzeyde, sonra her yerde. Yapraklar sararır ve dökülür.',
+   nedenler:'Yüksek nem, kötü hava sirkülasyonu, serin geceler + sıcak gündüzler. Özellikle yaz-sonbahar arası.',
+   tedavi:['Bikarbonat spreyi: 1 çay kaşığı soda + 1 tatlı kaşığı sıvı sabun + 1L su. Haftada 2x.','Neem yağı sprey: %2 konsantrasyon, sabah erkenden uygula.','Bakır bazlı fungisit: organik onaylı, geniş spektrum.','Etkilenen yaprakları hemen kopar ve imha et.'],
+   onleme:'Bitkiler arası mesafeyi artır, sabah sula, hava sirkülasyonu sağla.'},
+
+  {id:'mildiyö',e:'🟤',ad:'Mildiyö (Downy Mildew)',tip:'mantar',
+   etkili:['asma','domates','salatalık','soğan','lahana'],
+   belirtiler:'Yaprak üstünde sarı-kahve lekeler, altında grimsi-mor tüylü mantar örtüsü. Nemli havalarda hızla yayılır.',
+   nedenler:'Soğuk ve nemli hava, yaprak ıslaklığı, kötü drenaj.',
+   tedavi:['Bakır sülfat (Bordo bulamacı): klasik ve etkili.','Fosetil-Al içerikli fungisit.','Etkilenen yaprakları hemen uzaklaştır.','Sulama sistemini damla sulamaya çevir.'],
+   onleme:'Yaprakları ıslatma, sabah sula, sıkışık dikim yapma.'},
+
+  {id:'gri_kuf',e:'🩶',ad:'Gri Küf (Botrytis)',tip:'mantar',
+   etkili:['çilek','domates','üzüm','soğan','lale'],
+   belirtiler:'Gri-kahverengi tüylü küf kitlesi. Meyve ve çiçeklerde çürüme. Serin ve nemli havalarda patlama yapar.',
+   nedenler:'Yaralı dokular, dökülen çiçek ve yapraklar, yüksek nem, havasızlık.',
+   tedavi:['Etkilenen kısımları hemen kes ve imha et.','Botrisin veya iprodion içerikli fungisit.','Thiram veya captan ile koruyucu uygulama.'],
+   onleme:'Hasarlı bitki kısımlarını temizle, iyi havalandır, sulama suyunu yapraklara değdirme.'},
+
+  {id:'kok_curukl',e:'🟫',ad:'Kök Çürüklüğü (Root Rot)',tip:'mantar',
+   etkili:['tüm saksı bitkileri','domates','kavun','karpuz'],
+   belirtiler:'Bitki solar, sulayınca düzelmez. Kökler kahverengi, yumuşak, kötü kokulu. Yapraklar sararır.',
+   nedenler:'Aşırı sulama, kötü drenaj, ağır toprak, Phytophthora veya Pythium mantarı.',
+   tedavi:['Saksıdan çıkar, çürük kökleri kes.','Kökleri %1 hidrojen peroksit çözeltisine daldır.','Taze, iyi drene eden toprağa ek.','Fosfonit içerikli fungisit.'],
+   onleme:'Saksı drenajı şart, parmak testi ile sula, ağır kil topraktan kaçın.'},
+
+  {id:'yaprak_biti',e:'🐛',ad:'Yaprak Biti (Aphid)',tip:'zarali',
+   etkili:['gül','domates','biber','elma','lahana','nane'],
+   belirtiler:'Yaprak altında küçük yeşil/siyah/sarı böcekler. Yapraklar kıvrılır, sararır. Yapışkan salgı (bal özü) bırakır.',
+   nedenler:'Sıcak ve kuru hava, azotlu gübre aşırılığı, doğal düşman yokluğu.',
+   tedavi:['Sabunlu su (1 çay kaşığı sıvı sabun/L) spreyi, haftada 3x.','Neem yağı: %2 konsantrasyon.','Sarımsak-biber suyu spreyi.','Güçlü su spreyi ile yıkama.','Uğur böceği gibi doğal düşmanları teşvik et.'],
+   onleme:'Azotu dengeli kullan, bitkileri strese sokma, karışık dikim yap.'},
+
+  {id:'kirmizi_orumcek',e:'🕷️',ad:'Kırmızı Örümcek (Spider Mite)',tip:'zarali',
+   etkili:['domates','biber','gül','meyve ağaçları','iç mekan bitkileri'],
+   belirtiler:'Yapraklarda sarı-gri lekeler, bronzlaşma. Yaprak altında ince ağlar. Çok küçük kırmızı-kahve noktalar.',
+   nedenler:'Sıcak ve kuru hava, düşük nem, kapalı ortam. Yazın patlama yapar.',
+   tedavi:['Neem yağı spreyi: %2, haftada 2x.','Sabunlu su spreyi.','Abamektin veya spiromesifen içerikli ilaç.','Nem artır — örümcek düşük nemde gelişir.'],
+   onleme:'Düzenli nem, bitkileri haftada bir kontrol et, yaprakları yıka.'},
+
+  {id:'un_biti',e:'🤍',ad:'Un Biti (Mealybug)',tip:'zarali',
+   etkili:['iç mekan bitkileri','kaktüs','sukulent','narenciye'],
+   belirtiler:'Yaprak koltuklarında ve gövdede pamuk gibi beyaz kitle. Yapışkan salgı. Bitki zayıflar.',
+   nedenler:'Kapalı ortam, kötü hava sirkülasyonu, aşırı gübreleme.',
+   tedavi:['Pamukla alkol uygulama: direk dokunuşla öldür.','Neem yağı spreyi.','Sabunlu su spreyi.','Sistematik ilaç: imidakloprit toprak uygulaması.'],
+   onleme:'Yeni bitkileri karantinaya al, düzenli kontrol et.'},
+
+  {id:'beyaz_sinek',e:'🦟',ad:'Beyaz Sinek (Whitefly)',tip:'zarali',
+   etkili:['domates','biber','salatalık','begonvil','sardunya'],
+   belirtiler:'Bitkiyi sallayınca beyaz sinekler uçar. Yaprak altında küçük beyaz yumurtalar. Yapraklar sararır, solar.',
+   nedenler:'Sıcak hava, açık tarla ve sera koşulları, kimyasal ilaçlara direnç.',
+   tedavi:['Sarı yapışkan tuzaklar.','Sabunlu su veya neem yağı spreyi.','Pyretrin içerikli organik ilaç.','Parazitoitler (Encarsia formosa): biyolojik mücadele.'],
+   onleme:'Sarı tuzakları erken as, doğal düşmanları koru.'},
+
+  {id:'pas_hastaligi',e:'🟠',ad:'Pas Hastalığı (Rust)',tip:'mantar',
+   etkili:['gül','buğday','elma','armut','nane'],
+   belirtiler:'Yaprak altında turuncu-kahverengi toz sporları. Üstte sarı lekeler. Yapraklar solar ve dökülür.',
+   nedenler:'Nemli hava, ıslak yapraklar, hassas çeşitler.',
+   tedavi:['Triadimenol veya tebukonazol içerikli fungisit.','Bakır bazlı spreyi.','Etkilenen yaprakları hemen uzaklaştır ve imha et.'],
+   onleme:'Dirençli çeşit seç, sabah sula, yaprakları ıslatma.'},
+
+  {id:'azot_eksik',e:'💛',ad:'Azot Eksikliği',tip:'beslenme',
+   etkili:['tüm bitkiler'],
+   belirtiler:'Önce yaşlı (alt) yapraklar sararır, damarlar da dahil. Bitki soluk ve cılız büyür.',
+   nedenler:'Fakir toprak, aşırı yıkama, hafif toprak, hızlı büyüme dönemi.',
+   tedavi:['Dengeli NPK gübre veya özellikle azotlu gübre (ör. üre %46N).','Sıvı gübre hızlı etki eder.','Kompost ile toprak zenginleştir.'],
+   onleme:'Düzenli gübreleme programı, organik madde ekle.'},
+
+  {id:'demir_eksik',e:'🟡',ad:'Demir Eksikliği (Kloroz)',tip:'beslenme',
+   etkili:['gül','asma','narenciye','iç mekan bitkileri'],
+   belirtiler:'Genç yapraklar sararır ama damarlar yeşil kalır (interveinal kloroz). Tipik görünüm.',
+   nedenler:'Yüksek pH (kireçli toprak), aşırı sulama, soğuk toprak, fosfor fazlası.',
+   tedavi:['Şelatlı demir (Fe-EDTA veya Fe-DTPA) spreyi veya toprak uygulaması.','Toprak pH\'ını düşür: kükürt veya turba ekle.','Asitleştirici gübre kullan.'],
+   onleme:'pH 6-6.5\'ta tut, kireçli suyu yumuşat.'},
+
+  {id:'gec_yaniklik',e:'🟤',ad:'Geç Yanıklık (Late Blight)',tip:'mantar',
+   etkili:['domates','patates'],
+   belirtiler:'Yapraklarda su emmiş gibi koyu yeşil lekeler, hızla kahverengileşir. Mor-gri tüylü örtü. Çok hızlı yayılır.',
+   nedenler:'Phytophthora infestans. Nemli ve serin hava, yaprak ıslaklığı. Büyük salgınlara yol açar.',
+   tedavi:['Bakır bazlı fungisit: ilk belirtide hemen uygula.','Chlorothalonil veya mancozeb.','Etkilenen bitkileri hemen imha et — kompostlama.'],
+   onleme:'Dirençli çeşit, damla sulama, iyi havalandırma, koruyucu bakır spreyi.'},
+
+  {id:'erken_yaniklik',e:'🟠',ad:'Erken Yanıklık (Early Blight)',tip:'mantar',
+   etkili:['domates','patates','patlıcan'],
+   belirtiler:'Yapraklarda halka şeklinde kahverengi lekeler (hedef tahtası görünümü). Alttan başlar, yukarı ilerler.',
+   nedenler:'Alternaria solani mantarı. Sıcak ve nemli hava. Stresli bitkiler daha hassas.',
+   tedavi:['Bakır hidroksit veya chlorothalonil.','Etkilenen yaprakları kopar.','2 haftada bir koruyucu uygulama.'],
+   onleme:'Toprak sıçramasını önle (malç), koltuk al, dengeli gübrele.'},
+
+  {id:'solgunluk',e:'🥀',ad:'Fusarium Solgunluğu',tip:'mantar',
+   etkili:['domates','biber','salatalık','karanfil'],
+   belirtiler:'Bitki bir anda solar, sulayınca düzelmez. Gövde kesitinde kahverengi çizgiler. Önce bir dal, sonra tüm bitki.',
+   nedenler:'Fusarium oxysporum. Toprağa yerleşir, yıllarca kalır. Yaralı köklerden girer.',
+   tedavi:['Çözüm yok — hasta bitkileri söküp imha et.','Toprağı dezenfekte et (güneşlendirme yöntemi).','Bir sonraki sezonda dirençli çeşit kullan.'],
+   onleme:'Ekim nöbeti, dirençli çeşit, steril fide toprağı.'},
+
+  {id:'nematod',e:'🪱',ad:'Kök Ur Nematodu',tip:'zarali',
+   etkili:['domates','biber','patlıcan','meyve ağaçları'],
+   belirtiler:'Köklerde irili ufaklı yuvarlak urlar. Bitki yavaş büyür, solar, verim düşer. Yukarıdan neden belli olmaz.',
+   nedenler:'Meloidogyne türleri. Sıcak ve kumlu toprak, monokültür, kirli fide.',
+   tedavi:['Oxamyl veya fosthiazate içerikli nematisit.','Toprağı güneşle sterilize et (solarizasyon).','Biyolojik: Bacillus firmus içerikli preparatlar.'],
+   onleme:'Ekim nöbeti, Fransız kadife çiçeği (tagetes) ara bitkisi, dirençli çeşit.'},
+
+  {id:'bakteriyel_leke',e:'🔵',ad:'Bakteriyel Yaprak Lekesi',tip:'bakteri',
+   etkili:['domates','biber','kiraz','şeftali'],
+   belirtiler:'Su emmiş görünümlü lekeler, sonra kahverengi ve kurur. Yaprak kenarı sarıya çerçevelenir. Nem sonrası patlama.',
+   nedenler:'Xanthomonas veya Pseudomonas bakterisi. Yağmur, böcek ve alet ile yayılır.',
+   tedavi:['Bakır bazlı bakterisit.','Streptomisin sülfat (lisanslı kullanım).','Etkilenen yaprakları uzaklaştır.'],
+   onleme:'Steril tohum, üstten sulama yapma, aletleri dezenfekte et.'},
+
+  {id:'manganez_eksik',e:'🟩',ad:'Manganez Eksikliği',tip:'beslenme',
+   etkili:['elma','şeftali','üzüm','fasulye'],
+   belirtiler:'Genç yapraklarda damarlar arası sararma ama damarlar yeşil. Demire benzer ama biraz farklı desen.',
+   nedenler:'Yüksek pH, aşırı sulama, soğuk ve ıslak toprak.',
+   tedavi:['Mangan sülfat yaprak spreyi (5g/L).','Toprak pH\'ını düşür.'],
+   onleme:'pH kontrolü, iyi drenaj.'},
+
+  {id:'trip',e:'🟡',ad:'Trip (Thrips)',tip:'zarali',
+   etkili:['soğan','biber','çiçekler','iç mekan bitkileri'],
+   belirtiler:'Yapraklarda gümüşi çizgiler ve lekeler. Çok küçük sarı-kahve böcekler. Çiçeklerde renk bozulması.',
+   nedenler:'Kuru ve sıcak koşullar. Çiçek içinde gizlenirler.',
+   tedavi:['Mavi yapışkan tuzak.','Spinosad içerikli organik ilaç.','Neem yağı.','Abamektin.'],
+   onleme:'Tuzakla erken teşhis, bitkileri düzenli kontrol et.'},
+
+  {id:'salyangoz',e:'🐌',ad:'Salyangoz ve Sümüklüböcek',tip:'zarali',
+   etkili:['lahana','marul','çilek','fide'],
+   belirtiler:'Yapraklarda düzensiz delikler ve gümüşi iz. Geceleri zarar verir.',
+   nedenler:'Nemli ortam, malç, gece sıcaklığı, gölgeli alan.',
+   tedavi:['Demir fosfat granülü (organik): etkili ve güvenli.','Bira kapanı: yere gömülü kap içine bira.','El ile toplama (gece).','Külleme oluştur (diatomit).'],
+   onleme:'Alanı temiz tut, gündüz malçı kaldır, sabah sula.'},
+
+  {id:'sarilik_virus',e:'🟡',ad:'Sarılık Virüsü (TYLCV)',tip:'virus',
+   etkili:['domates','biber'],
+   belirtiler:'Yaprak kenarları yukarı kıvrılır, sararır. Bitki bodur kalır. Meyve tutumu azalır veya durur.',
+   nedenler:'Beyaz sinek tarafından taşınır. Virüs — kimyasal tedavisi yok.',
+   tedavi:['Hasta bitkileri söküp imha et.','Beyaz sinekle mücadele (taşıyıcıyı yok et).','Dirençli çeşit kullan.'],
+   onleme:'Beyaz sinek kontrolü, hastalıklı materyal kullanma, dirençli çeşit.'},
+];
+
+var TIPLER = [
+  {id:'hepsi',label:'Tümü'},
+  {id:'mantar',label:'🍄 Mantar'},
+  {id:'zarali',label:'🐛 Zararlı'},
+  {id:'bakteri',label:'🔵 Bakteri'},
+  {id:'beslenme',label:'🌱 Beslenme'},
+  {id:'virus',label:'🦠 Virüs'},
+];
+
+var aktifTip='hepsi', araQ='', acikId=null;
+
+function renderHst(){
+  araQ = document.getElementById('araInput').value.toLowerCase().trim();
+  var liste = HASTALIKLAR.filter(function(h){
+    var tipOk = aktifTip==='hepsi' || h.tip===aktifTip;
+    var araOk = !araQ || h.ad.toLowerCase().includes(araQ)
+      || (h.etkili||[]).join(' ').toLowerCase().includes(araQ)
+      || h.belirtiler.toLowerCase().includes(araQ);
+    return tipOk && araOk;
+  });
+  document.getElementById('sayiInfo').textContent = liste.length+' hastalık/zararlı gösteriliyor';
+  document.getElementById('hstGrid').innerHTML = liste.map(function(h){
+    var acik = acikId===h.id;
+    var tipRenk = {mantar:'tip-mantar',bakteri:'tip-bakteri',virus:'tip-virus',zarali:'tip-zarali',beslenme:'tip-beslenme',cevre:'tip-cevre'}[h.tip]||'tip-cevre';
+    var tipLabel = {mantar:'Mantar',bakteri:'Bakteri',virus:'Virüs',zarali:'Zararlı',beslenme:'Beslenme Sorunu',cevre:'Çevre'}[h.tip]||h.tip;
+    var html = '<div class="hst-kart'+(acik?' acik':'')+'" onclick="toggleHst(\''+h.id+'\''+')">'
+      +'<div class="hst-ust"><span class="hst-emoji">'+h.e+'</span>'
+      +'<div class="hst-bilgi"><div class="hst-baslik">'+h.ad+'</div>'
+      +'<div class="hst-tip"><span class="hst-etiket '+tipRenk+'">'+tipLabel+'</span>'
+      +(h.etkili?'<span style="font-size:.72rem;color:var(--t3);margin-left:.4rem">'+h.etkili.slice(0,3).join(', ')+(h.etkili.length>3?'...':'')+'</span>':'')
+      +'</div></div>'
+      +'<span class="hst-ok">▼</span></div>';
+    if(acik){
+      html += '<div class="hst-detay">'
+        +'<div class="hst-bolum"><h4>📋 Belirtiler</h4><p>'+h.belirtiler+'</p></div>'
+        +'<div class="hst-bolum"><h4>❓ Nedenler</h4><p>'+h.nedenler+'</p></div>'
+        +'<div class="hst-bolum"><h4>💊 Tedavi</h4><ul>'+h.tedavi.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul></div>'
+        +'<div class="hst-bolum"><h4>🛡️ Önleme</h4><p>'+h.onleme+'</p></div>'
+        +'</div>';
+    }
+    html += '</div>';
+    return html;
+  }).join('');
+}
+
+function toggleHst(id){ acikId = (acikId===id)?null:id; renderHst(); }
+
+function secTip(t){
+  aktifTip=t;
+  document.querySelectorAll('.kat-btn').forEach(function(b){b.classList.toggle('aktif',b.dataset.tip===t);});
+  renderHst();
+}
+
+// Kat bar
+document.getElementById('katBar').innerHTML = TIPLER.map(function(t){
+  return '<button class="kat-btn'+(aktifTip===t.id?' aktif':'')+'" data-tip="'+t.id+'" onclick="secTip(\''+t.id+'\')">'+t.label+'</button>';
+}).join('');
+
+renderHst();
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+<script>
+function paylasim(platform) {
+  var url = encodeURIComponent(window.location.href);
+  var baslik = encodeURIComponent(document.title);
+  var linkler = {
+    whatsapp: 'https://wa.me/?text=' + baslik + '%20' + url,
+    twitter:  'https://twitter.com/intent/tweet?text=' + baslik + '&url=' + url,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
+  };
+  if(platform === 'link') {
+    navigator.clipboard.writeText(window.location.href).then(function(){alert('Bağlantı kopyalandı!');});
+    return;
+  }
+  window.open(linkler[platform], '_blank', 'width=600,height=400');
+}
+</script>
+</body>
+</html>

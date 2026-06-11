@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bölgeye Göre Bitkiler | BitkiDoktorum</title>
+<meta name="description" content="Türkiye haritasıyla bölgenize uygun bitkileri keşfedin. Akdeniz, Karadeniz, Ege, İç Anadolu ve daha fazlası.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.bolge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+@media(max-width:600px){.bolge-grid{grid-template-columns:1fr 1fr}}
+.bolge-kart{background:#fff;border:2px solid var(--br);border-radius:var(--r);padding:1.25rem;cursor:pointer;transition:.2s;text-align:center;box-shadow:var(--sh)}
+.bolge-kart:hover,.bolge-kart.aktif{border-color:var(--g);background:var(--gp);transform:translateY(-2px)}
+.bolge-kart .ikon{font-size:2.5rem;margin-bottom:.5rem}
+.bolge-kart .ad{font-weight:700;font-size:.95rem;color:var(--gd)}
+.bolge-kart .ozet{font-size:.72rem;color:var(--t2);margin-top:.25rem}
+.bolge-kart .sayi{font-size:.75rem;background:var(--g);color:#fff;border-radius:20px;padding:.1rem .5rem;display:inline-block;margin-top:.4rem}
+.hava-kutusu{background:linear-gradient(135deg,#0072ff,#00c6ff);color:#fff;border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.hava-kutusu input{flex:1;min-width:180px;padding:.5rem .75rem;border-radius:6px;border:none;font-size:.9rem}
+.hava-kutusu button{padding:.5rem 1rem;background:#fff;color:#0072ff;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.85rem}
+.hava-sonuc{background:#fff;border-radius:var(--r);padding:1rem;margin-top:.75rem;color:var(--t1);width:100%}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Bölge Rehberi</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>🗺️ Bölgeye Göre Bitki Rehberi</h1>
+<p style="color:var(--t2);margin-bottom:1.5rem">Türkiye'nin bölgesini seçin, size uygun bitkiler listelensin. Ayrıca hava durumuna göre bitki önerisi alın.</p>
+
+<!-- Hava Durumu & Bitki Önerisi -->
+<div class="hava-kutusu">
+  <div style="font-size:1.8rem">🌤️</div>
+  <div style="flex:1">
+    <div style="font-weight:700;margin-bottom:.4rem">Şehrinize Göre Bitki Önerisi</div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <input type="text" id="sehirInput" placeholder="Şehir girin... (İstanbul, Ankara...)" onkeydown="if(event.key==='Enter')havaBitki()">
+      <button onclick="havaBitki()">🔍 Öner</button>
+    </div>
+  </div>
+  <div class="hava-sonuc" id="havaSonuc" style="display:none"></div>
+</div>
+
+<!-- Bölge seçimi -->
+<h2 style="margin-bottom:.75rem">📍 Bölge Seçin</h2>
+<div class="bolge-grid" id="bolgeGrid"></div>
+
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+
+<div id="bitkiSonuc"></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+
+<script src="assets/app.js"></script>
+<script>
+var BOLGELER = [
+  {id:'akdeniz',ad:'Akdeniz',ikon:'🌊',ozet:'Sıcak yazlar, ılık kışlar',anahtar:['Akdeniz','akdeniz','Güney','güney'],renk:'#ff6b6b'},
+  {id:'ege',ad:'Ege',ikon:'🫒',ozet:'Zeytin, incir, narenciye iklimi',anahtar:['Ege','ege','İzmir','Muğla'],renk:'#feca57'},
+  {id:'marmara',ad:'Marmara',ikon:'🌆',ozet:'Ilıman, yaz-kış dört mevsim',anahtar:['Marmara','marmara','İstanbul','Bursa'],renk:'#48dbfb'},
+  {id:'karadeniz',ad:'Karadeniz',ikon:'🌧️',ozet:'Nemli, yağışlı, asidik toprak',anahtar:['Karadeniz','karadeniz','Trabzon','Rize'],renk:'#1dd1a1'},
+  {id:'ic_anadolu',ad:'İç Anadolu',ikon:'🌾',ozet:'Karasal, sert kışlar',anahtar:['İç Anadolu','İç','Ankara','Konya','Karasal'],renk:'#f9ca24'},
+  {id:'dogu_anadolu',ad:'Doğu Anadolu',ikon:'🏔️',ozet:'Dağlık, sert soğuklar',anahtar:['Doğu Anadolu','Doğu Anadolu','Erzurum','Van'],renk:'#6c5ce7'},
+  {id:'guneydogu',ad:'Güneydoğu',ikon:'☀️',ozet:'Çok sıcak yazlar, kurak',anahtar:['Güneydoğu','Güneydoğu','Şanlıurfa','Diyarbakır'],renk:'#fd9644'},
+  {id:'tum',ad:'Tüm Türkiye',ikon:'🇹🇷',ozet:'Her bölgede yetişen bitkiler',anahtar:['Tüm Türkiye','Her iklim','Her iklim'],renk:'#e84393'},
+];
+
+var SEHIR_BOLGE = {
+  'istanbul':'marmara','ankara':'ic_anadolu','izmir':'ege','bursa':'marmara',
+  'antalya':'akdeniz','adana':'akdeniz','mersin':'akdeniz','konya':'ic_anadolu',
+  'gaziantep':'guneydogu','diyarbakır':'guneydogu','şanlıurfa':'guneydogu',
+  'trabzon':'karadeniz','samsun':'karadeniz','rize':'karadeniz','artvin':'karadeniz',
+  'erzurum':'dogu_anadolu','van':'dogu_anadolu','ağrı':'dogu_anadolu',
+  'muğla':'ege','aydın':'ege','manisa':'ege','denizli':'ege',
+  'hatay':'akdeniz','osmaniye':'akdeniz','kahramanmaraş':'guneydogu',
+  'kayseri':'ic_anadolu','sivas':'ic_anadolu','malatya':'dogu_anadolu',
+};
+
+var secilenBolge = null;
+
+function bolgedeBitki(bolge){
+  var anahtar = bolge.anahtar;
+  return PLANT_DB.filter(function(p){
+    if(!p.regions) return bolge.id==='tum';
+    var r = Array.isArray(p.regions)?p.regions.join(' '):p.regions;
+    if(bolge.id==='tum') return r.includes('Tüm Türkiye') || r.includes('Her iklim');
+    return anahtar.some(function(k){ return r.includes(k); });
+  });
+}
+
+function renderBolgeler(){
+  document.getElementById('bolgeGrid').innerHTML = BOLGELER.map(function(b){
+    var sayi = bolgedeBitki(b).length;
+    return '<div class="bolge-kart'+(secilenBolge&&secilenBolge.id===b.id?' aktif':'')+'" onclick="secBolge(\''+b.id+'\''+')">'
+      +'<div class="ikon">'+b.ikon+'</div>'
+      +'<div class="ad">'+b.ad+'</div>'
+      +'<div class="ozet">'+b.ozet+'</div>'
+      +'<span class="sayi">'+sayi+' bitki</span>'
+      +'</div>';
+  }).join('');
+}
+
+function secBolge(id){
+  secilenBolge = BOLGELER.find(function(b){return b.id===id;});
+  renderBolgeler();
+  var bitkiler = bolgedeBitki(secilenBolge);
+  var html = '<h2 style="margin-bottom:1rem">'+secilenBolge.ikon+' '+secilenBolge.ad+' Bölgesi — '+bitkiler.length+' Bitki</h2>';
+  html += '<div class="grid-3">' + bitkiler.map(function(p){return plantCardHTML(p);}).join('') + '</div>';
+  document.getElementById('bitkiSonuc').innerHTML = html;
+}
+
+function havaBitki(){
+  var sehir = document.getElementById('sehirInput').value.trim().toLowerCase();
+  var el = document.getElementById('havaSonuc');
+  el.style.display='block';
+  if(!sehir){el.innerHTML='<span style="color:#e74c3c">Lütfen şehir adı girin.</span>';return;}
+  var bolgeId = SEHIR_BOLGE[sehir];
+  var bolge = bolgeId ? BOLGELER.find(function(b){return b.id===bolgeId;}) : null;
+  if(!bolge){
+    el.innerHTML='<b>'+sehir.charAt(0).toUpperCase()+sehir.slice(1)+'</b> için bölge tespit edilemedi. Aşağıdan bölgenizi seçebilirsiniz.';
+    return;
+  }
+  var bitkiler = bolgedeBitki(bolge).filter(function(p){return p.featured;}).slice(0,6);
+  el.innerHTML = '<b>📍 '+sehir.charAt(0).toUpperCase()+sehir.slice(1)+' → '+bolge.ad+' Bölgesi</b><br>'
+    +'<div style="margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.4rem">'
+    +bitkiler.map(function(p){return '<a href="bitki.html?id='+p.id+'" style="background:var(--gp);border:1px solid var(--g);border-radius:20px;padding:.2rem .6rem;font-size:.78rem;text-decoration:none;color:var(--gd)">'+p.emoji+' '+p.tr+'</a>';}).join('')
+    +'<a href="bolge.html" onclick="secBolge(\''+bolgeId+'\')" style="font-size:.78rem;color:var(--g);padding:.2rem .6rem">Tümünü gör →</a>'
+    +'</div>';
+  secBolge(bolgeId);
+}
+
+renderBolgeler();
+var paramBolge = new URLSearchParams(window.location.search).get('bolge');
+if(paramBolge) secBolge(paramBolge);
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>

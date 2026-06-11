@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Hastalığı Teşhisi — AI Destekli | BitkiDoktorum</title>
+<meta name="description" content="Bitkinizdeki hastalığı fotoğrafla anında teşhis edin.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.upload-box{border:2px dashed var(--gl);border-radius:var(--r);padding:2rem;text-align:center;background:var(--gxp);transition:all .2s;margin-bottom:1rem}
+.upload-box.drag{border-color:var(--g);background:var(--gp)}
+.preview-img{width:100%;max-height:300px;object-fit:cover;border-radius:var(--r);margin-bottom:1rem;display:none}
+.fi{width:100%;padding:.6rem .85rem;border:2px solid var(--br);border-radius:var(--r);font-family:'Open Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--g)}
+.res-card{background:white;border:1px solid var(--br);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem}
+.res-card.critical{border-left:4px solid var(--red)}.res-card.warning{border-left:4px solid var(--am)}.res-card.healthy{border-left:4px solid var(--g)}
+.conf-bar{height:5px;background:#eee;border-radius:3px;overflow:hidden;margin:.5rem 0}
+.conf-fill{height:100%;background:linear-gradient(90deg,var(--g),var(--gl));border-radius:3px;transition:width 1s ease}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-top:1rem}
+.prod-card{background:var(--gxp);border:1px solid var(--br);border-left:3px solid var(--g);border-radius:var(--r);padding:.9rem}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Bitki Hastalık Teşhisi | BitkiDoktorum","url":"https://bitkidoktorum.com/teshis.html","applicationCategory":"HealthApplication"}
+</script>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html" class="active">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Hastalık Teşhisi</span></div></div></nav>
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+<div class="site-wrap">
+<div class="main-content">
+
+<style>
+.sekme-bar{display:flex;gap:0;margin-bottom:1.5rem;border-bottom:2px solid var(--br)}
+.sekme-btn{padding:.6rem 1.2rem;border:none;background:none;cursor:pointer;font-size:.9rem;font-weight:600;color:var(--t2);border-bottom:3px solid transparent;margin-bottom:-2px;transition:.15s}
+.sekme-btn.aktif{color:var(--g);border-bottom-color:var(--g)}
+.sekme-icerik{display:none}
+.sekme-icerik.aktif{display:block}
+</style>
+
+<div class="sekme-bar">
+  <button class="sekme-btn aktif" onclick="sekmeAc('teshis',this)">🔬 Hastalık Teşhisi</button>
+  <button class="sekme-btn" onclick="sekmeAc('tanima',this)">🌿 Bitki Tanıma</button>
+</div>
+<div id="sekme-teshis" class="sekme-icerik aktif">
+<h1>🔬 Bitki Hastalığı Teşhisi</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Fotoğraf yükleyin — AI akademik kaynaklı tanı ve ilaçlama programı hazırlasın.</p>
+
+<div class="upload-box" id="uploadBox"
+  ondragover="event.preventDefault();this.classList.add('drag')"
+  ondragleave="this.classList.remove('drag')"
+  ondrop="event.preventDefault();this.classList.remove('drag');loadFile(event.dataTransfer.files[0])">
+  <div id="uploadInner">
+    <div style="font-size:2.5rem;margin-bottom:.5rem">📸</div>
+    <h3 style="margin-bottom:.3rem">Fotoğraf Seç veya Sürükle</h3>
+    <p style="color:var(--t3);font-size:.82rem;margin-bottom:.75rem">📱 Mobilde kamera ile çekebilirsiniz</p>
+    <button class="btn btn-primary btn-sm" onclick="document.getElementById('fileIn').click()">📂 Dosya Seç</button>
+    <button class="btn btn-secondary btn-sm" onclick="document.getElementById('cameraIn').click()">📷 Kamera</button>
+  </div>
+  <input type="file" id="fileIn" accept="image/*" style="display:none" onchange="loadFile(this.files[0])">
+  <input type="file" id="cameraIn" accept="image/*" capture="environment" style="display:none" onchange="loadFile(this.files[0])">
+</div>
+
+<img id="prevImg" class="preview-img" alt="Yüklenen fotoğraf">
+<div id="imgInfo" style="font-size:.75rem;color:var(--t3);margin-bottom:.75rem;display:none"></div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+  <div><label style="display:block;font-size:.73rem;font-weight:700;color:var(--t3);text-transform:uppercase;margin-bottom:.35rem">Bitki Türü</label>
+  <input type="text" class="fi" id="plantIn" placeholder="Domates, gül, elma..."></div>
+  <div><label style="display:block;font-size:.73rem;font-weight:700;color:var(--t3);text-transform:uppercase;margin-bottom:.35rem">Sorunun Süresi</label>
+  <select class="fi" id="durIn"><option value="">Belirtmiyorum</option><option>1–3 gün</option><option>1 hafta</option><option>2–4 hafta</option><option>1–3 ay</option></select></div>
+</div>
+<div style="margin-bottom:1rem"><label style="display:block;font-size:.73rem;font-weight:700;color:var(--t3);text-transform:uppercase;margin-bottom:.35rem">Gözlemleriniz</label>
+<textarea class="fi" id="noteIn" rows="2" style="resize:vertical" placeholder="Yapraklar sarardı, kuruma var..."></textarea></div>
+
+<button class="btn btn-primary btn-lg btn-block" id="diagBtn" onclick="runDiag()" disabled>🔬 Teşhisi Başlat</button>
+
+<div class="ad-slot ad-slot-in-article" style="margin:1.5rem 0"><span class="ad-label">Reklam</span><small>336×280</small></div>
+<div id="diagLoading" style="display:none" class="loading-spinner"><div class="spinner"></div><span id="diagMsg">Analiz ediliyor...</span></div>
+<div id="diagResult" style="display:none"></div>
+
+<section style="margin-top:2rem">
+<h2>Yaygın Hastalıklar</h2>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem">
+<div class="res-card warning"><h4>🍄 Külleme</h4><p style="font-size:.82rem;color:var(--t2);margin:0">Beyaz un görünümü. Kükürt veya Trifloksistrobin fungisit ile tedavi.</p></div>
+<div class="res-card critical"><h4>🐛 Kırmızı Örümcek</h4><p style="font-size:.82rem;color:var(--t2);margin:0">Yaprak altında ağ. Abamektin içerikli akarisit.</p></div>
+<div class="res-card critical"><h4>🦗 Yaprak Biti</h4><p style="font-size:.82rem;color:var(--t2);margin:0">Genç sürgünlerde küme. İmidakloprid veya Pirimikarb.</p></div>
+<div class="res-card warning"><h4>🟡 Sarı Yapraklar</h4><p style="font-size:.82rem;color:var(--t2);margin:0">Demir/azot eksikliği. pH testi ve şelatlı gübre.</p></div>
+</div>
+</section>
+<div class="info-box info-box-amber" style="margin-top:1.25rem"><h5>⚠️ Uyarı</h5><p style="margin:0;font-size:.82rem">Bilgilendirme amaçlıdır. İlaçlamadan önce etiketi okuyun.</p></div>
+<div class="ad-slot ad-slot-banner" style="margin-top:1.25rem"><span class="ad-label">Reklam</span><small>728×90</small></div>
+</div>
+
+<aside class="sidebar">
+<div class="ad-slot ad-slot-sidebar"><span class="ad-label">Reklam</span><small>300×600</small></div>
+<div class="widget"><h3 class="widget-title">💡 İpuçları</h3><ul class="widget-list"><li>📸 Net odaklı çekin</li><li>☀️ Gün ışığında çekin</li><li>🔍 Hastalıklı kısmı yakın</li><li>🌿 Yaprak üstü ve altı</li></ul></div>
+<div class="ad-slot ad-slot-rectangle"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</aside>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>AI destekli bitki hastalığı teşhisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="ansiklopedi.html">Ansiklopedi</a></li><li><a href="blog.html">Blog</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+
+<script src="assets/app.js"></script>
+<script>
+let imgB64 = null, imgMime = null;
+
+function loadFile(f) {
+  if (!f || !f.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const original = e.target.result;
+    // Canvas ile sıkıştır
+    const img2 = new Image();
+    img2.onload = () => {
+      const canvas = document.createElement('canvas');
+      let w = img2.width, h = img2.height;
+      // Max 600px
+      const MAX = 200;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      const ctx2 = canvas.getContext('2d');
+      ctx2.drawImage(img2, 0, 0, w, h);
+      // Kalite 0.6
+      const compressed = canvas.toDataURL('image/jpeg', 0.3);
+      imgB64 = compressed.split(',')[1];
+      imgMime = 'image/jpeg';
+      // Boyut göster
+      const kb = Math.round(imgB64.length * 0.75 / 1024);
+      document.getElementById('imgInfo').style.display = 'block';
+      document.getElementById('imgInfo').textContent = `✅ Fotoğraf hazır: ${w}×${h}px, ~${kb}KB`;
+      document.getElementById('prevImg').src = compressed;
+      document.getElementById('prevImg').style.display = 'block';
+      document.getElementById('uploadInner').style.display = 'none';
+      document.getElementById('diagBtn').disabled = false;
+      document.getElementById('diagResult').style.display = 'none';
+    };
+    img2.src = original;
+  };
+  reader.readAsDataURL(f);
+}
+
+async function runDiag() {
+  if (!imgB64) { alert('Lütfen önce bir fotoğraf yükleyin.'); return; }
+  const plant = document.getElementById('plantIn').value.trim();
+  const dur = document.getElementById('durIn').value;
+  const note = document.getElementById('noteIn').value.trim();
+  document.getElementById('diagBtn').disabled = true;
+  document.getElementById('diagLoading').style.display = 'flex';
+  document.getElementById('diagResult').style.display = 'none';
+  document.getElementById('diagMsg').textContent = 'Analiz ediliyor...';
+  try {
+    const sources = await fetchAcademic(`${plant||'plant'} disease treatment`, 3);
+    const ctx = sources.slice(0,2).map((p,i) => `[${i+1}] ${p.title}`).join('\n');
+    const prompt = `Sen uzman bitki patoloğu yapay zekasısın. Fotoğraftaki bitkiyi incele, Türkçe tanı raporu hazırla.
+${plant?'Bitki: '+plant:''} ${dur?'Süre: '+dur:''} ${note?'Not: '+note:''}
+Akademik: ${ctx||'kendi bilginle devam et'}
+SADECE JSON döndür - başka hiçbir şey yazma:
+{"tree":"Bitki türü","status":"kritik|uyari|saglikli","diagnosis":"Hastalık adı","confidence":82,"desc":"2-3 cümle açıklama","symptoms":["b1","b2"],"causes":["n1"],"urgent":"Acil yapılacak","treatment":"Tedavi","products":[{"type":"Fungisit","name":"Ürün","ingredient":"Etken madde","dose":"Doz","timing":"Ne zaman","desc":"Açıklama"}]}`;
+    const raw = await callClaude(prompt, imgB64, imgMime);
+    const d = parseJSON(raw);
+    renderDiag(d, sources);
+  } catch(e) {
+    document.getElementById('diagResult').innerHTML = `<div class="info-box info-box-red"><h5>⚠️ Hata</h5><p style="margin:0">${e.message}</p></div>`;
+    document.getElementById('diagResult').style.display = 'block';
+  } finally {
+    document.getElementById('diagLoading').style.display = 'none';
+    document.getElementById('diagBtn').disabled = false;
+  }
+}
+
+function renderDiag(d, sources) {
+  const sm = {kritik:{cls:'critical',badge:'🔴 Kritik',bc:'badge-red'}, uyari:{cls:'warning',badge:'🟡 Dikkat',bc:'badge-amber'}, saglikli:{cls:'healthy',badge:'🟢 Sağlıklı',bc:'badge-green'}};
+  const s = sm[d.status] || sm.uyari;
+  const conf = Math.min(100, Math.max(0, d.confidence||75));
+  const prods = (d.products||[]).map(p => `<div class="prod-card">
+    <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:var(--am);margin-bottom:.2rem">${p.type}</div>
+    <div style="font-weight:700;font-size:.9rem;color:var(--gd);margin-bottom:.25rem">${p.name}</div>
+    <code style="background:white;border:1px solid var(--br);border-radius:3px;padding:.08rem .35rem;font-size:.68rem;color:var(--g)">${p.ingredient}</code>
+    <p style="font-size:.78rem;color:var(--t2);margin:.35rem 0">${p.desc}</p>
+    <div style="background:white;border-radius:var(--rs);padding:.4rem .6rem;font-size:.73rem;color:var(--t2)">${p.dose?'💊 '+p.dose+' · ':''} ⏰ ${p.timing||''}</div>
+  </div>`).join('');
+  document.getElementById('diagResult').innerHTML = `
+    <div class="res-card ${s.cls}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.85rem">
+        <div><div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;margin-bottom:.2rem">Tanı</div>
+        <div style="font-family:'Merriweather',serif;font-size:1.4rem;color:var(--gd);font-weight:700">${d.diagnosis||'–'}</div></div>
+        <span class="badge ${s.bc}">${s.badge}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.85rem">
+        <div><div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Bitki</div><strong>${d.tree||'–'}</strong></div>
+        <div><div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;font-weight:700;margin-bottom:.2rem">Güven %${conf}</div>
+          <div class="conf-bar"><div class="conf-fill" id="confFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <p style="margin:0;font-size:.88rem">${d.desc||'–'}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.85rem">
+      <div class="res-card"><h4 style="color:var(--gd);margin-bottom:.5rem;font-size:.95rem">🍂 Belirtiler</h4><ul style="padding-left:1rem">${(d.symptoms||[]).map(s=>`<li style="font-size:.82rem;margin-bottom:.25rem">${s}</li>`).join('')}</ul></div>
+      <div class="res-card"><h4 style="color:var(--gd);margin-bottom:.5rem;font-size:.95rem">⚡ Nedenler</h4><ul style="padding-left:1rem">${(d.causes||[]).map(c=>`<li style="font-size:.82rem;margin-bottom:.25rem">${c}</li>`).join('')}</ul></div>
+    </div>
+    <div class="res-card warning" style="margin-bottom:.85rem"><h4 style="color:var(--am);margin-bottom:.4rem">⚡ Acil Eylem</h4><p style="margin:0;font-size:.88rem">${d.urgent||'–'}</p></div>
+    <div class="res-card" style="margin-bottom:1rem"><h4 style="color:var(--gd);margin-bottom:.4rem">🌱 Tedavi</h4><p style="margin:0;font-size:.88rem">${d.treatment||'–'}</p></div>
+    <h3 style="margin-bottom:.75rem">💊 Önerilen İlaçlar</h3>
+    <div class="prod-grid">${prods||'<p style="color:var(--t3)">Ürün önerisi bulunamadı.</p>'}</div>
+    ${sourcesHTML(sources)}
+    <button class="btn btn-outline" style="margin-top:1rem" onclick="resetDiag()">↻ Yeni Teşhis</button>`;
+  document.getElementById('diagResult').style.display = 'block';
+  document.getElementById('diagResult').scrollIntoView({behavior:'smooth'});
+  setTimeout(() => { const f = document.getElementById('confFill'); if(f) f.style.width = conf + '%'; }, 200);
+}
+
+function resetDiag() {
+  imgB64 = null; imgMime = null;
+  document.getElementById('prevImg').style.display = 'none';
+  document.getElementById('imgInfo').style.display = 'none';
+  document.getElementById('uploadInner').style.display = 'block';
+  document.getElementById('diagResult').style.display = 'none';
+  document.getElementById('diagBtn').disabled = true;
+  document.getElementById('fileIn').value = '';
+  document.getElementById('cameraIn').value = '';
+}
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>
+
+</div><!-- /sekme-teshis -->
+<div id="sekme-tanima" class="sekme-icerik">
+<h1>🌿 Fotoğraftan Bitki Tanıma</h1>
+<p style="color:var(--t2);margin-bottom:1.25rem">Bitkinin fotoğrafını yükleyin, AI ismini ve bakım bilgilerini söylesin.</p>
+<div class="card" style="max-width:600px;margin:0 auto">
+  <div class="card-body">
+    <div id="tanimaUpload" style="border:2px dashed var(--br);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer;transition:.2s" onclick="document.getElementById('tanimaFile').click()">
+      <div style="font-size:3rem">📷</div>
+      <p style="margin:.5rem 0;font-weight:600">Bitki fotoğrafı yükleyin</p>
+      <p style="font-size:.8rem;color:var(--t2)">JPG veya PNG, max 10MB</p>
+      <input type="file" id="tanimaFile" accept="image/*" style="display:none" onchange="tanimaYukle(this)">
+    </div>
+    <div id="tanimaOnizleme" style="display:none;margin-top:1rem;text-align:center">
+      <img id="tanimaImg" style="max-width:100%;max-height:250px;border-radius:8px;object-fit:cover" alt="Yüklenen fotoğraf">
+      <button class="btn btn-primary" style="margin-top:.75rem;width:100%" onclick="tanimaAnaliz()">🔍 Bitkiyi Tanı</button>
+    </div>
+    <div id="tanimaSonuc" style="display:none;margin-top:1rem"></div>
+  </div>
+</div>
+<div class="ad-slot" style="margin:1.5rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div><!-- /sekme-tanima -->
+<script>
+function sekmeAc(id, btn){
+  document.querySelectorAll('.sekme-icerik').forEach(function(el){el.classList.remove('aktif');});
+  document.querySelectorAll('.sekme-btn').forEach(function(el){el.classList.remove('aktif');});
+  document.getElementById('sekme-'+id).classList.add('aktif');
+  btn.classList.add('aktif');
+}
+
+var tanimaBase64=null, tanımaMime=null;
+function tanimaYukle(input){
+  var file=input.files[0];
+  if(!file) return;
+  tanımaMime=file.type;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    tanimaBase64=e.target.result.split(',')[1];
+    document.getElementById('tanimaImg').src=e.target.result;
+    document.getElementById('tanimaOnizleme').style.display='block';
+    document.getElementById('tanimaSonuc').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function tanimaAnaliz(){
+  if(!tanimaBase64){alert('Önce fotoğraf yükleyin.');return;}
+  var el=document.getElementById('tanimaSonuc');
+  el.style.display='block';
+  el.innerHTML='<div class="loading-spinner"><div class="spinner"></div><span>Bitki tanınıyor...</span></div>';
+  try{
+    var prompt='Bu fotoğraftaki bitkiyi tanı. Varsa bilimsel adını, Türkçe adını, bakım bilgilerini (sulama, güneş, gübreleme), Türkiye'de hangi bölgelerde yetiştiğini söyle. SADECE JSON: {"isim_tr":"","isim_en":"","bilimsel_ad":"","sulama":"","gunes":"","gubre":"","bolge":"","aciklama":"","bulundu":true}';
+    var r=await fetch('/api/diagnose',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,image:tanimaBase64,mime:tanımaMime})});
+    var d=await r.json();
+    if(d.error) throw new Error(d.error);
+    var j=JSON.parse(d.text.replace(/```json|```/g,'').trim());
+    if(!j.bulundu){el.innerHTML='<div class="info-box info-box-amber"><h5>⚠️ Tanınamadı</h5><p>Fotoğraf netliği yetersiz veya bitki veritabanında yok. Daha net bir fotoğraf deneyin.</p></div>';return;}
+    el.innerHTML='<div class="info-box info-box-green" style="margin-bottom:.75rem"><h5>✅ Bitki Tanındı!</h5>'
+      +'<p><strong>'+j.isim_tr+'</strong> '+(j.isim_en?'('+j.isim_en+')':'')+'<br>'
+      +'<em style="font-size:.83rem;color:#555">'+j.bilimsel_ad+'</em></p></div>'
+      +'<table style="width:100%;font-size:.82rem;border-collapse:collapse">'
+      +(j.sulama?'<tr><td style="padding:.35rem;font-weight:600;color:var(--t2);width:35%">💧 Sulama</td><td style="padding:.35rem">'+j.sulama+'</td></tr>':'')
+      +(j.gunes?'<tr style="background:var(--gp)"><td style="padding:.35rem;font-weight:600;color:var(--t2)">☀️ Güneş</td><td style="padding:.35rem">'+j.gunes+'</td></tr>':'')
+      +(j.gubre?'<tr><td style="padding:.35rem;font-weight:600;color:var(--t2)">🌱 Gübreleme</td><td style="padding:.35rem">'+j.gubre+'</td></tr>':'')
+      +(j.bolge?'<tr style="background:var(--gp)"><td style="padding:.35rem;font-weight:600;color:var(--t2)">📍 Bölge</td><td style="padding:.35rem">'+j.bolge+'</td></tr>':'')
+      +'</table>'
+      +(j.aciklama?'<p style="margin-top:.75rem;font-size:.83rem;color:var(--t2)">'+j.aciklama+'</p>':'')
+      +'<div style="margin-top:.75rem"><a href="ansiklopedi.html?q='+encodeURIComponent(j.isim_tr)+'" class="btn btn-secondary btn-sm">Ansiklopedide Ara →</a></div>';
+  }catch(e){
+    el.innerHTML='<div class="info-box info-box-red"><h5>Hata</h5><p>Tanıma başarısız. Tekrar deneyin.</p></div>';
+  }
+}
+</script>

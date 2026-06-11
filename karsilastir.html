@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bitki Karşılaştır | BitkiDoktorum</title>
+<meta name="description" content="İki bitkiyi yan yana karşılaştırın. Sulama, gübreleme, zorluk, bölge bilgileri.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.karsi-grid{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin:1.5rem 0;align-items:start}
+@media(max-width:600px){.karsi-grid{grid-template-columns:1fr;}.vs-col{display:none}}
+.secim-kutu{background:#fff;border:2px dashed var(--br);border-radius:var(--r);padding:1rem;text-align:center}
+.secim-kutu.dolu{border-style:solid;border-color:var(--g)}
+.bitki-select{width:100%;padding:.5rem;border:1px solid var(--br);border-radius:6px;font-size:.85rem;margin-top:.5rem}
+.vs-col{display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;color:var(--t3)}
+.karsi-tablo{width:100%;border-collapse:collapse;margin-top:1rem}
+.karsi-tablo th{background:var(--gp);color:var(--gd);padding:.6rem .8rem;text-align:left;font-size:.82rem;font-weight:700}
+.karsi-tablo td{padding:.55rem .8rem;border-bottom:1px solid #f0f0f0;font-size:.82rem;vertical-align:top}
+.karsi-tablo tr:hover td{background:#fafff8}
+.kazanan{background:#d4edda!important;font-weight:600;color:#155724}
+.kaybeden{background:#fff3cd!important;color:#856404}
+.ozet-bar{display:flex;gap:1rem;margin:1rem 0;flex-wrap:wrap}
+.ozet-kart{flex:1;min-width:120px;background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:.75rem;text-align:center;box-shadow:var(--sh)}
+.ozet-kart .emoji{font-size:2rem}
+.ozet-kart .isim{font-weight:700;font-size:.85rem;color:var(--gd);margin-top:.3rem}
+.ozet-kart .skor{font-size:1.2rem;font-weight:700;color:var(--g)}
+.puan-yildiz{color:#f39c12}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BFFHPP4MPT');
+</script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2d7a2d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BitkiDoktorum">
+<style>
+.quick-search-wrap{position:relative;display:inline-block}
+.quick-search-btn{background:var(--gp);border:1px solid var(--br);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.82rem;color:var(--gd);font-weight:600;display:flex;align-items:center;gap:.4rem}
+.quick-search-btn:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.quick-search-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9998}
+.quick-search-box{display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:520px;background:#fff;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:9999;overflow:hidden}
+.quick-search-box.acik,.quick-search-overlay.acik{display:block}
+.qs-input-wrap{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-bottom:1px solid var(--br)}
+.qs-input{flex:1;border:none;outline:none;font-size:1rem;color:var(--t1)}
+.qs-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--t3);padding:.2rem}
+.qs-sonuclar{max-height:340px;overflow-y:auto;padding:.5rem 0}
+.qs-item{display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;text-decoration:none;color:var(--t1);transition:.1s}
+.qs-item:hover{background:var(--gp)}
+.qs-item-emoji{font-size:1.4rem;flex-shrink:0}
+.qs-item-bilgi{flex:1}
+.qs-item-isim{font-weight:600;font-size:.88rem;color:var(--gd)}
+.qs-item-sci{font-size:.73rem;color:var(--t3);font-style:italic}
+.qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="takvim.html">Takvim</a><a href="karsilastir.html">Karşılaştır</a><a href="bolge.html">Bölge</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="araclar.html">Araçlar</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
+<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+</div>
+<div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
+<div class="quick-search-box" id="qsBox">
+<div class="qs-input-wrap">
+<span style="font-size:1.1rem">🔍</span>
+<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
+<button class="qs-close" onclick="qsKapat()">✕</button>
+</div>
+<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
+</div>
+<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
+<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Karşılaştır</span></div></div></nav>
+
+<div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
+
+<div class="container" style="padding:1.5rem 1rem">
+<h1>⚖️ Bitki Karşılaştırma</h1>
+<p style="color:var(--t2);margin-bottom:1.5rem">İki bitkiyi seçin, özelliklerini yan yana karşılaştırın.</p>
+
+<div class="karsi-grid">
+  <div class="secim-kutu" id="kutu1">
+    <div style="font-size:2.5rem" id="emoji1">🌱</div>
+    <div style="font-weight:600;margin:.3rem 0" id="isim1">Birinci Bitki</div>
+    <select class="bitki-select" id="sel1" onchange="secBitki(1)">
+      <option value="">-- Bitki seçin --</option>
+    </select>
+  </div>
+  <div class="vs-col">VS</div>
+  <div class="secim-kutu" id="kutu2">
+    <div style="font-size:2.5rem" id="emoji2">🌿</div>
+    <div style="font-weight:600;margin:.3rem 0" id="isim2">İkinci Bitki</div>
+    <select class="bitki-select" id="sel2" onchange="secBitki(2)">
+      <option value="">-- Bitki seçin --</option>
+    </select>
+  </div>
+</div>
+
+<div id="sonucArea" style="display:none">
+  <div class="ozet-bar" id="ozet"></div>
+  <div class="ad-slot" style="margin:.75rem 0"><span class="ad-label">Reklam</span><small>728×90</small></div>
+  <table class="karsi-tablo" id="tablo">
+    <thead><tr><th>Özellik</th><th id="th1">Bitki 1</th><th id="th2">Bitki 2</th></tr></thead>
+    <tbody id="tabloBody"></tbody>
+  </table>
+</div>
+
+<div class="ad-slot" style="margin:1rem 0"><span class="ad-label">Reklam</span><small>300×250</small></div>
+</div>
+
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div></div></div><div class="footer-bottom"><p>© 2025 BitkiDoktorum.com</p></div></footer>
+
+<script src="assets/app.js"></script>
+<script>
+var b1 = null, b2 = null;
+
+var WL = {low:'Az 💧', moderate:'Orta 💧💧', high:'Çok 💧💧💧'};
+var SL = {full_sun:'Tam Güneş ☀️', partial_shade:'Yarı Gölge 🌤️', shade:'Gölge 🌥️'};
+var DL = {easy:'Kolay ⭐', medium:'Orta ⭐⭐', hard:'Zor ⭐⭐⭐'};
+var DV = {easy:1, medium:2, hard:3};
+var WV = {low:1, moderate:2, high:3};
+
+function doldurSelect(){
+  var opts = PLANT_DB.map(function(p){ return '<option value="'+p.id+'">'+p.emoji+' '+p.tr+'</option>'; }).join('');
+  document.getElementById('sel1').innerHTML = '<option value="">-- Bitki seçin --</option>' + opts;
+  document.getElementById('sel2').innerHTML = '<option value="">-- Bitki seçin --</option>' + opts;
+}
+
+function secBitki(n){
+  var id = document.getElementById('sel'+n).value;
+  var p = PLANT_DB.find(function(x){return x.id===id;});
+  if(n===1) b1=p; else b2=p;
+  if(p){
+    document.getElementById('emoji'+n).textContent = p.emoji;
+    document.getElementById('isim'+n).textContent = p.tr;
+    document.getElementById('kutu'+n).classList.add('dolu');
+  }
+  if(b1 && b2) renderKarsi();
+}
+
+function renderKarsi(){
+  document.getElementById('sonucArea').style.display = 'block';
+  document.getElementById('th1').textContent = b1.emoji+' '+b1.tr;
+  document.getElementById('th2').textContent = b2.emoji+' '+b2.tr;
+
+  var satirlar = [
+    {label:'Bilimsel Ad', v1:b1.sci, v2:b2.sci, mode:'text'},
+    {label:'Kategori', v1:b1.cat, v2:b2.cat, mode:'text'},
+    {label:'Köken', v1:b1.origin, v2:b2.origin, mode:'text'},
+    {label:'İklim', v1:b1.climate, v2:b2.climate, mode:'text'},
+    {label:'Sulama', v1:WL[b1.water]||b1.water, v2:WL[b2.water]||b2.water, n1:WV[b1.water], n2:WV[b2.water], mode:'num_low'},
+    {label:'Güneş İsteği', v1:SL[b1.sun]||b1.sun, v2:SL[b2.sun]||b2.sun, mode:'text'},
+    {label:'Toprak', v1:b1.soil, v2:b2.soil, mode:'text'},
+    {label:'Bakım Zorluğu', v1:DL[b1.difficulty]||b1.difficulty, v2:DL[b2.difficulty]||b2.difficulty, n1:DV[b1.difficulty], n2:DV[b2.difficulty], mode:'num_low'},
+    {label:'Boy', v1:b1.height, v2:b2.height, mode:'text'},
+    {label:'Yaşam Süresi', v1:b1.lifespan, v2:b2.lifespan, mode:'text'},
+    {label:'Çiçeklenme', v1:b1.bloom, v2:b2.bloom, mode:'text'},
+    {label:'Hasat', v1:b1.harvest||'–', v2:b2.harvest||'–', mode:'text'},
+    {label:'Türkiye Bölgesi', v1:(b1.regions?b1.regions.join(', '):'Belirtilmemiş'), v2:(b2.regions?b2.regions.join(', '):'Belirtilmemiş'), mode:'text'},
+    {label:'Gübreleme', v1:b1.fertilize||'Belirtilmemiş', v2:b2.fertilize||'Belirtilmemiş', mode:'text'},
+    {label:'Dikim Zamanı', v1:b1.dikim||'Belirtilmemiş', v2:b2.dikim||'Belirtilmemiş', mode:'text'},
+    {label:'Budama', v1:b1.budama||'Belirtilmemiş', v2:b2.budama||'Belirtilmemiş', mode:'text'},
+  ];
+
+  var html = '';
+  satirlar.forEach(function(s){
+    var c1='', c2='';
+    if(s.mode==='num_low' && s.n1!=null && s.n2!=null){
+      if(s.n1<s.n2){c1='kazanan'; c2='kaybeden';}
+      else if(s.n2<s.n1){c2='kazanan'; c1='kaybeden';}
+    }
+    html += '<tr><td style="font-weight:600;color:var(--t2)">'+s.label+'</td>'
+          + '<td class="'+c1+'">'+s.v1+'</td>'
+          + '<td class="'+c2+'">'+s.v2+'</td></tr>';
+  });
+  document.getElementById('tabloBody').innerHTML = html;
+
+  // Özet
+  var k1 = DV[b1.difficulty]<=DV[b2.difficulty]?'✅':'';
+  var k2 = DV[b2.difficulty]<=DV[b1.difficulty]?'✅':'';
+  document.getElementById('ozet').innerHTML =
+    '<div class="ozet-kart"><div class="emoji">'+b1.emoji+'</div><div class="isim">'+b1.tr+'</div>'
+    +'<div style="font-size:.75rem;color:var(--t2);margin:.2rem 0">Bakım Zorluğu</div>'
+    +'<div class="skor">'+DL[b1.difficulty]+'</div></div>'
+    +'<div class="ozet-kart"><div class="emoji">'+b2.emoji+'</div><div class="isim">'+b2.tr+'</div>'
+    +'<div style="font-size:.75rem;color:var(--t2);margin:.2rem 0">Bakım Zorluğu</div>'
+    +'<div class="skor">'+DL[b2.difficulty]+'</div></div>';
+}
+
+doldurSelect();
+
+// URL parametrelerinden bitki seç
+var params = new URLSearchParams(window.location.search);
+if(params.get('b1')){document.getElementById('sel1').value=params.get('b1'); secBitki(1);}
+if(params.get('b2')){document.getElementById('sel2').value=params.get('b2'); secBitki(2);}
+</script>
+<script>
+function qsAc(){
+  document.getElementById('qsBox').classList.add('acik');
+  document.getElementById('qsOverlay').classList.add('acik');
+  setTimeout(function(){document.getElementById('qsInput').focus();},50);
+}
+function qsKapat(){
+  document.getElementById('qsBox').classList.remove('acik');
+  document.getElementById('qsOverlay').classList.remove('acik');
+  document.getElementById('qsInput').value='';
+  document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';
+}
+function qsAra(q){
+  q=q.trim().toLowerCase();
+  var el=document.getElementById('qsSonuclar');
+  if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}
+  var r=(typeof PLANT_DB!=='undefined'?PLANT_DB:[]).filter(function(p){
+    return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı — <a href="ansiklopedi.html">Ansiklopediyi deneyin</a></div>';return;}
+  el.innerHTML=r.map(function(p){
+    return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()">'
+      +'<span class="qs-item-emoji">'+p.emoji+'</span>'
+      +'<div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div>'
+      +'<div class="qs-item-sci">'+p.sci+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'
+      +'</a>';
+  }).join('');
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();qsAc();
+  }
+  if(e.key==='Escape') qsKapat();
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+<script>
+function dmToggle(){
+  var cur = document.documentElement.getAttribute('data-theme')||'light';
+  var nxt = cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('bd_theme', nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var t = localStorage.getItem('bd_theme')||'light';
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
+});
+</script>
+</body>
+</html>
