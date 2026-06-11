@@ -1,0 +1,573 @@
+/* BitkiDoktorum — app.js */
+
+// ── DİL ──────────────────────────────────────────────────────────
+let currentLang = localStorage.getItem('bd_lang') || 'tr';
+function setLang(l) {
+  currentLang = l;
+  localStorage.setItem('bd_lang', l);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  document.documentElement.lang = l;
+}
+
+// ── BİTKİ VERİTABANI (135 Tür) ──────────────────────────────────
+const PLANT_DB = [
+  // MEYVE
+  {id:'elma',tr:'Elma',en:'Apple',sci:'Malus domestica',cat:'fruit',emoji:'🍎',family:'Rosaceae',origin:'Orta Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Tınlı, iyi drene',difficulty:'medium',height:'3-8m',lifespan:'50-100 yıl',bloom:'Mart-Nisan',harvest:'Ağu-Eki',tags:['meyve','ticari'],featured:true},
+  {id:'armut',tr:'Armut',en:'Pear',sci:'Pyrus communis',cat:'fruit',emoji:'🍐',family:'Rosaceae',origin:'Avrupa/Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Derin verimli',difficulty:'medium',height:'4-10m',lifespan:'75+ yıl',bloom:'Mar-Nis',harvest:'Tem-Eki',tags:['meyve','ticari']},
+  {id:'kiraz',tr:'Kiraz',en:'Cherry',sci:'Prunus avium',cat:'fruit',emoji:'🍒',family:'Rosaceae',origin:'Avrupa',climate:'Ilıman/Serin',water:'moderate',sun:'full_sun',soil:'Kumlu-tınlı',difficulty:'medium',height:'5-10m',lifespan:'30-40 yıl',bloom:'Şub-Nis',harvest:'May-Tem',tags:['meyve'],featured:true},
+  {id:'visne',tr:'Vişne',en:'Sour Cherry',sci:'Prunus cerasus',cat:'fruit',emoji:'🍒',family:'Rosaceae',origin:'Güneybatı Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Tınlı',difficulty:'easy',height:'3-5m',lifespan:'25-35 yıl',bloom:'Mar-Nis',harvest:'Haz-Tem',tags:['meyve']},
+  {id:'seftali',tr:'Şeftali',en:'Peach',sci:'Prunus persica',cat:'fruit',emoji:'🍑',family:'Rosaceae',origin:'Çin',climate:'Ilıman/Sıcak',water:'moderate',sun:'full_sun',soil:'Kumlu-tınlı',difficulty:'medium',height:'3-6m',lifespan:'15-25 yıl',bloom:'Şub-Mar',harvest:'Haz-Eyl',tags:['meyve','yaz'],featured:true},
+  {id:'zeytin',tr:'Zeytin',en:'Olive',sci:'Olea europaea',cat:'fruit',emoji:'🫒',family:'Oleaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Kalkerli drene',difficulty:'easy',height:'3-12m',lifespan:'500+ yıl',bloom:'May-Haz',harvest:'Eki-Ara',tags:['meyve','akdeniz','kuraklık'],featured:true},
+  {id:'nar',tr:'Nar',en:'Pomegranate',sci:'Punica granatum',cat:'fruit',emoji:'🍎',family:'Lythraceae',origin:'İran',climate:'Akdeniz/Karasal',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'2-5m',lifespan:'200+ yıl',bloom:'May-Tem',harvest:'Eyl-Kas',tags:['meyve','akdeniz']},
+  {id:'incir',tr:'İncir',en:'Fig',sci:'Ficus carica',cat:'fruit',emoji:'🌿',family:'Moraceae',origin:'Batı Asya',climate:'Akdeniz/Sıcak',water:'low',sun:'full_sun',soil:'Kumlu-tınlı',difficulty:'easy',height:'3-10m',lifespan:'100+ yıl',bloom:'İlkbahar',harvest:'Haz-Eyl',tags:['meyve','akdeniz']},
+  {id:'ceviz',tr:'Ceviz',en:'Walnut',sci:'Juglans regia',cat:'fruit',emoji:'🌰',family:'Juglandaceae',origin:'Orta Asya',climate:'Ilıman/Karasal',water:'moderate',sun:'full_sun',soil:'Derin verimli',difficulty:'easy',height:'10-25m',lifespan:'200+ yıl',bloom:'Nis-May',harvest:'Eyl-Eki',tags:['kuruyemiş','ticari'],featured:true},
+  {id:'findik',tr:'Fındık',en:'Hazelnut',sci:'Corylus avellana',cat:'fruit',emoji:'🌰',family:'Betulaceae',origin:'Karadeniz',climate:'Karadeniz/Ilıman',water:'moderate',sun:'partial_shade',soil:'Derin asidik',difficulty:'easy',height:'2-5m',lifespan:'80+ yıl',bloom:'Oca-Mar',harvest:'Tem-Eyl',tags:['kuruyemiş','ticari']},
+  {id:'badem',tr:'Badem',en:'Almond',sci:'Prunus dulcis',cat:'fruit',emoji:'🤎',family:'Rosaceae',origin:'Orta Doğu',climate:'Akdeniz/Karasal',water:'low',sun:'full_sun',soil:'Kumlu-tınlı drene',difficulty:'medium',height:'4-10m',lifespan:'25-50 yıl',bloom:'Oca-Mar',harvest:'Ağu-Eyl',tags:['kuruyemiş','akdeniz']},
+  {id:'kayisi',tr:'Kayısı',en:'Apricot',sci:'Prunus armeniaca',cat:'fruit',emoji:'🍑',family:'Rosaceae',origin:'Çin/Orta Asya',climate:'Karasal/Ilıman',water:'low',sun:'full_sun',soil:'Killi-tınlı',difficulty:'medium',height:'3-6m',lifespan:'25-50 yıl',bloom:'Şub-Mar',harvest:'Haz-Tem',tags:['meyve','ticari']},
+  {id:'uzum',tr:'Üzüm',en:'Grape Vine',sci:'Vitis vinifera',cat:'fruit',emoji:'🍇',family:'Vitaceae',origin:'Kafkasya/Akdeniz',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'medium',height:'Sarmaşık',lifespan:'100+ yıl',bloom:'Nis-May',harvest:'Ağu-Eki',tags:['meyve','akdeniz','ticari'],featured:true},
+  {id:'erik',tr:'Erik',en:'Plum',sci:'Prunus domestica',cat:'fruit',emoji:'🟣',family:'Rosaceae',origin:'Hazar',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Tınlı verimli',difficulty:'easy',height:'3-6m',lifespan:'25-50 yıl',bloom:'Mar-Nis',harvest:'Tem-Eyl',tags:['meyve']},
+  {id:'ayva',tr:'Ayva',en:'Quince',sci:'Cydonia oblonga',cat:'fruit',emoji:'💛',family:'Rosaceae',origin:'Kafkasya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'2-5m',lifespan:'50+ yıl',bloom:'Nis-May',harvest:'Eki-Kas',tags:['meyve']},
+  {id:'limon',tr:'Limon',en:'Lemon',sci:'Citrus limon',cat:'fruit',emoji:'🍋',family:'Rutaceae',origin:'Asya',climate:'Akdeniz/Tropikal',water:'moderate',sun:'full_sun',soil:'Kumlu-tınlı drene',difficulty:'medium',height:'3-6m',lifespan:'50+ yıl',bloom:'İlk/Son',harvest:'Yıl boyunca',tags:['narenciye','akdeniz']},
+  {id:'portakal',tr:'Portakal',en:'Orange',sci:'Citrus sinensis',cat:'fruit',emoji:'🍊',family:'Rutaceae',origin:'Güneydoğu Asya',climate:'Akdeniz/Tropikal',water:'moderate',sun:'full_sun',soil:'Kumlu-tınlı',difficulty:'medium',height:'5-10m',lifespan:'50+ yıl',bloom:'İlkbahar',harvest:'Kas-Mar',tags:['narenciye','akdeniz','ticari']},
+  {id:'mandalina',tr:'Mandalina',en:'Mandarin',sci:'Citrus reticulata',cat:'fruit',emoji:'🍊',family:'Rutaceae',origin:'Asya',climate:'Akdeniz',water:'moderate',sun:'full_sun',soil:'Kumlu-tınlı',difficulty:'easy',height:'2-4m',lifespan:'50+ yıl',bloom:'Nis-May',harvest:'Kas-Oca',tags:['narenciye','akdeniz']},
+  {id:'kivi',tr:'Kivi',en:'Kiwi',sci:'Actinidia deliciosa',cat:'fruit',emoji:'🥝',family:'Actinidiaceae',origin:'Çin',climate:'Ilıman/Karadeniz',water:'high',sun:'partial_shade',soil:'Asidik verimli',difficulty:'medium',height:'Sarmaşık',lifespan:'50+ yıl',bloom:'May-Haz',harvest:'Eki-Kas',tags:['meyve','egzotik']},
+  {id:'cilek',tr:'Çilek',en:'Strawberry',sci:'Fragaria × ananassa',cat:'fruit',emoji:'🍓',family:'Rosaceae',origin:'Amerika',climate:'Ilıman',water:'high',sun:'full_sun',soil:'Asidik verimli',difficulty:'easy',height:'20-30cm',lifespan:'3-5 yıl',bloom:'Nis-May',harvest:'Nis-Haz',tags:['meyve'],featured:true},
+  {id:'ahududu',tr:'Ahududu',en:'Raspberry',sci:'Rubus idaeus',cat:'fruit',emoji:'🫐',family:'Rosaceae',origin:'Avrupa/Asya',climate:'Serin/Ilıman',water:'moderate',sun:'partial_shade',soil:'Asidik verimli',difficulty:'easy',height:'1-2m',lifespan:'10-15 yıl',bloom:'May-Haz',harvest:'Haz-Ağu',tags:['meyve']},
+  {id:'avokado',tr:'Avokado',en:'Avocado',sci:'Persea americana',cat:'fruit',emoji:'🥑',family:'Lauraceae',origin:'Meksika',climate:'Tropikal/Sıcak',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'hard',height:'5-15m',lifespan:'50+ yıl',bloom:'İlkbahar',harvest:'Yıl boyunca',tags:['egzotik','tropikal']},
+  {id:'muz',tr:'Muz',en:'Banana',sci:'Musa acuminata',cat:'fruit',emoji:'🍌',family:'Musaceae',origin:'Güneydoğu Asya',climate:'Tropikal',water:'high',sun:'full_sun',soil:'Verimli nemli',difficulty:'hard',height:'3-9m',lifespan:'Çok yıllık',bloom:'Yıl boyunca',harvest:'Yıl boyunca',tags:['egzotik','tropikal']},
+  {id:'hurma',tr:'Hurma',en:'Date Palm',sci:'Phoenix dactylifera',cat:'fruit',emoji:'🌴',family:'Arecaceae',origin:'Orta Doğu',climate:'Çöl/Sıcak',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'medium',height:'15-25m',lifespan:'100+ yıl',bloom:'Mar-May',harvest:'Eyl-Kas',tags:['meyve','kuraklık']},
+  {id:'dut',tr:'Dut',en:'Mulberry',sci:'Morus spp.',cat:'fruit',emoji:'🫐',family:'Moraceae',origin:'Asya',climate:'Her iklim',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-20m',lifespan:'200+ yıl',bloom:'Mar-May',harvest:'May-Tem',tags:['meyve','kolay']},
+  // SEBZE
+  {id:'domates',tr:'Domates',en:'Tomato',sci:'Solanum lycopersicum',cat:'vegetable',emoji:'🍅',family:'Solanaceae',origin:'Güney Amerika',climate:'Sıcak',water:'high',sun:'full_sun',soil:'Verimli tınlı',difficulty:'medium',height:'50cm-2m',lifespan:'Tek yıllık',bloom:'May-Eyl',harvest:'Tem-Eki',tags:['sebze','yaz','ticari'],featured:true},
+  {id:'biber',tr:'Biber',en:'Pepper',sci:'Capsicum annuum',cat:'vegetable',emoji:'🫑',family:'Solanaceae',origin:'Orta Amerika',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli drene',difficulty:'medium',height:'50cm-1m',lifespan:'Tek yıllık',bloom:'Haz-Eyl',harvest:'Tem-Eki',tags:['sebze','yaz','ticari']},
+  {id:'salatalik',tr:'Salatalık',en:'Cucumber',sci:'Cucumis sativus',cat:'vegetable',emoji:'🥒',family:'Cucurbitaceae',origin:'Güney Asya',climate:'Sıcak',water:'high',sun:'full_sun',soil:'Verimli nemli',difficulty:'easy',height:'Sarmaşık',lifespan:'Tek yıllık',bloom:'May-Eyl',harvest:'Haz-Eki',tags:['sebze','yaz'],featured:true},
+  {id:'patlican',tr:'Patlıcan',en:'Eggplant',sci:'Solanum melongena',cat:'vegetable',emoji:'🍆',family:'Solanaceae',origin:'Güney Asya',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli sıcak',difficulty:'medium',height:'50cm-1m',lifespan:'Tek yıllık',bloom:'Haz-Eyl',harvest:'Tem-Eki',tags:['sebze','yaz']},
+  {id:'kabak',tr:'Kabak',en:'Zucchini',sci:'Cucurbita pepo',cat:'vegetable',emoji:'🥬',family:'Cucurbitaceae',origin:'Amerika',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'Sarmaşık',lifespan:'Tek yıllık',bloom:'Haz-Ağu',harvest:'Tem-Eki',tags:['sebze']},
+  {id:'havuc',tr:'Havuç',en:'Carrot',sci:'Daucus carota',cat:'vegetable',emoji:'🥕',family:'Apiaceae',origin:'Afganistan',climate:'Serin/Ilıman',water:'moderate',sun:'full_sun',soil:'Derin kumlu',difficulty:'easy',height:'20-30cm',lifespan:'İki yıllık',bloom:'2. yıl',harvest:'Tem-Kas',tags:['sebze','kök'],featured:true},
+  {id:'patates',tr:'Patates',en:'Potato',sci:'Solanum tuberosum',cat:'vegetable',emoji:'🥔',family:'Solanaceae',origin:'Güney Amerika',climate:'Ilıman/Serin',water:'moderate',sun:'full_sun',soil:'Gevşek kumlu',difficulty:'easy',height:'30-80cm',lifespan:'Tek yıllık',bloom:'Haz-Tem',harvest:'Tem-Eki',tags:['sebze','kök','ticari']},
+  {id:'sogan',tr:'Soğan',en:'Onion',sci:'Allium cepa',cat:'vegetable',emoji:'🧅',family:'Amaryllidaceae',origin:'Orta Asya',climate:'Her iklim',water:'moderate',sun:'full_sun',soil:'Verimli drene',difficulty:'easy',height:'30-50cm',lifespan:'İki yıllık',bloom:'2. yıl',harvest:'Tem-Ağu',tags:['sebze','kök']},
+  {id:'sarimsak',tr:'Sarımsak',en:'Garlic',sci:'Allium sativum',cat:'vegetable',emoji:'🧄',family:'Amaryllidaceae',origin:'Orta Asya',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Verimli drene',difficulty:'easy',height:'30-60cm',lifespan:'Tek yıllık',bloom:'May-Haz',harvest:'Haz-Tem',tags:['sebze','tibbi']},
+  {id:'ispanak',tr:'Ispanak',en:'Spinach',sci:'Spinacia oleracea',cat:'vegetable',emoji:'🥬',family:'Amaranthaceae',origin:'İran',climate:'Serin',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'15-30cm',lifespan:'Tek yıllık',bloom:'İlk/Son',harvest:'Yıl boyunca',tags:['sebze','sağlıklı']},
+  {id:'marul',tr:'Marul',en:'Lettuce',sci:'Lactuca sativa',cat:'vegetable',emoji:'🥬',family:'Asteraceae',origin:'Doğu Akdeniz',climate:'Serin',water:'high',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'20-30cm',lifespan:'Tek yıllık',bloom:'İlk/Son',harvest:'Yıl boyunca',tags:['sebze','salata']},
+  {id:'brokoli',tr:'Brokoli',en:'Broccoli',sci:'Brassica oleracea var. italica',cat:'vegetable',emoji:'🥦',family:'Brassicaceae',origin:'Akdeniz',climate:'Serin',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'medium',height:'60-90cm',lifespan:'Tek yıllık',bloom:'İlk/Son',harvest:'Eki-May',tags:['sebze','sağlıklı']},
+  {id:'karnabahar',tr:'Karnabahar',en:'Cauliflower',sci:'Brassica oleracea var. botrytis',cat:'vegetable',emoji:'🥦',family:'Brassicaceae',origin:'Akdeniz',climate:'Serin',water:'moderate',sun:'full_sun',soil:'Verimli bazik',difficulty:'medium',height:'50-70cm',lifespan:'Tek yıllık',bloom:'İlk/Son',harvest:'Eki-May',tags:['sebze']},
+  {id:'lahana',tr:'Lahana',en:'Cabbage',sci:'Brassica oleracea var. capitata',cat:'vegetable',emoji:'🥬',family:'Brassicaceae',origin:'Avrupa',climate:'Serin',water:'moderate',sun:'full_sun',soil:'Verimli bazik',difficulty:'easy',height:'30-60cm',lifespan:'Tek yıllık',bloom:'2. yıl',harvest:'Eki-Nis',tags:['sebze','ticari']},
+  {id:'karpuz',tr:'Karpuz',en:'Watermelon',sci:'Citrullus lanatus',cat:'vegetable',emoji:'🍉',family:'Cucurbitaceae',origin:'Batı Afrika',climate:'Sıcak/Kurak',water:'moderate',sun:'full_sun',soil:'Kumlu sıcak',difficulty:'medium',height:'Sarmaşık',lifespan:'Tek yıllık',bloom:'Haz-Tem',harvest:'Tem-Eyl',tags:['sebze','yaz','ticari'],featured:true},
+  {id:'kavun',tr:'Kavun',en:'Melon',sci:'Cucumis melo',cat:'vegetable',emoji:'🍈',family:'Cucurbitaceae',origin:'Güney Asya',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Kumlu sıcak',difficulty:'medium',height:'Sarmaşık',lifespan:'Tek yıllık',bloom:'Haz-Tem',harvest:'Tem-Ağu',tags:['sebze','yaz']},
+  {id:'misir',tr:'Mısır',en:'Corn',sci:'Zea mays',cat:'vegetable',emoji:'🌽',family:'Poaceae',origin:'Amerika',climate:'Sıcak',water:'high',sun:'full_sun',soil:'Derin verimli',difficulty:'easy',height:'1.5-3m',lifespan:'Tek yıllık',bloom:'Haz-Tem',harvest:'Ağu-Eki',tags:['sebze','tahıl','ticari']},
+  {id:'bezelye',tr:'Bezelye',en:'Pea',sci:'Pisum sativum',cat:'vegetable',emoji:'🫛',family:'Fabaceae',origin:'Orta Doğu',climate:'Serin',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'30cm-1.5m',lifespan:'Tek yıllık',bloom:'Mar-May',harvest:'Nis-Haz',tags:['sebze','baklagil']},
+  {id:'fasulye',tr:'Fasulye',en:'Bean',sci:'Phaseolus vulgaris',cat:'vegetable',emoji:'🫘',family:'Fabaceae',origin:'Amerika',climate:'Ilıman/Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli drene',difficulty:'easy',height:'30cm-2m',lifespan:'Tek yıllık',bloom:'May-Tem',harvest:'Haz-Ağu',tags:['sebze','baklagil']},
+  {id:'pirasa',tr:'Pırasa',en:'Leek',sci:'Allium ampeloprasum',cat:'vegetable',emoji:'🧅',family:'Amaryllidaceae',origin:'Doğu Akdeniz',climate:'Serin',water:'moderate',sun:'full_sun',soil:'Verimli derin',difficulty:'easy',height:'40-70cm',lifespan:'Tek yıllık',bloom:'2. yıl',harvest:'Eki-Mar',tags:['sebze']},
+  {id:'pancar',tr:'Pancar',en:'Beetroot',sci:'Beta vulgaris',cat:'vegetable',emoji:'🟣',family:'Amaranthaceae',origin:'Akdeniz',climate:'Serin/Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli derin',difficulty:'easy',height:'20-40cm',lifespan:'İki yıllık',bloom:'2. yıl',harvest:'Tem-Kas',tags:['sebze','sağlıklı']},
+  {id:'roka',tr:'Roka',en:'Arugula',sci:'Eruca vesicaria',cat:'vegetable',emoji:'🌿',family:'Brassicaceae',origin:'Akdeniz',climate:'Serin',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'20-40cm',lifespan:'Tek yıllık',bloom:'İlk/Yaz',harvest:'Yıl boyunca',tags:['sebze','salata','balkon']},
+  {id:'bamya',tr:'Bamya',en:'Okra',sci:'Abelmoschus esculentus',cat:'vegetable',emoji:'🌿',family:'Malvaceae',origin:'Afrika',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli drene',difficulty:'medium',height:'1-2m',lifespan:'Tek yıllık',bloom:'Haz-Eyl',harvest:'Tem-Eki',tags:['sebze','sıcak']},
+  {id:'bakla',tr:'Bakla',en:'Broad Bean',sci:'Vicia faba',cat:'vegetable',emoji:'🫘',family:'Fabaceae',origin:'Kuzey Afrika',climate:'Serin',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'30-150cm',lifespan:'Tek yıllık',bloom:'Mar-May',harvest:'Nis-Haz',tags:['sebze','baklagil']},
+  {id:'enginar',tr:'Enginar',en:'Artichoke',sci:'Cynara cardunculus',cat:'vegetable',emoji:'🌿',family:'Asteraceae',origin:'Akdeniz',climate:'Akdeniz',water:'moderate',sun:'full_sun',soil:'Derin verimli',difficulty:'medium',height:'1-2m',lifespan:'Çok yıllık',bloom:'Nis-Haz',harvest:'Nis-Haz',tags:['sebze','akdeniz']},
+  // ÇİÇEK
+  {id:'gul',tr:'Gül',en:'Rose',sci:'Rosa spp.',cat:'flower',emoji:'🌹',family:'Rosaceae',origin:'Asya/Avrupa',climate:'Her iklim',water:'moderate',sun:'full_sun',soil:'Zengin tınlı',difficulty:'medium',height:'30cm-3m',lifespan:'Çok yıllık',bloom:'May-Eki',harvest:'–',tags:['çiçek','romantik'],featured:true},
+  {id:'lavanta',tr:'Lavanta',en:'Lavender',sci:'Lavandula angustifolia',cat:'flower',emoji:'💜',family:'Lamiaceae',origin:'Akdeniz',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'30-90cm',lifespan:'Çok yıllık',bloom:'Haz-Ağu',harvest:'–',tags:['çiçek','tibbi','aromatik'],featured:true},
+  {id:'lale',tr:'Lale',en:'Tulip',sci:'Tulipa spp.',cat:'flower',emoji:'🌷',family:'Liliaceae',origin:'Orta Asya',climate:'Serin/Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'20-70cm',lifespan:'Soğanlı',bloom:'Mar-May',harvest:'–',tags:['çiçek','ilkbahar'],featured:true},
+  {id:'begonvil',tr:'Begonvil',en:'Bougainvillea',sci:'Bougainvillea spp.',cat:'flower',emoji:'🌺',family:'Nyctaginaceae',origin:'Güney Amerika',climate:'Akdeniz/Tropikal',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'5-12m',lifespan:'Çok yıllık',bloom:'Nis-Kas',harvest:'–',tags:['çiçek','akdeniz'],featured:true},
+  {id:'sardunya',tr:'Sardunya',en:'Geranium',sci:'Pelargonium × hortorum',cat:'flower',emoji:'🌸',family:'Geraniaceae',origin:'Güney Afrika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Her toprak drene',difficulty:'easy',height:'30-60cm',lifespan:'Çok yıllık',bloom:'İlk-Son',harvest:'–',tags:['çiçek','balkon']},
+  {id:'ayicegi',tr:'Ayçiçeği',en:'Sunflower',sci:'Helianthus annuus',cat:'flower',emoji:'🌻',family:'Asteraceae',origin:'Amerika',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-3m',lifespan:'Tek yıllık',bloom:'Tem-Eyl',harvest:'Eyl-Eki',tags:['çiçek','yemeklik']},
+  {id:'papatya',tr:'Papatya',en:'Chamomile',sci:'Bellis perennis',cat:'flower',emoji:'🌼',family:'Asteraceae',origin:'Avrupa',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'15-30cm',lifespan:'Çok yıllık',bloom:'Mar-Kas',harvest:'–',tags:['çiçek','tibbi']},
+  {id:'zambak',tr:'Zambak',en:'Lily',sci:'Lilium spp.',cat:'flower',emoji:'🌸',family:'Liliaceae',origin:'Asya/Avrupa',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Zengin iyi drene',difficulty:'medium',height:'50cm-1.5m',lifespan:'Soğanlı',bloom:'Haz-Ağu',harvest:'–',tags:['çiçek','süs']},
+  {id:'karanfil',tr:'Karanfil',en:'Carnation',sci:'Dianthus caryophyllus',cat:'flower',emoji:'🌸',family:'Caryophyllaceae',origin:'Akdeniz',climate:'Akdeniz/Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene bazik',difficulty:'easy',height:'30-80cm',lifespan:'Çok yıllık',bloom:'May-Eki',harvest:'–',tags:['çiçek','kesme']},
+  {id:'menekse',tr:'Menekşe',en:'Violet',sci:'Viola odorata',cat:'flower',emoji:'💜',family:'Violaceae',origin:'Avrupa/Asya',climate:'Serin',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'10-20cm',lifespan:'Çok yıllık',bloom:'Mar-May',harvest:'–',tags:['çiçek','gölge']},
+  {id:'yasemin',tr:'Yasemin',en:'Jasmine',sci:'Jasminum officinale',cat:'flower',emoji:'🌼',family:'Oleaceae',origin:'Himalayalar',climate:'Ilıman/Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'3-6m',lifespan:'Çok yıllık',bloom:'Haz-Eyl',harvest:'–',tags:['çiçek','kokusu']},
+  {id:'kasimpati',tr:'Kasımpatı',en:'Chrysanthemum',sci:'Chrysanthemum spp.',cat:'flower',emoji:'🌸',family:'Asteraceae',origin:'Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli drene',difficulty:'medium',height:'30-90cm',lifespan:'Çok yıllık',bloom:'Eyl-Kas',harvest:'–',tags:['çiçek','sonbahar']},
+  {id:'petunya',tr:'Petunya',en:'Petunia',sci:'Petunia spp.',cat:'flower',emoji:'🌸',family:'Solanaceae',origin:'Amerika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'15-45cm',lifespan:'Tek yıllık',bloom:'İlk-Son',harvest:'–',tags:['çiçek','balkon','renkli']},
+  {id:'kadife',tr:'Kadife Çiçeği',en:'Marigold',sci:'Tagetes spp.',cat:'flower',emoji:'🌼',family:'Asteraceae',origin:'Amerika',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'20-90cm',lifespan:'Tek yıllık',bloom:'May-Eki',harvest:'–',tags:['çiçek','kolay']},
+  {id:'zakkum',tr:'Zakkum',en:'Oleander',sci:'Nerium oleander',cat:'flower',emoji:'🌸',family:'Apocynaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'2-6m',lifespan:'Çok yıllık',bloom:'May-Eki',harvest:'–',tags:['çiçek','akdeniz','kuraklık']},
+  {id:'ortanca',tr:'Ortanca',en:'Hydrangea',sci:'Hydrangea macrophylla',cat:'flower',emoji:'💙',family:'Hydrangeaceae',origin:'Asya/Amerika',climate:'Ilıman',water:'high',sun:'partial_shade',soil:'Asidik nemli',difficulty:'medium',height:'1-3m',lifespan:'Çok yıllık',bloom:'Haz-Eyl',harvest:'–',tags:['çiçek','gölge','renkli']},
+  // İÇ MEKAN
+  {id:'monstera',tr:'Monstera',en:'Monstera',sci:'Monstera deliciosa',cat:'indoor',emoji:'🌿',family:'Araceae',origin:'Orta Amerika',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli iyi drene',difficulty:'easy',height:'1-3m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','tropikal'],featured:true},
+  {id:'aloe',tr:'Aloe Vera',en:'Aloe Vera',sci:'Aloe vera',cat:'indoor',emoji:'🌵',family:'Asphodelaceae',origin:'Arabistan',climate:'Kurak',water:'low',sun:'full_sun',soil:'Kaktüs toprağı',difficulty:'easy',height:'30-60cm',lifespan:'Çok yıllık',bloom:'Yaz',harvest:'–',tags:['içmekan','tibbi'],featured:true},
+  {id:'sansevieria',tr:'Kayınvalide Dili',en:'Snake Plant',sci:'Sansevieria trifasciata',cat:'indoor',emoji:'🌿',family:'Asparagaceae',origin:'Batı Afrika',climate:'Kurak',water:'low',sun:'partial_shade',soil:'Her toprak drene',difficulty:'easy',height:'30-120cm',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','kolay'],featured:true},
+  {id:'pothos',tr:'Pothos',en:'Pothos',sci:'Epipremnum aureum',cat:'indoor',emoji:'🌿',family:'Araceae',origin:'Asya',climate:'Tropikal',water:'low',sun:'shade',soil:'Her toprak',difficulty:'easy',height:'Sarmaşık',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','kolay']},
+  {id:'kaktus',tr:'Kaktüs',en:'Cactus',sci:'Cactaceae spp.',cat:'indoor',emoji:'🌵',family:'Cactaceae',origin:'Amerika',climate:'Çöl',water:'low',sun:'full_sun',soil:'Kaktüs toprağı',difficulty:'easy',height:'5cm-10m',lifespan:'Çok yıllık',bloom:'Değişken',harvest:'–',tags:['içmekan','kolay']},
+  {id:'orkide',tr:'Orkide',en:'Orchid',sci:'Orchidaceae spp.',cat:'indoor',emoji:'🌸',family:'Orchidaceae',origin:'Tropikal',climate:'Tropikal',water:'low',sun:'partial_shade',soil:'Özel orkide toprağı',difficulty:'hard',height:'15-80cm',lifespan:'Çok yıllık',bloom:'Yıl boyunca',harvest:'–',tags:['içmekan','süs'],featured:true},
+  {id:'zz',tr:'ZZ Bitkisi',en:'ZZ Plant',sci:'Zamioculcas zamiifolia',cat:'indoor',emoji:'🌿',family:'Araceae',origin:'Doğu Afrika',climate:'Kurak',water:'low',sun:'shade',soil:'Her toprak drene',difficulty:'easy',height:'60-90cm',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','gölge']},
+  {id:'baris_zambagi',tr:'Barış Zambağı',en:'Peace Lily',sci:'Spathiphyllum spp.',cat:'indoor',emoji:'🌸',family:'Araceae',origin:'Tropikal Amerika',climate:'Tropikal',water:'moderate',sun:'shade',soil:'Verimli nemli',difficulty:'easy',height:'40-100cm',lifespan:'Çok yıllık',bloom:'İlk-Yaz',harvest:'–',tags:['içmekan','gölge','çiçekli']},
+  {id:'filodendron',tr:'Filodendron',en:'Philodendron',sci:'Philodendron spp.',cat:'indoor',emoji:'🌿',family:'Araceae',origin:'Güney Amerika',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'30cm-3m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','tropikal']},
+  {id:'dracaena',tr:'Drasena',en:'Dracaena',sci:'Dracaena spp.',cat:'indoor',emoji:'🌴',family:'Asparagaceae',origin:'Afrika',climate:'Tropikal',water:'low',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'50cm-3m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','dekoratif']},
+  {id:'sukulent',tr:'Sukulent',en:'Succulent',sci:'Çeşitli',cat:'indoor',emoji:'🌵',family:'Çeşitli',origin:'Kurak bölgeler',climate:'Kurak',water:'low',sun:'full_sun',soil:'Kaktüs toprağı',difficulty:'easy',height:'5-30cm',lifespan:'Çok yıllık',bloom:'Değişken',harvest:'–',tags:['içmekan','kolay']},
+  {id:'kalathea',tr:'Kalathea',en:'Calathea',sci:'Calathea spp.',cat:'indoor',emoji:'🌿',family:'Marantaceae',origin:'Güney Amerika',climate:'Tropikal',water:'high',sun:'shade',soil:'Verimli nemli',difficulty:'hard',height:'30-60cm',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['içmekan','gölge']},
+  // TIBBİ
+  {id:'nane',tr:'Nane',en:'Mint',sci:'Mentha spicata',cat:'herb',emoji:'🌿',family:'Lamiaceae',origin:'Akdeniz',climate:'Her iklim',water:'high',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'30-90cm',lifespan:'Çok yıllık',bloom:'Haz-Eyl',harvest:'Yıl boyunca',tags:['tibbi','aromatik','mutfak'],featured:true},
+  {id:'fesleen',tr:'Fesleğen',en:'Basil',sci:'Ocimum basilicum',cat:'herb',emoji:'🌿',family:'Lamiaceae',origin:'Asya/Afrika',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'20-50cm',lifespan:'Tek yıllık',bloom:'Yaz',harvest:'Yıl boyunca',tags:['tibbi','mutfak']},
+  {id:'biberiye',tr:'Biberiye',en:'Rosemary',sci:'Rosmarinus officinalis',cat:'herb',emoji:'🌿',family:'Lamiaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'50cm-2m',lifespan:'Çok yıllık',bloom:'Oca-May',harvest:'Yıl boyunca',tags:['tibbi','mutfak','aromatik']},
+  {id:'kekik',tr:'Kekik',en:'Thyme',sci:'Thymus vulgaris',cat:'herb',emoji:'🌿',family:'Lamiaceae',origin:'Güney Avrupa',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'20-40cm',lifespan:'Çok yıllık',bloom:'May-Tem',harvest:'Yıl boyunca',tags:['tibbi','mutfak','aromatik']},
+  {id:'adacayi',tr:'Adaçayı',en:'Sage',sci:'Salvia officinalis',cat:'herb',emoji:'🌿',family:'Lamiaceae',origin:'Akdeniz',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'40-80cm',lifespan:'Çok yıllık',bloom:'May-Tem',harvest:'Yıl boyunca',tags:['tibbi','mutfak']},
+  {id:'maydanoz',tr:'Maydanoz',en:'Parsley',sci:'Petroselinum crispum',cat:'herb',emoji:'🌿',family:'Apiaceae',origin:'Akdeniz',climate:'Ilıman/Serin',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'30-60cm',lifespan:'İki yıllık',bloom:'2. yıl',harvest:'Yıl boyunca',tags:['tibbi','mutfak']},
+  {id:'dereotu',tr:'Dereotu',en:'Dill',sci:'Anethum graveolens',cat:'herb',emoji:'🌿',family:'Apiaceae',origin:'Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'60-120cm',lifespan:'Tek yıllık',bloom:'Yaz',harvest:'İlk-Son',tags:['tibbi','mutfak']},
+  {id:'melisa',tr:'Melisa',en:'Lemon Balm',sci:'Melissa officinalis',cat:'herb',emoji:'🌿',family:'Lamiaceae',origin:'Güney Avrupa',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'40-80cm',lifespan:'Çok yıllık',bloom:'Tem-Ağu',harvest:'Yıl boyunca',tags:['tibbi','aromatik','çay']},
+  {id:'ekinezya',tr:'Ekinezya',en:'Echinacea',sci:'Echinacea purpurea',cat:'herb',emoji:'🌸',family:'Asteraceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'60-120cm',lifespan:'Çok yıllık',bloom:'Tem-Eyl',harvest:'Sonbahar',tags:['tibbi','bağışıklık']},
+  {id:'kimyon',tr:'Kimyon',en:'Cumin',sci:'Cuminum cyminum',cat:'herb',emoji:'🌿',family:'Apiaceae',origin:'Orta Doğu',climate:'Sıcak/Kurak',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'medium',height:'20-30cm',lifespan:'Tek yıllık',bloom:'Yaz',harvest:'Yaz',tags:['tibbi','mutfak','baharat']},
+  {id:'kisinic',tr:'Kişniş',en:'Coriander',sci:'Coriandrum sativum',cat:'herb',emoji:'🌿',family:'Apiaceae',origin:'Güney Avrupa',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'30-60cm',lifespan:'Tek yıllık',bloom:'Yaz',harvest:'Yıl boyunca',tags:['tibbi','mutfak','baharat']},
+  {id:'rezene',tr:'Rezene',en:'Fennel',sci:'Foeniculum vulgare',cat:'herb',emoji:'🌿',family:'Apiaceae',origin:'Akdeniz',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'1-2m',lifespan:'Çok yıllık',bloom:'Tem-Eyl',harvest:'Yıl boyunca',tags:['tibbi','mutfak']},
+  // DIŞ MEKAN
+  {id:'cam',tr:'Çam',en:'Pine',sci:'Pinus spp.',cat:'outdoor',emoji:'🌲',family:'Pinaceae',origin:'Kuzey Yarıküre',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Kumlu asidik',difficulty:'easy',height:'10-50m',lifespan:'100-1000+ yıl',bloom:'İlkbahar',harvest:'–',tags:['dışarıda','iğneyapraklı']},
+  {id:'mese',tr:'Meşe',en:'Oak',sci:'Quercus spp.',cat:'outdoor',emoji:'🌳',family:'Fagaceae',origin:'Kuzey Yarıküre',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Derin verimli',difficulty:'easy',height:'10-30m',lifespan:'500-1000+ yıl',bloom:'İlkbahar',harvest:'–',tags:['dışarıda','yapraklı'],featured:true},
+  {id:'ihlamur',tr:'Ihlamur',en:'Linden',sci:'Tilia spp.',cat:'outdoor',emoji:'🌳',family:'Malvaceae',origin:'Avrupa/Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'10-30m',lifespan:'500+ yıl',bloom:'Haz-Tem',harvest:'Haz-Tem',tags:['dışarıda','tibbi']},
+  {id:'palmiye',tr:'Palmiye',en:'Palm',sci:'Arecaceae spp.',cat:'outdoor',emoji:'🌴',family:'Arecaceae',origin:'Tropikal',climate:'Sıcak',water:'moderate',sun:'full_sun',soil:'Kumlu drene',difficulty:'medium',height:'3-30m',lifespan:'100+ yıl',bloom:'Değişken',harvest:'–',tags:['dışarıda','tropikal']},
+  {id:'servi',tr:'Servi',en:'Cypress',sci:'Cupressus sempervirens',cat:'outdoor',emoji:'🌲',family:'Cupressaceae',origin:'Akdeniz',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-30m',lifespan:'500+ yıl',bloom:'İlkbahar',harvest:'–',tags:['dışarıda','akdeniz']},
+  {id:'bambu',tr:'Bambu',en:'Bamboo',sci:'Bambusoideae',cat:'outdoor',emoji:'🎍',family:'Poaceae',origin:'Asya',climate:'Her iklim',water:'high',sun:'full_sun',soil:'Verimli nemli',difficulty:'easy',height:'2-25m',lifespan:'Çok yıllık',bloom:'Nadir',harvest:'–',tags:['dışarıda','hızlıbüyüyen']},
+  {id:'defne',tr:'Defne',en:'Bay Laurel',sci:'Laurus nobilis',cat:'outdoor',emoji:'🌿',family:'Lauraceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'2-10m',lifespan:'100+ yıl',bloom:'Mar-May',harvest:'Yıl boyunca',tags:['dışarıda','tibbi','mutfak']},
+  {id:'kavak',tr:'Kavak',en:'Poplar',sci:'Populus spp.',cat:'outdoor',emoji:'🌳',family:'Salicaceae',origin:'Kuzey Yarıküre',climate:'Her iklim',water:'high',sun:'full_sun',soil:'Derin nemli',difficulty:'easy',height:'20-40m',lifespan:'50-150 yıl',bloom:'İlkbahar',harvest:'–',tags:['dışarıda','hızlıbüyüyen']},
+  {id:'akasya',tr:'Akasya',en:'Black Locust',sci:'Robinia pseudoacacia',cat:'outdoor',emoji:'🌳',family:'Fabaceae',origin:'Kuzey Amerika',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-25m',lifespan:'100+ yıl',bloom:'May-Haz',harvest:'–',tags:['dışarıda','arıcılık']},
+  {id:'kizilcam',tr:'Kızılçam',en:'Turkish Pine',sci:'Pinus brutia',cat:'outdoor',emoji:'🌲',family:'Pinaceae',origin:'Türkiye/Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu asidik',difficulty:'easy',height:'20-35m',lifespan:'200+ yıl',bloom:'İlkbahar',harvest:'–',tags:['dışarıda','endemik','akdeniz'],regions:['Akdeniz','Ege','Güneydoğu'],fertilize:'Mart-Nisan azotlu, Eylül potasyumlu'},
+
+  // DIŞ MEKAN — YAPRAKLI AĞAÇLAR
+  {id:'acer',tr:'Akçaağaç',en:'Maple',sci:'Acer platanoides',cat:'outdoor',emoji:'🍁',family:'Sapindaceae',origin:'Avrupa/Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli nemli',difficulty:'easy',height:'15-25m',lifespan:'200+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','sonbahar rengi','gölge'],regions:['Tüm Türkiye'],fertilize:'Mart: 100g/m² 20-10-10 NPK | Mayıs: 50g/m² amonyum sülfat | Eylül: 60g/m² potasyum sülfat',dikim:'Sonbahar veya ilkbahar başı',budama:'Kış sonu (Şubat)'},
+  {id:'samsun_kestane',tr:'At Kestanesi',en:'Horse Chestnut',sci:'Aesculus hippocastanum',cat:'outdoor',emoji:'🌰',family:'Sapindaceae',origin:'Balkanlar',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Derin verimli',difficulty:'easy',height:'20-30m',lifespan:'300+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','park','gölge'],regions:['Tüm Türkiye','özellikle Karadeniz/Marmara'],fertilize:'Mart dengeli, Haziran azot',dikim:'Sonbahar'},
+  {id:'taflan',tr:'Taflan',en:'Cherry Laurel',sci:'Laurocerasus officinalis',cat:'outdoor',emoji:'🌿',family:'Rosaceae',origin:'Karadeniz/Kafkasya',climate:'Ilıman/Nemli',water:'moderate',sun:'partial_shade',soil:'Asidik-nötr, verimli',difficulty:'easy',height:'2-8m',lifespan:'100+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','çit','herdem yeşil','gölge','karadeniz'],regions:['Karadeniz (yoğun)','Marmara','Ege (kıyı)'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül | Haziran: 30g/m² amonyum nitrat | Eylül: 40g/m² potasyum sülfat',dikim:'Ekim-Kasım veya Şubat-Mart',budama:'Mayıs-Haziran (çit şekli için), Ağustos (ikinci budama)'},
+  {id:'simsir',tr:'Şimşir',en:'Boxwood',sci:'Buxus sempervirens',cat:'outdoor',emoji:'🌿',family:'Buxaceae',origin:'Akdeniz/Kafkasya',climate:'Her iklim',water:'low',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'1-5m',lifespan:'500+ yıl',bloom:'Nisan',harvest:'–',tags:['dışarıda','çit','topiary','herdem yeşil'],featured:true,regions:['Tüm Türkiye'],fertilize:'Mart ve Temmuz yavaş salınımlı',dikim:'Her mevsim (yaz hariç)',budama:'Mayıs ve Eylül'},
+  {id:'hurmali',tr:'Hurmalı Ağaç (Trabzon Hurması)',en:'Persimmon',sci:'Diospyros kaki',cat:'outdoor',emoji:'🍊',family:'Ebenaceae',origin:'Çin/Japonya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Derin verimli',difficulty:'easy',height:'5-12m',lifespan:'100+ yıl',bloom:'Mayıs-Haziran',harvest:'Ekim-Kasım',tags:['dışarıda','meyve','sonbahar'],regions:['Akdeniz','Ege','Marmara','Karadeniz'],fertilize:'Mart azotlu, Haziran dengeli, Eylül potasyum',dikim:'Sonbahar veya ilkbahar'},
+  {id:'kusgoznü',tr:'Kuşburnu',en:'Rosehip',sci:'Rosa canina',cat:'outdoor',emoji:'🌹',family:'Rosaceae',origin:'Avrupa/Asya',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-3m',lifespan:'20+ yıl',bloom:'Mayıs-Haziran',harvest:'Eylül-Ekim',tags:['dışarıda','tibbi','meyve','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli yeterli',dikim:'Sonbahar veya ilkbahar'},
+  {id:'cornus',tr:'Kızılcık',en:'Cornelian Cherry',sci:'Cornus mas',cat:'outdoor',emoji:'🔴',family:'Cornaceae',origin:'Güney Avrupa/Kafkasya',climate:'Ilıman/Karasal',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'3-8m',lifespan:'100+ yıl',bloom:'Şubat-Mart',harvest:'Ağustos-Eylül',tags:['dışarıda','meyve','tibbi','erken çiçek'],regions:['Tüm Türkiye'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül, fazla azottan kaçın',dikim:'Sonbahar'},
+  {id:'gürgen',tr:'Gürgen',en:'Hornbeam',sci:'Carpinus betulus',cat:'outdoor',emoji:'🌳',family:'Betulaceae',origin:'Avrupa/Asya',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'10-25m',lifespan:'300+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','çit','gölge'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli NPK',dikim:'Sonbahar'},
+  {id:'kayın',tr:'Kayın',en:'Beech',sci:'Fagus sylvatica',cat:'outdoor',emoji:'🌳',family:'Fagaceae',origin:'Orta Avrupa',climate:'Ilıman/Serin',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'20-35m',lifespan:'300+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','orman','büyük'],regions:['Karadeniz','Marmara','İç Anadolu (yüksek)'],fertilize:'Mart dengeli, yılda bir kez yeterli',dikim:'Sonbahar'},
+  {id:'huş',tr:'Huş Ağacı',en:'Silver Birch',sci:'Betula pendula',cat:'outdoor',emoji:'🌳',family:'Betulaceae',origin:'Avrupa/Kuzey Asya',climate:'Serin/Ilıman',water:'moderate',sun:'full_sun',soil:'Kumlu asidik',difficulty:'easy',height:'15-25m',lifespan:'50-100 yıl',bloom:'Nisan',harvest:'–',tags:['dışarıda','beyaz gövde','hızlı büyüme'],regions:['Karadeniz','İç Anadolu','Doğu Anadolu'],fertilize:'Nisan dengeli azotlu',dikim:'Sonbahar veya ilkbahar başı'},
+  {id:'dişbudak',tr:'Dişbudak',en:'Ash Tree',sci:'Fraxinus excelsior',cat:'outdoor',emoji:'🌳',family:'Oleaceae',origin:'Avrupa',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli nemli',difficulty:'easy',height:'20-35m',lifespan:'200+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','park','geniş alan'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli NPK yılda bir',dikim:'Sonbahar'},
+  {id:'ıhlamur_kocayemiş',tr:'Kocayemiş',en:'Strawberry Tree',sci:'Arbutus unedo',cat:'outdoor',emoji:'🔴',family:'Ericaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Asidik drene',difficulty:'easy',height:'3-8m',lifespan:'100+ yıl',bloom:'Ekim-Kasım',harvest:'Ekim-Kasım',tags:['dışarıda','herdem yeşil','akdeniz','meyveli'],regions:['Akdeniz','Ege','Marmara'],fertilize:'Nisan: 40g/m² asidik özel gübre (sülfatlı amonyum bazlı)',dikim:'Sonbahar veya ilkbahar'},
+  {id:'ahlat',tr:'Ahlat (Yaban Armudu)',en:'Wild Pear',sci:'Pyrus elaeagnifolia',cat:'outdoor',emoji:'🌳',family:'Rosaceae',origin:'Türkiye/Kafkasya',climate:'Karasal/Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'5-10m',lifespan:'100+ yıl',bloom:'Nisan',harvest:'Eylül-Ekim',tags:['dışarıda','kuraklık','endemik'],regions:['İç Anadolu','Doğu Anadolu','Güneydoğu'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar'},
+  // DIŞ MEKAN — HERDEMYEŞİL AĞAÇ VE ÇALILAR
+  {id:'aucuba',tr:'Benekli Defne',en:'Spotted Laurel',sci:'Aucuba japonica',cat:'outdoor',emoji:'🌿',family:'Garryaceae',origin:'Japonya',climate:'Ilıman',water:'moderate',sun:'shade',soil:'Verimli',difficulty:'easy',height:'1-3m',lifespan:'30+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','gölge','renkli yaprak','herdem yeşil'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK | Temmuz: 30g/m² potasyum nitrat',dikim:'Sonbahar veya ilkbahar'},
+  {id:'mahonia',tr:'Mahonia',en:'Oregon Grape',sci:'Mahonia aquifolium',cat:'outdoor',emoji:'💛',family:'Berberidaceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'low',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'1-2m',lifespan:'30+ yıl',bloom:'Şubat-Nisan',harvest:'–',tags:['dışarıda','kış çiçeği','herdem yeşil','gölge'],regions:['Tüm Türkiye'],fertilize:'Nisan: 30g/m² 15-15-15 NPK, fazla gübrelemeden kaçın',dikim:'Her mevsim'},
+  {id:'viburnum',tr:'Kartopu',en:'Viburnum',sci:'Viburnum opulus',cat:'outdoor',emoji:'⚪',family:'Adoxaceae',origin:'Avrupa/Asya',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'2-4m',lifespan:'30+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','beyaz çiçek','park'],regions:['Tüm Türkiye'],fertilize:'Mart: 60g/m² 15-15-15 NPK | Haziran: 30g/m² amonyum nitrat',dikim:'Sonbahar veya ilkbahar'},
+  {id:'berberis',tr:'Kadın Tuzluğu',en:'Barberry',sci:'Berberis thunbergii',cat:'outdoor',emoji:'🔴',family:'Berberidaceae',origin:'Japonya',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-2m',lifespan:'20+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','dikenli çit','mor yaprak','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül, yavaş salınımlı',dikim:'Her mevsim (yaz hariç)',budama:'Nisan veya Eylül'},
+  {id:'cotoneaster',tr:'Dağ Muşmulası',en:'Cotoneaster',sci:'Cotoneaster horizontalis',cat:'outdoor',emoji:'🔴',family:'Rosaceae',origin:'Çin',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'30cm-3m',lifespan:'20+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','yer örtücü','kış meyve','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli yılda bir yeterli',dikim:'Her mevsim'},
+  {id:'ilex',tr:'Çobanpüskülü',en:'Holly',sci:'Ilex aquifolium',cat:'outdoor',emoji:'🌿',family:'Aquifoliaceae',origin:'Avrupa',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Asidik verimli',difficulty:'medium',height:'2-10m',lifespan:'100+ yıl',bloom:'Mayıs',harvest:'–',tags:['dışarıda','herdem yeşil','kış dekorasyon','dikenli'],regions:['Karadeniz','Marmara','Ege'],fertilize:'Nisan asidik gübre, Temmuz potasyum',dikim:'Sonbahar veya ilkbahar'},
+  {id:'pyracantha',tr:'Ateş Dikeni',en:'Firethorn',sci:'Pyracantha coccinea',cat:'outdoor',emoji:'🔴',family:'Rosaceae',origin:'Güney Avrupa',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'2-4m',lifespan:'20+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','turuncu-kırmızı meyve','dikenli çit','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Mart ve Eylül dengeli',dikim:'Sonbahar veya ilkbahar',budama:'Çiçek sonrası Temmuz'},
+  {id:'ligustrum',tr:'Kurtbağrı',en:'Privet',sci:'Ligustrum vulgare',cat:'outdoor',emoji:'🌿',family:'Oleaceae',origin:'Avrupa',climate:'Her iklim',water:'low',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'1-5m',lifespan:'30+ yıl',bloom:'Haziran-Temmuz',harvest:'–',tags:['dışarıda','çit','hızlı büyüme','herdem yeşil'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Her mevsim',budama:'Nisan ve Temmuz (çit için)'},
+  {id:'euonymus',tr:'Taflan Benzeri (Öğlük)',en:'Euonymus',sci:'Euonymus japonicus',cat:'outdoor',emoji:'🌿',family:'Celastraceae',origin:'Japonya',climate:'Ilıman',water:'low',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'1-4m',lifespan:'30+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','herdem yeşil','çit','renkli yaprak'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK | Temmuz: 30g/m² potasyum nitrat',dikim:'Her mevsim (yaz hariç)'},
+  {id:'pittosporum',tr:'Pitosporum',en:'Pittosporum',sci:'Pittosporum tobira',cat:'outdoor',emoji:'🌿',family:'Pittosporaceae',origin:'Japonya/Çin',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'1-4m',lifespan:'30+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','herdem yeşil','kokusu','akdeniz'],regions:['Akdeniz','Ege','Marmara'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'İlkbahar veya sonbahar'},
+  {id:'escallonia',tr:'Eskallonia',en:'Escallonia',sci:'Escallonia rubra',cat:'outdoor',emoji:'🌸',family:'Escalloniaceae',origin:'Güney Amerika',climate:'Ilıman/Akdeniz',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-3m',lifespan:'20+ yıl',bloom:'Yaz-Sonbahar',harvest:'–',tags:['dışarıda','pembe çiçek','herdem yeşil'],regions:['Akdeniz','Ege','Marmara'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'İlkbahar'},
+  // DIŞ MEKAN — İĞNEYAPRAKLILAR
+  {id:'thuja',tr:'Mazı (Thuja)',en:'Arborvitae',sci:'Thuja occidentalis',cat:'outdoor',emoji:'🌲',family:'Cupressaceae',origin:'Kuzey Amerika',climate:'Ilıman/Serin',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'5-20m',lifespan:'100+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','çit','perde','iğneyapraklı'],featured:true,regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 20-10-10 NPK | Eylül: 40g/m² 5-10-20 potasyum ağırlıklı',dikim:'Sonbahar veya ilkbahar',budama:'Nisan (şekil için)'},
+  {id:'picea',tr:'Ladin',en:'Spruce',sci:'Picea abies',cat:'outdoor',emoji:'🌲',family:'Pinaceae',origin:'Avrupa',climate:'Serin/Dağlık',water:'moderate',sun:'full_sun',soil:'Asidik iyi drene',difficulty:'easy',height:'30-60m',lifespan:'500+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','dağ','büyük','iğneyapraklı'],regions:['Karadeniz','Doğu Anadolu','İç Anadolu (dağlık)'],fertilize:'Nisan dengeli azotlu yılda bir',dikim:'Sonbahar veya ilkbahar'},
+  {id:'abies',tr:'Göknar',en:'Fir Tree',sci:'Abies nordmanniana',cat:'outdoor',emoji:'🌲',family:'Pinaceae',origin:'Kafkasya/Türkiye',climate:'Serin/Dağlık',water:'moderate',sun:'full_sun',soil:'Asidik verimli',difficulty:'easy',height:'30-50m',lifespan:'500+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','noel ağacı','endemik','büyük'],regions:['Karadeniz','Doğu Anadolu'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar'},
+  {id:'juniper_horizontal',tr:'Yayılıcı Ardıç',en:'Creeping Juniper',sci:'Juniperus horizontalis',cat:'outdoor',emoji:'🌿',family:'Cupressaceae',origin:'Kuzey Amerika',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak kumlu',difficulty:'easy',height:'30-50cm',lifespan:'50+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','yer örtücü','kuraklık','erozyon'],regions:['Tüm Türkiye'],fertilize:'Nisan: 30g/m² 15-15-15 NPK, fazla gübrelemeden kaçın',dikim:'Her mevsim (yaz hariç)'},
+  {id:'pinus_strobus',tr:'Beş İğneli Çam',en:'Eastern White Pine',sci:'Pinus strobus',cat:'outdoor',emoji:'🌲',family:'Pinaceae',origin:'Kuzey Amerika',climate:'Ilıman/Serin',water:'moderate',sun:'full_sun',soil:'Kumlu asidik',difficulty:'easy',height:'20-40m',lifespan:'200+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','büyük','hızlı büyüme'],regions:['Karadeniz','Marmara','İç Anadolu'],fertilize:'Nisan azotlu yılda bir',dikim:'Sonbahar veya ilkbahar'},
+  {id:'cryptomeria',tr:'Japon Sediri',en:'Japanese Cedar',sci:'Cryptomeria japonica',cat:'outdoor',emoji:'🌲',family:'Cupressaceae',origin:'Japonya/Çin',climate:'Ilıman/Nemli',water:'moderate',sun:'full_sun',soil:'Asidik nemli',difficulty:'medium',height:'15-40m',lifespan:'200+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','japon','büyük','nemli'],regions:['Karadeniz','Marmara'],fertilize:'Nisan: 50g/m² rododendron/asidik gübre (pH 4-5) | Temmuz: 30g/m² amonyum sülfat',dikim:'Sonbahar veya ilkbahar'},
+  {id:'taxus',tr:'Porsuk',en:'Yew',sci:'Taxus baccata',cat:'outdoor',emoji:'🌲',family:'Taxaceae',origin:'Avrupa/Asya',climate:'Her iklim',water:'low',sun:'shade',soil:'Her toprak',difficulty:'easy',height:'5-20m',lifespan:'1000+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','gölge','herdem yeşil','topiary','uzun ömür'],featured:true,regions:['Tüm Türkiye'],fertilize:'Nisan dengeli yavaş salınımlı',dikim:'Her mevsim (yaz hariç)',budama:'Her zaman (dayanıklı)'},
+  {id:'chamaecyparis',tr:'Sahte Servi',en:'False Cypress',sci:'Chamaecyparis lawsoniana',cat:'outdoor',emoji:'🌲',family:'Cupressaceae',origin:'Kuzey Amerika',climate:'Ilıman/Nemli',water:'moderate',sun:'full_sun',soil:'Asidik nemli',difficulty:'easy',height:'10-30m',lifespan:'100+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','mavi-gri','hızlı büyüme'],regions:['Karadeniz','Marmara','Ege'],fertilize:'Nisan: 40g/m² 20-10-10 NPK | Eylül: 40g/m² 5-10-20 potasyum ağırlıklı',dikim:'Sonbahar veya ilkbahar'},
+  // DIŞ MEKAN — ÇALI VE BODUR
+  {id:'lavandula_stoechas',tr:'Fransız Lavantası',en:'French Lavender',sci:'Lavandula stoechas',cat:'outdoor',emoji:'💜',family:'Lamiaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'30-60cm',lifespan:'10+ yıl',bloom:'Nisan-Temmuz',harvest:'Mayıs-Haziran',tags:['dışarıda','akdeniz','kuraklık','aromatik'],regions:['Akdeniz','Ege'],fertilize:'Mart düşük azotlu yılda bir yeterli',dikim:'İlkbahar veya sonbahar'},
+  {id:'cistus',tr:'Laden',en:'Rock Rose',sci:'Cistus spp.',cat:'outdoor',emoji:'🌸',family:'Cistaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu kuru',difficulty:'easy',height:'50cm-2m',lifespan:'10-15 yıl',bloom:'Nisan-Haziran',harvest:'–',tags:['dışarıda','kuraklık','akdeniz','kaya bahçesi'],regions:['Akdeniz','Ege','Güneydoğu'],fertilize:'Gübre gerekmez — aşırı gübre bitkiye zarar verir, sadece yılda bir kez çok az kompost verilebilir',dikim:'Sonbahar'},
+  {id:'rosmarinus_tree',tr:'Ağaç Biberiye',en:'Tree Rosemary',sci:'Rosmarinus officinalis Prostratus',cat:'outdoor',emoji:'💙',family:'Lamiaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'50cm-1m',lifespan:'20+ yıl',bloom:'Kış-Bahar',harvest:'Yıl boyunca',tags:['dışarıda','sarkan','kuraklık','aromatik'],regions:['Akdeniz','Ege'],fertilize:'Nisan: 30g/m² 15-15-15 NPK, fazla gübrelemeden kaçın',dikim:'İlkbahar'},
+  {id:'callistemon',tr:'Fırça Çiçeği',en:'Bottlebrush',sci:'Callistemon citrinus',cat:'outdoor',emoji:'🔴',family:'Myrtaceae',origin:'Avustralya',climate:'Akdeniz/Sıcak',water:'low',sun:'full_sun',soil:'Her toprak drene',difficulty:'easy',height:'1-4m',lifespan:'20+ yıl',bloom:'Nisan-Temmuz',harvest:'–',tags:['dışarıda','kırmızı','egzotik','kuraklık'],regions:['Akdeniz','Ege'],fertilize:'Nisan: 40g/m² 15-15-15 NPK | Temmuz: 30g/m² potasyum nitrat',dikim:'İlkbahar'},
+  {id:'abelia',tr:'Abelia',en:'Abelia',sci:'Abelia grandiflora',cat:'outdoor',emoji:'🌸',family:'Caprifoliaceae',origin:'Çin',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-2m',lifespan:'20+ yıl',bloom:'Haziran-Ekim',harvest:'–',tags:['dışarıda','uzun çiçeklenme','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Mart: 60g/m² 15-15-15 NPK | Haziran: 30g/m² amonyum nitrat',dikim:'İlkbahar veya sonbahar'},
+  {id:'deutzia',tr:'Deutzia',en:'Deutzia',sci:'Deutzia gracilis',cat:'outdoor',emoji:'⬜',family:'Hydrangeaceae',origin:'Japonya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'1-2m',lifespan:'20+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','beyaz çiçek','çalı'],regions:['Tüm Türkiye'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül, yavaş salınımlı',dikim:'Sonbahar veya ilkbahar'},
+  {id:'kolkwitzia',tr:'Güzellik Çalısı',en:'Beauty Bush',sci:'Kolkwitzia amabilis',cat:'outdoor',emoji:'🌸',family:'Caprifoliaceae',origin:'Çin',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'2-3m',lifespan:'30+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','pembe','zariflik'],regions:['Tüm Türkiye'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül, yavaş salınımlı',dikim:'Sonbahar veya ilkbahar'},
+  {id:'sambucus',tr:'Mürver',en:'Elderberry',sci:'Sambucus nigra',cat:'outdoor',emoji:'🌸',family:'Adoxaceae',origin:'Avrupa',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'3-6m',lifespan:'50+ yıl',bloom:'Mayıs-Haziran',harvest:'Ağustos-Eylül',tags:['dışarıda','tibbi','meyveli','hızlı büyüme'],regions:['Tüm Türkiye'],fertilize:'Nisan dengeli azotlu',dikim:'Sonbahar veya ilkbahar'},
+  {id:'corylus',tr:'Fındık (Orman)',en:'Hazelnut Shrub',sci:'Corylus avellana contorta',cat:'outdoor',emoji:'🌰',family:'Betulaceae',origin:'Avrupa',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'3-5m',lifespan:'80+ yıl',bloom:'Ocak-Mart',harvest:'–',tags:['dışarıda','kış ilgisi','bükülmüş dal'],regions:['Tüm Türkiye'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül, yavaş salınımlı',dikim:'Sonbahar'},
+  {id:'ribes',tr:'Frenk Üzümü',en:'Flowering Currant',sci:'Ribes sanguineum',cat:'outdoor',emoji:'🔴',family:'Grossulariaceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'1-3m',lifespan:'20+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','erken bahar','pembe-kırmızı'],regions:['Tüm Türkiye'],fertilize:'Mart: 50g/m² 15-15-15 NPK granül, yavaş salınımlı',dikim:'Sonbahar'},
+  // DIŞ MEKAN — TOPRAK ÖRTÜCÜ VE SARMAŞIK
+  {id:'hedera_outdoor',tr:'Dış Mekan Sarmaşığı',en:'Outdoor Ivy',sci:'Hedera colchica',cat:'outdoor',emoji:'🌿',family:'Araliaceae',origin:'Kafkasya',climate:'Ilıman',water:'moderate',sun:'shade',soil:'Her toprak',difficulty:'easy',height:'Sarmaşık 20m+',lifespan:'50+ yıl',bloom:'Sonbahar',harvest:'–',tags:['dışarıda','gölge','duvar','yer örtücü'],regions:['Tüm Türkiye','özellikle Karadeniz/Marmara'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Her mevsim'},
+  {id:'parthenocissus',tr:'Beş Yapraklı Sarmaşık',en:'Virginia Creeper',sci:'Parthenocissus quinquefolia',cat:'outdoor',emoji:'🍂',family:'Vitaceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'10-20m',lifespan:'50+ yıl',bloom:'Haziran-Temmuz',harvest:'–',tags:['dışarıda','sonbahar rengi','duvar','hızlı büyüme'],featured:true,regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar veya ilkbahar'},
+  {id:'lonicera',tr:'Hanımeli',en:'Honeysuckle',sci:'Lonicera japonica',cat:'outdoor',emoji:'💛',family:'Caprifoliaceae',origin:'Japonya',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'5-10m (sarmaşık)',lifespan:'20+ yıl',bloom:'Mayıs-Eylül',harvest:'–',tags:['dışarıda','kokusu','sarmaşık','arı'],featured:true,regions:['Tüm Türkiye'],fertilize:'Nisan ve Haziran dengeli',dikim:'Sonbahar veya ilkbahar'},
+  {id:'polygonum',tr:'Japon Sarmaşığı',en:'Russian Vine',sci:'Fallopia baldschuanica',cat:'outdoor',emoji:'⬜',family:'Polygonaceae',origin:'Orta Asya',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-15m (sarmaşık)',lifespan:'30+ yıl',bloom:'Temmuz-Ekim',harvest:'–',tags:['dışarıda','hızlı büyüme','örtü','çit'],regions:['Tüm Türkiye'],fertilize:'Nisan: Çok az 10-10-10 NPK (20g/m²) yeterli, aşırı gübre istemez',dikim:'Her mevsim'},
+  {id:'pachysandra',tr:'Paşisandra',en:'Pachysandra',sci:'Pachysandra terminalis',cat:'outdoor',emoji:'🌿',family:'Buxaceae',origin:'Japonya',climate:'Ilıman',water:'moderate',sun:'shade',soil:'Asidik humuslu',difficulty:'easy',height:'20-30cm',lifespan:'Çok yıllık',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','yer örtücü','gölge','herdem yeşil'],regions:['Karadeniz','Marmara','Ege'],fertilize:'Nisan: 40g/m² asidik özel gübre (sülfatlı amonyum bazlı)',dikim:'İlkbahar'},
+  // DIŞ MEKAN — ÖZEL & SÜSLEMELİK
+  {id:'ginkgo',tr:'Ginkgo',en:'Ginkgo',sci:'Ginkgo biloba',cat:'outdoor',emoji:'🍃',family:'Ginkgoaceae',origin:'Çin',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'20-35m',lifespan:'1000+ yıl',bloom:'–',harvest:'–',tags:['dışarıda','fosil ağaç','sarı sonbahar','tibbi'],featured:true,regions:['Tüm Türkiye'],fertilize:'Nisan dengeli, yılda bir yeterli',dikim:'Sonbahar veya ilkbahar'},
+  {id:'liquidambar',tr:'Sığla Ağacı',en:'Sweetgum',sci:'Liquidambar orientalis',cat:'outdoor',emoji:'🍂',family:'Altingiaceae',origin:'Türkiye/Rodos',climate:'Ilıman/Nemli',water:'moderate',sun:'full_sun',soil:'Asidik nemli',difficulty:'medium',height:'10-20m',lifespan:'200+ yıl',bloom:'Nisan',harvest:'–',tags:['dışarıda','endemik','sonbahar rengi','tibbi'],regions:['Ege (Muğla)','Marmara'],fertilize:'Nisan dengeli azotlu',dikim:'Sonbahar'},
+  {id:'catalpa',tr:'Katalpa',en:'Catalpa',sci:'Catalpa bignonioides',cat:'outdoor',emoji:'🌳',family:'Bignoniaceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-20m',lifespan:'100+ yıl',bloom:'Haziran-Temmuz',harvest:'–',tags:['dışarıda','büyük yaprak','ekzotik görünüm','park'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar'},
+  {id:'robinia_frisia',tr:'Altın Akasya',en:'Golden Locust',sci:'Robinia pseudoacacia Frisia',cat:'outdoor',emoji:'💛',family:'Fabaceae',origin:'Bahçe çeşidi',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'8-15m',lifespan:'100+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','altın sarısı yaprak','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar'},
+  {id:'paulownia',tr:'Paulovnya',en:'Paulownia',sci:'Paulownia tomentosa',cat:'outdoor',emoji:'💜',family:'Paulowniaceae',origin:'Çin',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Derin iyi drene',difficulty:'easy',height:'10-20m',lifespan:'50+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','hızlı büyüme','mor çiçek','biyoenerji'],regions:['Tüm Türkiye'],fertilize:'Nisan yüksek azotlu, Temmuz dengeli',dikim:'İlkbahar'},
+  {id:'jacaranda',tr:'Jakaranda',en:'Jacaranda',sci:'Jacaranda mimosifolia',cat:'outdoor',emoji:'💜',family:'Bignoniaceae',origin:'Brezilya',climate:'Akdeniz/Sıcak',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'medium',height:'10-15m',lifespan:'50+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','mor','egzotik','sıcak iklim'],regions:['Akdeniz','Ege (kıyı)'],fertilize:'Mart: 60g/m² 15-15-15 NPK | Haziran: 30g/m² amonyum nitrat',dikim:'İlkbahar'},
+  {id:'tamarix',tr:'Ilgın',en:'Tamarisk',sci:'Tamarix parviflora',cat:'outdoor',emoji:'🌸',family:'Tamaricaceae',origin:'Akdeniz/Orta Doğu',climate:'Akdeniz/Karasal',water:'low',sun:'full_sun',soil:'Her toprak, tuzlu',difficulty:'easy',height:'2-5m',lifespan:'50+ yıl',bloom:'Nisan-Haziran',harvest:'–',tags:['dışarıda','tuz toleransı','kuraklık','pembe'],regions:['Tüm Türkiye','özellikle kıyı ve karasal'],fertilize:'Nisan: 30g/m² 15-15-15 NPK, fazla gübrelemeden kaçın',dikim:'Sonbahar veya ilkbahar'},
+  {id:'cercis',tr:'Erguvan',en:'Judas Tree',sci:'Cercis siliquastrum',cat:'outdoor',emoji:'💜',family:'Fabaceae',origin:'Türkiye/Akdeniz',climate:'Akdeniz/Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'5-10m',lifespan:'100+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','mor pembe','bahar','endemik','kuraklık'],featured:true,regions:['Tüm Türkiye','özellikle Ege/Akdeniz'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar',budama:'Çiçek sonrası'},
+  {id:'albizia',tr:'İpek Ağacı',en:'Silk Tree',sci:'Albizia julibrissin',cat:'outdoor',emoji:'🌸',family:'Fabaceae',origin:'İran/Çin',climate:'Ilıman/Sıcak',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'5-12m',lifespan:'30-50 yıl',bloom:'Haziran-Ağustos',harvest:'–',tags:['dışarıda','pembe tüylü çiçek','yaz çiçeği','kuraklık'],regions:['Akdeniz','Ege','Marmara','Güneydoğu'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'İlkbahar'},
+  {id:'koelreuteria',tr:'Altın Yağmur',en:'Golden Rain Tree',sci:'Koelreuteria paniculata',cat:'outdoor',emoji:'💛',family:'Sapindaceae',origin:'Çin/Kore',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'7-12m',lifespan:'50+ yıl',bloom:'Temmuz-Ağustos',harvest:'–',tags:['dışarıda','sarı çiçek','yaz çiçeği','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK granül yavaş salınımlı',dikim:'Sonbahar veya ilkbahar'},
+
+  // DIŞ MEKAN — EK BİTKİLER (AĞAÇLAR)
+  {id:'platanus',tr:'Çınar',en:'Plane Tree',sci:'Platanus orientalis',cat:'outdoor',emoji:'🌳',family:'Platanaceae',origin:'Türkiye/Balkanlar',climate:'Her iklim',water:'moderate',sun:'full_sun',soil:'Derin verimli nemli',difficulty:'easy',height:'25-50m',lifespan:'500+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','büyük','park','gölge','endemik'],featured:true,regions:['Tüm Türkiye','özellikle Ege/Akdeniz kıyıları'],fertilize:'Nisan: 100g/m² 20-10-10 NPK | Eylül: 60g/m² potasyum sülfat',dikim:'Sonbahar veya kış',budama:'Kış (Ocak-Şubat)'},
+  {id:'liriodendron',tr:'Lale Ağacı',en:'Tulip Tree',sci:'Liriodendron tulipifera',cat:'outdoor',emoji:'🌸',family:'Magnoliaceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Derin asidik verimli',difficulty:'medium',height:'20-40m',lifespan:'200+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','büyük','yaz çiçeği','park'],regions:['Marmara','Karadeniz','Ege'],fertilize:'Nisan: 80g/m² 15-15-15 NPK | Haziran: 40g/m² amonyum nitrat',dikim:'Sonbahar'},
+  {id:'sophora',tr:'Japon Akademi Ağacı',en:'Japanese Pagoda Tree',sci:'Styphnolobium japonicum',cat:'outdoor',emoji:'🌳',family:'Fabaceae',origin:'Çin/Kore',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'15-25m',lifespan:'100+ yıl',bloom:'Temmuz-Ağustos',harvest:'–',tags:['dışarıda','yaz çiçeği','kuraklık','arı'],regions:['Tüm Türkiye'],fertilize:'Nisan: 60g/m² 15-15-15 NPK yavaş salınımlı, kendi azot bağlar',dikim:'Sonbahar veya ilkbahar'},
+  {id:'aesculus_pavia',tr:'Kırmızı Kestane',en:'Red Buckeye',sci:'Aesculus pavia',cat:'outdoor',emoji:'🌸',family:'Sapindaceae',origin:'Kuzey Amerika',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'medium',height:'4-8m',lifespan:'50+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','kırmızı çiçek','küçük ağaç'],regions:['Marmara','Karadeniz','Ege'],fertilize:'Mart: 60g/m² 20-10-10 NPK | Haziran: 30g/m² amonyum sülfat',dikim:'Sonbahar'},
+  {id:'gleditsia',tr:'Gleditsya (Diken Ağacı)',en:'Honey Locust',sci:'Gleditsia triacanthos',cat:'outdoor',emoji:'🌳',family:'Fabaceae',origin:'Kuzey Amerika',climate:'Ilıman/Karasal',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'12-20m',lifespan:'100+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['dışarıda','kuraklık','tuz toleransı','şehir'],regions:['Tüm Türkiye'],fertilize:'Nisan: 50g/m² 15-15-15 NPK, kendi azot bağladığından az azot gerekir',dikim:'Sonbahar veya ilkbahar'},
+  {id:'ulmus',tr:'Karaağaç',en:'Elm',sci:'Ulmus minor',cat:'outdoor',emoji:'🌳',family:'Ulmaceae',origin:'Avrupa/Asya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli nemli',difficulty:'easy',height:'20-30m',lifespan:'300+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','büyük','tarihsel','gölge'],regions:['Tüm Türkiye'],fertilize:'Mart: 80g/m² 20-10-10 NPK | Eylül: 50g/m² potasyum sülfat',dikim:'Sonbahar'},
+  {id:'populus_nigra',tr:'Kara Kavak',en:'Black Poplar',sci:'Populus nigra',cat:'outdoor',emoji:'🌳',family:'Salicaceae',origin:'Avrupa/Asya',climate:'Her iklim',water:'high',sun:'full_sun',soil:'Derin nemli',difficulty:'easy',height:'25-35m',lifespan:'150+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','hızlı büyüme','rüzgar perdesi','nehir kenarı'],regions:['Tüm Türkiye'],fertilize:'Nisan: 100g/m² 20-10-10 yüksek azotlu NPK | Haziran: 50g/m² amonyum nitrat',dikim:'Sonbahar veya kış'},
+  {id:'zelkova',tr:'Karaçalı (Zelkova)',en:'Zelkova',sci:'Zelkova carpinifolia',cat:'outdoor',emoji:'🌳',family:'Ulmaceae',origin:'Kafkasya/Türkiye',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Derin verimli',difficulty:'easy',height:'20-35m',lifespan:'500+ yıl',bloom:'Nisan',harvest:'–',tags:['dışarıda','sonbahar rengi','endemik','uzun ömür'],regions:['Karadeniz','Marmara','Doğu Anadolu'],fertilize:'Mart: 70g/m² 15-15-15 NPK | Eylül: 50g/m² potasyum sülfat',dikim:'Sonbahar'},
+  {id:'morus_alba',tr:'Beyaz Dut',en:'White Mulberry',sci:'Morus alba',cat:'outdoor',emoji:'⚪',family:'Moraceae',origin:'Çin',climate:'Her iklim',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-20m',lifespan:'200+ yıl',bloom:'Nisan-Mayıs',harvest:'Haziran-Temmuz',tags:['dışarıda','meyve','hızlı büyüme','ipekböceği'],regions:['Tüm Türkiye'],fertilize:'Mart: 60g/m² 20-10-10 NPK | Haziran: 30g/m² amonyum nitrat',dikim:'Sonbahar veya ilkbahar'},
+  {id:'salix_babylonica',tr:'Salkım Söğüt',en:'Weeping Willow',sci:'Salix babylonica',cat:'outdoor',emoji:'🌿',family:'Salicaceae',origin:'Çin',climate:'Ilıman',water:'high',sun:'full_sun',soil:'Nemli derin',difficulty:'easy',height:'10-20m',lifespan:'50+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','su kenarı','sarkık dal','hızlı büyüme'],featured:true,regions:['Tüm Türkiye'],fertilize:'Nisan: 80g/m² 20-10-10 NPK | Haziran: 40g/m² amonyum nitrat',dikim:'Sonbahar veya kış'},
+  {id:'quercus_suber',tr:'Mantar Meşesi',en:'Cork Oak',sci:'Quercus suber',cat:'outdoor',emoji:'🌳',family:'Fagaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Asidik kumlu',difficulty:'easy',height:'10-20m',lifespan:'250+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','mantar kabuk','akdeniz','kuraklık','herdem yeşil'],regions:['Akdeniz','Ege'],fertilize:'Nisan: 40g/m² 15-15-15 NPK yavaş salınımlı, aşırı gübre istemez',dikim:'Sonbahar'},
+  {id:'quercus_ilex',tr:'Pırnal Meşesi',en:'Holm Oak',sci:'Quercus ilex',cat:'outdoor',emoji:'🌳',family:'Fagaceae',origin:'Akdeniz',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'15-25m',lifespan:'500+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','herdem yeşil','akdeniz','kuraklık'],regions:['Akdeniz','Ege','Marmara (kıyı)'],fertilize:'Nisan: 40g/m² 15-15-15 NPK yavaş salınımlı',dikim:'Sonbahar'},
+  // DIŞ MEKAN — EK ÇALILAR VE BODURLAR
+  {id:'caryopteris',tr:'Mavi Çalı',en:'Bluebeard',sci:'Caryopteris incana',cat:'outdoor',emoji:'💙',family:'Lamiaceae',origin:'Çin/Japonya',climate:'Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'60cm-1m',lifespan:'15+ yıl',bloom:'Ağustos-Ekim',harvest:'–',tags:['dışarıda','mavi','sonbahar','kelebek','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Mart: 30g/m² 10-10-10 NPK, aşırı gübre çiçeklenmeyi azaltır',dikim:'İlkbahar',budama:'Mart erken ilkbahar sert budama'},
+  {id:'perovskia',tr:'Rus Adaçayı',en:'Russian Sage',sci:'Salvia yangii',cat:'outdoor',emoji:'💜',family:'Lamiaceae',origin:'Afganistan/Orta Asya',climate:'Karasal/Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'60-120cm',lifespan:'10+ yıl',bloom:'Temmuz-Ekim',harvest:'–',tags:['dışarıda','mor','kuraklık','kelebek','aromatik'],regions:['Tüm Türkiye'],fertilize:'Mart: 20g/m² 10-10-10 NPK az gübre ister, zengin toprak çiçeklenmeyi azaltır',dikim:'İlkbahar',budama:'Mart sert budama'},
+  {id:'hypericum',tr:'Sarı Kantaron Çalısı',en:'St. Johns Wort Shrub',sci:'Hypericum calycinum',cat:'outdoor',emoji:'💛',family:'Hypericaceae',origin:'Güneydoğu Avrupa',climate:'Ilıman',water:'low',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'30-60cm',lifespan:'Çok yıllık',bloom:'Haziran-Eylül',harvest:'–',tags:['dışarıda','sarı','yer örtücü','gölge','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Nisan: 30g/m² 15-15-15 NPK yavaş salınımlı',dikim:'Her mevsim (yaz hariç)'},
+  {id:'indigofera',tr:'Nil Çiviti Çalısı',en:'Indigo Bush',sci:'Indigofera heterantha',cat:'outdoor',emoji:'💜',family:'Fabaceae',origin:'Himalayalar',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-2m',lifespan:'15+ yıl',bloom:'Haziran-Eylül',harvest:'–',tags:['dışarıda','mor-pembe','uzun çiçeklenme','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Nisan: 30g/m² 10-10-10 NPK, kendi azot bağlar',dikim:'İlkbahar'},
+  {id:'potentilla',tr:'Potentilla Çalısı',en:'Shrubby Cinquefoil',sci:'Potentilla fruticosa',cat:'outdoor',emoji:'💛',family:'Rosaceae',origin:'Kuzey Yarıküre',climate:'Her iklim',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'50-150cm',lifespan:'20+ yıl',bloom:'Mayıs-Ekim',harvest:'–',tags:['dışarıda','sarı','çok uzun çiçeklenme','kuraklık','soğuk'],regions:['Tüm Türkiye'],fertilize:'Nisan: 30g/m² 15-15-15 NPK yılda bir yeterli',dikim:'Her mevsim (yaz hariç)'},
+  {id:'genista',tr:'Katırtırnağı',en:'Broom',sci:'Genista lydia',cat:'outdoor',emoji:'💛',family:'Fabaceae',origin:'Balkanlar',climate:'Ilıman/Karasal',water:'low',sun:'full_sun',soil:'Kumlu fakir drene',difficulty:'easy',height:'30-60cm',lifespan:'15+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','sarı','kaya bahçesi','kuraklık','eğim'],regions:['Tüm Türkiye'],fertilize:'Gübre gerekmez — fakir toprakta daha iyi çiçeklenir, azotdan kaçın',dikim:'İlkbahar veya sonbahar'},
+  {id:'choisya',tr:'Meksika Portakalı',en:'Mexican Orange',sci:'Choisya ternata',cat:'outdoor',emoji:'⬜',family:'Rutaceae',origin:'Meksika',climate:'Ilıman/Akdeniz',water:'moderate',sun:'partial_shade',soil:'İyi drene',difficulty:'easy',height:'1-2m',lifespan:'20+ yıl',bloom:'Nisan-Mayıs ve Eylül',harvest:'–',tags:['dışarıda','beyaz kokusu','herdem yeşil','çift çiçeklenme'],regions:['Akdeniz','Ege','Marmara'],fertilize:'Nisan: 40g/m² 15-15-15 NPK | Ağustos: 30g/m² potasyum nitrat',dikim:'İlkbahar veya sonbahar'},
+  {id:'sarcococca',tr:'Tatlı Kutu Ağacı',en:'Sweet Box',sci:'Sarcococca confusa',cat:'outdoor',emoji:'🌿',family:'Buxaceae',origin:'Çin',climate:'Ilıman',water:'moderate',sun:'shade',soil:'Asidik humuslu',difficulty:'easy',height:'60-100cm',lifespan:'30+ yıl',bloom:'Ocak-Mart',harvest:'–',tags:['dışarıda','kış kokusu','derin gölge','herdem yeşil'],regions:['Karadeniz','Marmara','Ege'],fertilize:'Nisan: 30g/m² asidik gübre (amonyum sülfat bazlı)',dikim:'Sonbahar'},
+  {id:'osmanthus',tr:'Osmanthus',en:'Osmanthus',sci:'Osmanthus burkwoodii',cat:'outdoor',emoji:'⬜',family:'Oleaceae',origin:'Asya',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli iyi drene',difficulty:'easy',height:'1-3m',lifespan:'30+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['dışarıda','kokusu','herdem yeşil','çit'],regions:['Marmara','Ege','Akdeniz'],fertilize:'Nisan: 40g/m² 15-15-15 NPK | Eylül: 30g/m² potasyum sülfat',dikim:'Sonbahar veya ilkbahar'},
+  {id:'skimmia',tr:'Skimmia',en:'Skimmia',sci:'Skimmia japonica',cat:'outdoor',emoji:'🔴',family:'Rutaceae',origin:'Japonya',climate:'Ilıman',water:'moderate',sun:'shade',soil:'Asidik humuslu',difficulty:'medium',height:'60-100cm',lifespan:'20+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['dışarıda','kış kırmızı meyve','gölge','herdem yeşil'],regions:['Karadeniz','Marmara'],fertilize:'Nisan: 40g/m² asidik gübre | Temmuz: 20g/m² amonyum sülfat',dikim:'Sonbahar'},
+  {id:'nandina',tr:'Cennet Bambusu',en:'Heavenly Bamboo',sci:'Nandina domestica',cat:'outdoor',emoji:'🔴',family:'Berberidaceae',origin:'Japonya/Çin',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli iyi drene',difficulty:'easy',height:'1-2m',lifespan:'30+ yıl',bloom:'Haziran-Temmuz',harvest:'–',tags:['dışarıda','kış rengi','herdem yeşil','dört mevsim'],regions:['Tüm Türkiye'],fertilize:'Nisan: 40g/m² 15-15-15 NPK | Eylül: 30g/m² potasyum sülfat',dikim:'Her mevsim (yaz hariç)'},
+  // SÜS BİTKİLERİ — TROPIKAL İÇ MEKAN
+  {id:'bird_of_paradise',tr:'Cennet Kuşu',en:'Bird of Paradise',sci:'Strelitzia reginae',cat:'ornamental',emoji:'🌺',family:'Strelitziaceae',origin:'Güney Afrika',climate:'Tropikal/Akdeniz',water:'moderate',sun:'full_sun',soil:'Verimli iyi drene',difficulty:'medium',height:'1-2m',lifespan:'Çok yıllık',bloom:'Yıl boyunca',harvest:'–',tags:['süs','tropikal','egzotik'],featured:true,regions:['Akdeniz','Ege'],fertilize:'Nisan-Eylül her 2 haftada dengeli sıvı gübre'},
+  {id:'anthurium',tr:'Flamingo Çiçeği',en:'Anthurium',sci:'Anthurium andraeanum',cat:'ornamental',emoji:'🌸',family:'Araceae',origin:'Kolombiya',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Orkide toprağı karışımı',difficulty:'medium',height:'40-60cm',lifespan:'Çok yıllık',bloom:'Yıl boyunca',harvest:'–',tags:['süs','içmekan','kırmızı'],featured:true,regions:['Tüm Türkiye (iç mekan)'],fertilize:'İlkbahar-Yaz ayda bir fosfor ağırlıklı'},
+  {id:'bromeliad',tr:'Bromelia',en:'Bromeliad',sci:'Bromeliaceae spp.',cat:'ornamental',emoji:'🌿',family:'Bromeliaceae',origin:'Amerika',climate:'Tropikal',water:'low',sun:'partial_shade',soil:'Kaktüs toprağı',difficulty:'easy',height:'30-90cm',lifespan:'Çok yıllık',bloom:'Değişken',harvest:'–',tags:['süs','egzotik','renkli'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Mart-Eylül ayda bir yarım doz sıvı gübre'},
+  {id:'aglonema',tr:'Aglaonema',en:'Chinese Evergreen',sci:'Aglaonema spp.',cat:'ornamental',emoji:'🌿',family:'Araceae',origin:'Asya',climate:'Tropikal',water:'moderate',sun:'shade',soil:'Verimli nemli',difficulty:'easy',height:'30-90cm',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','gölge','renkli'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Ağustos 3 haftada bir dengeli gübre'},
+  {id:'dieffenbachia',tr:'Dieffenbachia',en:'Dumb Cane',sci:'Dieffenbachia spp.',cat:'ornamental',emoji:'🌿',family:'Araceae',origin:'Tropik Amerika',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'1-2m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','büyük yaprak'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Mart-Ekim her 4 haftada azot ağırlıklı'},
+  {id:'spathiphyllum_big',tr:'Büyük Barış Zambağı',en:'Peace Lily Large',sci:'Spathiphyllum wallisii',cat:'ornamental',emoji:'🌸',family:'Araceae',origin:'Kolombiya',climate:'Tropikal',water:'high',sun:'shade',soil:'Nemli verimli',difficulty:'easy',height:'60-120cm',lifespan:'Çok yıllık',bloom:'İlkbahar-Yaz',harvest:'–',tags:['süs','gölge','hava temizleyici'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Ağustos 6 haftada bir dengeli'},
+  {id:'croton',tr:'Kroton',en:'Croton',sci:'Codiaeum variegatum',cat:'ornamental',emoji:'🍂',family:'Euphorbiaceae',origin:'Güney Asya',climate:'Tropikal',water:'moderate',sun:'full_sun',soil:'Verimli iyi drene',difficulty:'medium',height:'60-150cm',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','renkli yaprak','tropikal'],regions:['Akdeniz','Ege (açık)','Tüm TR (iç mekan)'],fertilize:'Mart-Eylül ayda bir dengeli sıvı'},
+  {id:'ficus_benjamin',tr:'Ficus Benjamin',en:'Weeping Fig',sci:'Ficus benjamina',cat:'ornamental',emoji:'🌳',family:'Moraceae',origin:'Asya',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'medium',height:'2-3m (saksı)',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','ağaç','popüler'],featured:true,regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Eylül her 3 haftada dengeli'},
+  {id:'yucca',tr:'Yuka',en:'Yucca',sci:'Yucca elephantipes',cat:'ornamental',emoji:'🌵',family:'Asparagaceae',origin:'Meksika',climate:'Kurak',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'1-3m',lifespan:'Çok yıllık',bloom:'Yaz',harvest:'–',tags:['süs','kuraklık','tropikal'],regions:['Akdeniz','Ege','Tüm TR (iç mekan)'],fertilize:'Nisan ve Temmuz yavaş salınımlı gübre'},
+  {id:'cycas',tr:'Sago Palmiyesi',en:'Sago Palm',sci:'Cycas revoluta',cat:'ornamental',emoji:'🌴',family:'Cycadaceae',origin:'Japonya',climate:'Tropikal/Ilıman',water:'low',sun:'partial_shade',soil:'İyi drene',difficulty:'medium',height:'1-2m',lifespan:'100+ yıl',bloom:'Nadiren',harvest:'–',tags:['süs','palmiye','egzotik'],regions:['Akdeniz','Ege'],fertilize:'Nisan ve Temmuz dengeli yavaş salınımlı'},
+  {id:'areca',tr:'Areka Palmiyesi',en:'Areca Palm',sci:'Dypsis lutescens',cat:'ornamental',emoji:'🌴',family:'Arecaceae',origin:'Madagaskar',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli iyi drene',difficulty:'medium',height:'2-4m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','palmiye','hava temizleyici'],featured:true,regions:['Tüm Türkiye (iç mekan)','Akdeniz (açık)'],fertilize:'Mart-Eylül ayda bir palmiye gübresi'},
+  {id:'schefflera',tr:'Şeflera',en:'Umbrella Plant',sci:'Schefflera arboricola',cat:'ornamental',emoji:'🌿',family:'Araliaceae',origin:'Tayvan',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'1-3m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','büyük','kolay'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Eylül her 4 haftada dengeli'},
+  {id:'rubber_plant',tr:'Kauçuk Bitkisi',en:'Rubber Plant',sci:'Ficus elastica',cat:'ornamental',emoji:'🌿',family:'Moraceae',origin:'Hindistan',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Verimli',difficulty:'easy',height:'1-3m',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','büyük yaprak','hava temizleyici'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Ağustos ayda bir dengeli'},
+  {id:'maranta',tr:'Maranta',en:'Prayer Plant',sci:'Maranta leuconeura',cat:'ornamental',emoji:'🌿',family:'Marantaceae',origin:'Brezilya',climate:'Tropikal',water:'high',sun:'shade',soil:'Nemli verimli',difficulty:'medium',height:'20-30cm',lifespan:'Çok yıllık',bloom:'Nadiren',harvest:'–',tags:['süs','çizgili yaprak','gölge'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Eylül her 2 haftada yarım doz'},
+  {id:'tradescantia',tr:'Tradescantia',en:'Spiderwort',sci:'Tradescantia spp.',cat:'ornamental',emoji:'💜',family:'Commelinaceae',origin:'Amerika',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'20-40cm',lifespan:'Çok yıllık',bloom:'İlkbahar-Yaz',harvest:'–',tags:['süs','mor','sarkan'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Mart-Ekim ayda bir dengeli sıvı'},
+  // SÜS BİTKİLERİ — KAKTÜS & SUKULENT
+  {id:'echeveria',tr:'Echeveria',en:'Echeveria',sci:'Echeveria spp.',cat:'ornamental',emoji:'🌵',family:'Crassulaceae',origin:'Meksika',climate:'Kurak',water:'low',sun:'full_sun',soil:'Kaktüs toprağı',difficulty:'easy',height:'5-20cm',lifespan:'Çok yıllık',bloom:'İlkbahar-Yaz',harvest:'–',tags:['sukulent','rozet','renkli'],featured:true,regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan ve Temmuz kaktüs gübresi yarım doz'},
+  {id:'haworthia',tr:'Havortia',en:'Haworthia',sci:'Haworthia spp.',cat:'ornamental',emoji:'🌵',family:'Asphodelaceae',origin:'Güney Afrika',climate:'Kurak',water:'low',sun:'partial_shade',soil:'Kaktüs toprağı',difficulty:'easy',height:'5-15cm',lifespan:'Çok yıllık',bloom:'Yaz',harvest:'–',tags:['sukulent','şeffaf','gölge'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Mayıs ve Ağustos çok az kaktüs gübresi'},
+  {id:'gasteria',tr:'Gasteria',en:'Gasteria',sci:'Gasteria spp.',cat:'ornamental',emoji:'🌵',family:'Asphodelaceae',origin:'Güney Afrika',climate:'Kurak',water:'low',sun:'partial_shade',soil:'Kaktüs toprağı',difficulty:'easy',height:'10-25cm',lifespan:'Çok yıllık',bloom:'Kış-İlkbahar',harvest:'–',tags:['sukulent','gölge','kolay'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Haziran ve Eylül kaktüs gübresi'},
+  {id:'sedum',tr:'Sedum',en:'Stonecrop',sci:'Sedum spp.',cat:'ornamental',emoji:'🌿',family:'Crassulaceae',origin:'Kuzey Yarıküre',climate:'Ilıman',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'5-60cm',lifespan:'Çok yıllık',bloom:'Yaz-Sonbahar',harvest:'–',tags:['sukulent','yer örtücü','kuraklık'],regions:['Tüm Türkiye'],fertilize:'Nisan ve Temmuz çok az dengeli'},
+  {id:'cereus',tr:'Kolon Kaktüs',en:'Column Cactus',sci:'Cereus spp.',cat:'ornamental',emoji:'🌵',family:'Cactaceae',origin:'Güney Amerika',climate:'Çöl',water:'low',sun:'full_sun',soil:'Kaktüs toprağı',difficulty:'easy',height:'1-5m',lifespan:'100+ yıl',bloom:'Gece (yaz)',harvest:'–',tags:['kaktüs','sütun','büyük'],regions:['Akdeniz','Ege','Tüm TR (iç mekan)'],fertilize:'Nisan ve Temmuz kaktüs gübresi'},
+  {id:'opuntia',tr:'Fıkır Kaktüsü',en:'Prickly Pear',sci:'Opuntia spp.',cat:'ornamental',emoji:'🌵',family:'Cactaceae',origin:'Amerika',climate:'Kurak/Akdeniz',water:'low',sun:'full_sun',soil:'Kumlu drene',difficulty:'easy',height:'50cm-3m',lifespan:'Çok yıllık',bloom:'İlkbahar-Yaz',harvest:'Yaz-Sonbahar',tags:['kaktüs','akdeniz','meyveli'],regions:['Akdeniz','Ege','Güneydoğu'],fertilize:'Nisan kaktüs gübresi yılda bir kez yeterli'},
+  // SÜS BİTKİLERİ — BALKON & DIŞ MEKAN
+  {id:'bougainvillea_var',tr:'Mor Begonvil',en:'Purple Bougainvillea',sci:'Bougainvillea spectabilis',cat:'ornamental',emoji:'💜',family:'Nyctaginaceae',origin:'Brezilya',climate:'Akdeniz',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'5-10m',lifespan:'Çok yıllık',bloom:'Mart-Kasım',harvest:'–',tags:['süs','mor','akdeniz','sarmaşık'],regions:['Akdeniz','Ege','Marmara (korunaklı)'],fertilize:'Mart fosfor ağırlıklı, Haziran potasyum, Eylül son gübre'},
+  {id:'impatiens',tr:'Sabırsız Gelin',en:'Impatiens',sci:'Impatiens walleriana',cat:'ornamental',emoji:'🌸',family:'Balsaminaceae',origin:'Doğu Afrika',climate:'Ilıman',water:'high',sun:'shade',soil:'Nemli verimli',difficulty:'easy',height:'20-40cm',lifespan:'Tek yıllık',bloom:'İlkbahar-Sonbahar',harvest:'–',tags:['süs','balkon','gölge','renkli'],regions:['Tüm Türkiye'],fertilize:'Her 2 haftada dengeli sıvı gübre'},
+  {id:'begonia',tr:'Begonya',en:'Begonia',sci:'Begonia spp.',cat:'ornamental',emoji:'🌺',family:'Begoniaceae',origin:'Tropik bölgeler',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'medium',height:'20-60cm',lifespan:'Çok yıllık',bloom:'Yıl boyunca',harvest:'–',tags:['süs','balkon','çiçekli'],featured:true,regions:['Tüm Türkiye'],fertilize:'Mart-Ekim her 2 haftada fosfor ağırlıklı'},
+  {id:'viola',tr:'Hercai Menekşe',en:'Pansy',sci:'Viola tricolor',cat:'ornamental',emoji:'💜',family:'Violaceae',origin:'Avrupa',climate:'Serin',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'10-25cm',lifespan:'Tek/İki yıllık',bloom:'Sonbahar-İlkbahar',harvest:'–',tags:['süs','kış','renkli'],regions:['Tüm Türkiye'],fertilize:'Ekim ve Şubat dengeli granül gübre'},
+  {id:'verbena',tr:'Mine Çiçeği',en:'Verbena',sci:'Verbena hybrida',cat:'ornamental',emoji:'🌸',family:'Verbenaceae',origin:'Amerika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'20-40cm',lifespan:'Tek yıllık',bloom:'Yaz-Sonbahar',harvest:'–',tags:['süs','balkon','yayılıcı'],regions:['Tüm Türkiye'],fertilize:'Mayıs-Eylül her 3 haftada dengeli'},
+  {id:'lobelia',tr:'Lobelia',en:'Lobelia',sci:'Lobelia erinus',cat:'ornamental',emoji:'💙',family:'Campanulaceae',origin:'Güney Afrika',climate:'Ilıman/Serin',water:'moderate',sun:'partial_shade',soil:'Verimli nemli',difficulty:'easy',height:'10-20cm',lifespan:'Tek yıllık',bloom:'İlkbahar-Sonbahar',harvest:'–',tags:['süs','mavi','sarkan'],regions:['Tüm Türkiye'],fertilize:'Her 3 haftada dengeli sıvı gübre'},
+  {id:'alyssum',tr:'Ballıbaba',en:'Sweet Alyssum',sci:'Lobularia maritima',cat:'ornamental',emoji:'⬜',family:'Brassicaceae',origin:'Akdeniz',climate:'Serin',water:'low',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'10-20cm',lifespan:'Tek yıllık',bloom:'İlkbahar-Sonbahar',harvest:'–',tags:['süs','kokusu','yer örtücü'],regions:['Tüm Türkiye'],fertilize:'Ayda bir çok az dengeli yeterli'},
+  {id:'dahlia',tr:'Yıldız Çiçeği',en:'Dahlia',sci:'Dahlia spp.',cat:'ornamental',emoji:'🌸',family:'Asteraceae',origin:'Meksika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli iyi drene',difficulty:'medium',height:'30cm-1.5m',lifespan:'Yumrulu',bloom:'Yaz-Sonbahar',harvest:'–',tags:['süs','büyük','rengarenk'],featured:true,regions:['Tüm Türkiye'],fertilize:'Mayıs azotlu, Temmuz-Eylül fosfor-potasyum'},
+  {id:'gladiolus',tr:'Glayöl',en:'Gladiolus',sci:'Gladiolus spp.',cat:'ornamental',emoji:'🌸',family:'Iridaceae',origin:'Güney Afrika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Kumlu verimli',difficulty:'medium',height:'60-150cm',lifespan:'Yumrulu',bloom:'Yaz',harvest:'–',tags:['süs','kesme çiçek','uzun'],regions:['Tüm Türkiye'],fertilize:'Dikim sonrası dengeli, çiçeklenme öncesi potasyum'},
+  {id:'iris',tr:'Süsen',en:'Iris',sci:'Iris germanica',cat:'ornamental',emoji:'💜',family:'Iridaceae',origin:'Güney Avrupa',climate:'Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'30-90cm',lifespan:'Rizomlu',bloom:'Nisan-Mayıs',harvest:'–',tags:['süs','rizom','bahar'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli, Ağustos potasyum'},
+  {id:'hyacinth',tr:'Sümbül',en:'Hyacinth',sci:'Hyacinthus orientalis',cat:'ornamental',emoji:'💜',family:'Asparagaceae',origin:'Batı Asya/Türkiye',climate:'Serin/Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'20-30cm',lifespan:'Soğanlı',bloom:'Mart-Nisan',harvest:'–',tags:['süs','soğan','kokusu','bahar'],regions:['Tüm Türkiye'],fertilize:'Sonbahar dikim gübresi, çiçek sonrası potasyum'},
+  {id:'narcissus',tr:'Nergis',en:'Daffodil',sci:'Narcissus spp.',cat:'ornamental',emoji:'💛',family:'Amaryllidaceae',origin:'Güney Avrupa',climate:'Serin/Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'20-45cm',lifespan:'Soğanlı',bloom:'Şubat-Nisan',harvest:'–',tags:['süs','soğan','sarı','bahar'],regions:['Tüm Türkiye'],fertilize:'Ekim dikim gübresi, Mart dengeli'},
+  {id:'crocus',tr:'Çiğdem',en:'Crocus',sci:'Crocus spp.',cat:'ornamental',emoji:'💜',family:'Iridaceae',origin:'Akdeniz/Orta Asya',climate:'Serin',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'5-15cm',lifespan:'Soğanlı',bloom:'Şubat-Mart',harvest:'–',tags:['süs','erken bahar','soğan'],regions:['Tüm Türkiye'],fertilize:'Ekim dikim gübresi yeterli'},
+  {id:'anemone',tr:'Anemon',en:'Anemone',sci:'Anemone coronaria',cat:'ornamental',emoji:'🌸',family:'Ranunculaceae',origin:'Akdeniz',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'medium',height:'20-40cm',lifespan:'Yumrulu',bloom:'İlkbahar',harvest:'–',tags:['süs','bahar','rengarenk'],regions:['Akdeniz','Ege','Marmara'],fertilize:'Ekim ve Şubat dengeli'},
+  // SÜS — BONSAI
+  {id:'bonsai_juniper',tr:'Ardıç Bonsai',en:'Juniper Bonsai',sci:'Juniperus chinensis',cat:'ornamental',emoji:'🌲',family:'Cupressaceae',origin:'Çin/Japonya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Bonsai toprağı',difficulty:'hard',height:'15-60cm',lifespan:'100+ yıl',bloom:'–',harvest:'–',tags:['bonsai','iğneyapraklı','sanat'],regions:['Tüm Türkiye'],fertilize:'Mart-Ekim her 3 haftada dengeli sıvı bonsai gübre'},
+  {id:'bonsai_ficus',tr:'Ficus Bonsai',en:'Ficus Bonsai',sci:'Ficus retusa',cat:'ornamental',emoji:'🌳',family:'Moraceae',origin:'Asya',climate:'Tropikal',water:'moderate',sun:'partial_shade',soil:'Bonsai toprağı',difficulty:'medium',height:'15-50cm',lifespan:'50+ yıl',bloom:'–',harvest:'–',tags:['bonsai','iç mekan','popüler'],featured:true,regions:['Tüm Türkiye (iç mekan)'],fertilize:'Nisan-Eylül her 2 haftada dengeli bonsai gübre'},
+  {id:'bonsai_maple',tr:'Akçaağaç Bonsai',en:'Maple Bonsai',sci:'Acer palmatum',cat:'ornamental',emoji:'🍁',family:'Sapindaceae',origin:'Japonya',climate:'Ilıman/Serin',water:'moderate',sun:'partial_shade',soil:'Bonsai toprağı',difficulty:'hard',height:'15-60cm',lifespan:'100+ yıl',bloom:'İlkbahar',harvest:'–',tags:['bonsai','sonbahar rengi','ileri'],regions:['Tüm Türkiye'],fertilize:'Mart-Ekim her 3 haftada düşük azotlu bonsai gübre'},
+  // SÜS — SARMAŞIK & YER ÖRTÜCÜ
+  {id:'hedera',tr:'Sarmaşık',en:'English Ivy',sci:'Hedera helix',cat:'ornamental',emoji:'🌿',family:'Araliaceae',origin:'Avrupa',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Her toprak',difficulty:'easy',height:'Sarmaşık',lifespan:'Çok yıllık',bloom:'Sonbahar',harvest:'–',tags:['süs','sarmaşık','gölge','hızlı'],regions:['Tüm Türkiye'],fertilize:'Nisan ve Temmuz dengeli granül yeterli'},
+  {id:'clematis',tr:'Klematis',en:'Clematis',sci:'Clematis spp.',cat:'ornamental',emoji:'💜',family:'Ranunculaceae',origin:'Çin/Japonya',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli nemli',difficulty:'medium',height:'2-5m',lifespan:'Çok yıllık',bloom:'İlkbahar-Sonbahar',harvest:'–',tags:['süs','sarmaşık','çiçekli'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli, Mayıs-Haziran potasyum ağırlıklı'},
+  {id:'wisteria',tr:'Mor Salkım',en:'Wisteria',sci:'Wisteria sinensis',cat:'ornamental',emoji:'💜',family:'Fabaceae',origin:'Çin',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli derin',difficulty:'medium',height:'10-20m',lifespan:'50+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['süs','sarmaşık','mor','kokusu'],featured:true,regions:['Tüm Türkiye'],fertilize:'Mart düşük azotlu yüksek fosfor, Temmuz potasyum'},
+  {id:'vinca',tr:'Vinka',en:'Periwinkle',sci:'Vinca minor',cat:'ornamental',emoji:'💙',family:'Apocynaceae',origin:'Avrupa',climate:'Ilıman',water:'low',sun:'shade',soil:'Her toprak',difficulty:'easy',height:'10-20cm',lifespan:'Çok yıllık',bloom:'İlkbahar-Yaz',harvest:'–',tags:['süs','yer örtücü','gölge','mavi'],regions:['Tüm Türkiye'],fertilize:'Nisan dengeli granül, başka gübre gerekmez'},
+  // SÜS — MEVSIMLIK & ÖZEL
+  {id:'cyclamen',tr:'Siklamen',en:'Cyclamen',sci:'Cyclamen persicum',cat:'ornamental',emoji:'🌸',family:'Primulaceae',origin:'Akdeniz',climate:'Serin',water:'moderate',sun:'partial_shade',soil:'Verimli iyi drene',difficulty:'medium',height:'15-30cm',lifespan:'Yumrulu',bloom:'Sonbahar-Bahar',harvest:'–',tags:['süs','kış çiçeği','iç mekan'],featured:true,regions:['Tüm Türkiye'],fertilize:'Ekim-Mart her 2 haftada az azotlu sıvı'},
+  {id:'poinsettia',tr:'Atatürk Çiçeği',en:'Poinsettia',sci:'Euphorbia pulcherrima',cat:'ornamental',emoji:'🌹',family:'Euphorbiaceae',origin:'Meksika',climate:'Tropikal',water:'moderate',sun:'full_sun',soil:'İyi drene',difficulty:'medium',height:'30-60cm (saksı)',lifespan:'Çok yıllık',bloom:'Kış',harvest:'–',tags:['süs','kış','kırmızı','yılbaşı'],regions:['Tüm Türkiye (iç mekan)'],fertilize:'Temmuz-Eylül dengeli, Ekim-Kasım potasyum'},
+  {id:'primula',tr:'Primula',en:'Primrose',sci:'Primula vulgaris',cat:'ornamental',emoji:'💛',family:'Primulaceae',origin:'Avrupa',climate:'Serin',water:'moderate',sun:'partial_shade',soil:'Nemli verimli',difficulty:'easy',height:'10-20cm',lifespan:'Çok yıllık',bloom:'Kış-İlkbahar',harvest:'–',tags:['süs','kış','renkli'],regions:['Tüm Türkiye'],fertilize:'Ekim ve Şubat dengeli sıvı gübre'},
+  {id:'gerbera',tr:'Gerbera',en:'Gerbera Daisy',sci:'Gerbera jamesonii',cat:'ornamental',emoji:'🌼',family:'Asteraceae',origin:'Güney Afrika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli iyi drene',difficulty:'medium',height:'30-50cm',lifespan:'Çok yıllık',bloom:'İlkbahar-Sonbahar',harvest:'–',tags:['süs','kesme çiçek','renkli'],regions:['Tüm Türkiye'],fertilize:'Mart-Ekim her 2 haftada dengeli sıvı'},
+  {id:'helleborus',tr:'Noel Gülü',en:'Hellebore',sci:'Helleborus spp.',cat:'ornamental',emoji:'🌸',family:'Ranunculaceae',origin:'Avrupa',climate:'Serin/Ilıman',water:'moderate',sun:'shade',soil:'Humuslu nemli',difficulty:'medium',height:'30-45cm',lifespan:'Çok yıllık',bloom:'Kış-İlkbahar',harvest:'–',tags:['süs','kış çiçeği','gölge'],regions:['Tüm Türkiye'],fertilize:'Eylül kompost, Şubat dengeli granül'},
+  {id:'camellia',tr:'Kamelya',en:'Camellia',sci:'Camellia japonica',cat:'ornamental',emoji:'🌸',family:'Theaceae',origin:'Japonya/Çin',climate:'Ilıman/Nem',water:'moderate',sun:'partial_shade',soil:'Asidik verimli',difficulty:'medium',height:'1-3m',lifespan:'50+ yıl',bloom:'Kış-İlkbahar',harvest:'–',tags:['süs','kış çiçeği','asidik'],featured:true,regions:['Karadeniz','Marmara','Ege'],fertilize:'Nisan ve Haziran asidik gübre (rododendron gübresi)'},
+  {id:'rhododendron',tr:'Rododendron',en:'Rhododendron',sci:'Rhododendron spp.',cat:'ornamental',emoji:'🌺',family:'Ericaceae',origin:'Asya',climate:'Ilıman/Nem',water:'moderate',sun:'partial_shade',soil:'Asidik nemli',difficulty:'medium',height:'1-4m',lifespan:'50+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['süs','asidik','karadeniz'],regions:['Karadeniz','Marmara'],fertilize:'Nisan ve Haziran asidik gübre'},
+  {id:'azalea',tr:'Azalea',en:'Azalea',sci:'Rhododendron simsii',cat:'ornamental',emoji:'🌺',family:'Ericaceae',origin:'Çin',climate:'Ilıman',water:'moderate',sun:'partial_shade',soil:'Asidik verimli',difficulty:'medium',height:'30-150cm',lifespan:'Çok yıllık',bloom:'İlkbahar',harvest:'–',tags:['süs','iç mekan','asidik'],regions:['Tüm Türkiye (iç mekan)','Karadeniz (açık)'],fertilize:'Çiçek sonrası asidik gübre, Eylül potasyum'},
+  {id:'magnolia',tr:'Manolya',en:'Magnolia',sci:'Magnolia spp.',cat:'ornamental',emoji:'🌸',family:'Magnoliaceae',origin:'Asya/Amerika',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Asidik verimli derin',difficulty:'medium',height:'3-15m',lifespan:'100+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['süs','ağaç','bahar'],featured:true,regions:['Marmara','Ege','Karadeniz','Akdeniz'],fertilize:'Mart ve Mayıs dengeli azot ağırlıklı'},
+  {id:'forsythia',tr:'Altın Çan',en:'Forsythia',sci:'Forsythia intermedia',cat:'ornamental',emoji:'💛',family:'Oleaceae',origin:'Çin',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'1-3m',lifespan:'50+ yıl',bloom:'Mart-Nisan',harvest:'–',tags:['süs','sarı','erken bahar'],regions:['Tüm Türkiye'],fertilize:'Çiçek sonrası (Nisan-Mayıs) dengeli'},
+  {id:'lilac',tr:'Leylak',en:'Lilac',sci:'Syringa vulgaris',cat:'ornamental',emoji:'💜',family:'Oleaceae',origin:'Balkanlar',climate:'Ilıman/Karasal',water:'moderate',sun:'full_sun',soil:'Her toprak bazik',difficulty:'easy',height:'2-5m',lifespan:'100+ yıl',bloom:'Nisan-Mayıs',harvest:'–',tags:['süs','kokusu','mor','beyaz'],featured:true,regions:['Tüm Türkiye'],fertilize:'Mart dengeli, çiçek sonrası fosfor'},
+  {id:'weigela',tr:'Vayela',en:'Weigela',sci:'Weigela florida',cat:'ornamental',emoji:'🌸',family:'Caprifoliaceae',origin:'Çin/Kore',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Verimli',difficulty:'easy',height:'1-3m',lifespan:'20+ yıl',bloom:'Mayıs-Haziran',harvest:'–',tags:['süs','çalı','pembe'],regions:['Tüm Türkiye'],fertilize:'Mart ve Haziran dengeli'},
+  {id:'spiraea',tr:'Ispiraya',en:'Spirea',sci:'Spiraea spp.',cat:'ornamental',emoji:'🌸',family:'Rosaceae',origin:'Kuzey Yarıküre',climate:'Ilıman',water:'moderate',sun:'full_sun',soil:'Her toprak',difficulty:'easy',height:'60cm-2m',lifespan:'20+ yıl',bloom:'İlkbahar-Yaz',harvest:'–',tags:['süs','çalı','beyaz-pembe'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli granül yeterli'},
+  {id:'buddleja',tr:'Kelebek Çalısı',en:'Butterfly Bush',sci:'Buddleja davidii',cat:'ornamental',emoji:'💜',family:'Scrophulariaceae',origin:'Çin',climate:'Ilıman',water:'low',sun:'full_sun',soil:'İyi drene',difficulty:'easy',height:'1-3m',lifespan:'20+ yıl',bloom:'Yaz-Sonbahar',harvest:'–',tags:['süs','kelebek','kokusu'],regions:['Tüm Türkiye'],fertilize:'Mart dengeli, başka gübre gerekmez'},
+];
+
+// ── KATEGORİLER ──────────────────────────────────────────────────
+const CATEGORIES = [
+  {id:'all',tr:'Tüm Bitkiler',en:'All Plants',icon:'🌱'},
+  {id:'fruit',tr:'Meyve Ağaçları',en:'Fruit Trees',icon:'🍎'},
+  {id:'vegetable',tr:'Sebzeler',en:'Vegetables',icon:'🥦'},
+  {id:'flower',tr:'Çiçekler',en:'Flowers',icon:'🌸'},
+  {id:'ornamental',tr:'Süs Bitkileri',en:'Ornamental Plants',icon:'🌺'},
+  {id:'indoor',tr:'İç Mekan',en:'Indoor Plants',icon:'🪴'},
+  {id:'outdoor',tr:'Dış Mekan',en:'Outdoor Trees',icon:'🌳'},
+  {id:'herb',tr:'Tıbbi & Aromatik',en:'Herbs',icon:'🌿'},
+];
+
+// ── 100 BLOG KONUSU ──────────────────────────────────────────────
+const BLOG_TOPICS = [
+  {title:'Elma Ağacı Bakımı: Budama, Sulama ve Gübreleme Rehberi',cat:'Meyve Ağaçları',plantId:'elma'},
+  {title:'Zeytin Hastalıkları: Teşhis ve Organik Tedavi Yöntemleri',cat:'Meyve Ağaçları',plantId:'zeytin'},
+  {title:'Domates Yetiştirme: Hastalık Olmadan Bol Hasat Sırrı',cat:'Sebzeler',plantId:'domates'},
+  {title:'Gül Bakımı: Mevsimlik Takvim ve Hastalık Önleme',cat:'Çiçekler',plantId:'gul'},
+  {title:'Monstera Bakımı: Sararmış Yaprakların Nedenleri',cat:'İç Mekan',plantId:'monstera'},
+  {title:'Lavanta Yetiştiriciliği ve Hasat Takvimi',cat:'Çiçekler',plantId:'lavanta'},
+  {title:'Kiraz Ağacı Yetiştirme: Dikimden Hasada Rehber',cat:'Meyve Ağaçları',plantId:'kiraz'},
+  {title:'Nane Yetiştiriciliği: Balkon ve Mutfak Bahçesinde',cat:'Tıbbi Bitkiler',plantId:'nane'},
+  {title:'Karpuz Yetiştiriciliği: Büyük ve Tatlı Karpuz İpuçları',cat:'Sebzeler',plantId:'karpuz'},
+  {title:'Aloe Vera Bakımı: Hem Dekoratif Hem Şifalı',cat:'İç Mekan',plantId:'aloe'},
+  {title:'Çilek Yetiştiriciliği: Serada ve Açıkta Üretim',cat:'Meyve Ağaçları',plantId:'cilek'},
+  {title:'Biber Çeşitleri ve Yetiştiriciliği Rehberi',cat:'Sebzeler',plantId:'biber'},
+  {title:'Ceviz Ağacında Görülen Hastalıklar ve Çözümler',cat:'Meyve Ağaçları',plantId:'ceviz'},
+  {title:'Kayınvalide Dili Bakımı: Öldürülmesi Zor Bitki',cat:'İç Mekan',plantId:'sansevieria'},
+  {title:'Kekik Yetiştiriciliği ve Kurutma Teknikleri',cat:'Tıbbi Bitkiler',plantId:'kekik'},
+  {title:'Üzüm Bağı Kurma: Toprak Seçimi ve Çeşit Tercihi',cat:'Meyve Ağaçları',plantId:'uzum'},
+  {title:'Salatalık Sararmış Yapraklar: Neden Olur Nasıl Önlenir',cat:'Sebzeler',plantId:'salatalik'},
+  {title:'Orkide Bakımı: Yeniden Çiçek Açtırmanın 7 Kuralı',cat:'İç Mekan',plantId:'orkide'},
+  {title:'Biberiye Bakımı: Çok Yıllık Aromatik Bitkinin Sırları',cat:'Tıbbi Bitkiler',plantId:'biberiye'},
+  {title:'Şeftali Budaması: Mevsime Göre Yapılması Gerekenler',cat:'Meyve Ağaçları',plantId:'seftali'},
+  {title:'Kompost Yapımı: Evde Organik Gübre Üretimi',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'Külleme Hastalığı: Tüm Bitkilerde Tanı ve Tedavi',cat:'Hastalık Rehberi',plantId:'gul'},
+  {title:'Yaprak Biti ile Organik Mücadele Yöntemleri',cat:'Hastalık Rehberi',plantId:'domates'},
+  {title:'Toprak pH Testi: Neden Önemli ve Nasıl Yapılır',cat:'Genel Bahçecilik',plantId:'elma'},
+  {title:'Damlama Sulama Sistemi Kurma Rehberi',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'Pothos Bakımı: Sarkık Sarmaşığı Sağlıklı Tutma',cat:'İç Mekan',plantId:'pothos'},
+  {title:'Kaktüs Bakımı: Sulama Hataları ve Doğru Toprak',cat:'İç Mekan',plantId:'kaktus'},
+  {title:'Lale Soğanı Dikimi: Sonbaharda Yapılması Gerekenler',cat:'Çiçekler',plantId:'lale'},
+  {title:'Nar Ağacı Bakımı ve Hasat Zamanı Belirleme',cat:'Meyve Ağaçları',plantId:'nar'},
+  {title:'Gübre Çeşitleri: NPK Oranları ve Doğru Kullanım',cat:'Genel Bahçecilik',plantId:'elma'},
+  {title:'Havuç Yetiştiriciliği: Tohumdan Hasada Toprak Hazırlığı',cat:'Sebzeler',plantId:'havuc'},
+  {title:'Patates Hastalıkları: Geç Yanıklık ve Tedavisi',cat:'Hastalık Rehberi',plantId:'patates'},
+  {title:'Adaçayı Bakımı ve Şifalı Kullanım Alanları',cat:'Tıbbi Bitkiler',plantId:'adacayi'},
+  {title:'Begonvil Bakımı: Akdenizin Renk Şöleni',cat:'Çiçekler',plantId:'begonvil'},
+  {title:'Meşe Ağacı Dikimi: Uzun Ömürlü Ağaç Yetiştirme',cat:'Dış Mekan',plantId:'mese'},
+  {title:'Kırmızı Örümcek Mücadelesi: Erken Tespit ve Tedavi',cat:'Hastalık Rehberi',plantId:'domates'},
+  {title:'Sarımsak Yetiştiriciliği: Sağlıklı Diş Elde Etme',cat:'Sebzeler',plantId:'sarimsak'},
+  {title:'Fesleğen Yetiştiriciliği: Marul ile Ortak Yetiştirme',cat:'Tıbbi Bitkiler',plantId:'fesleen'},
+  {title:'Ayçiçeği Yetiştiriciliği: Dev Çiçekler İçin Gübre',cat:'Çiçekler',plantId:'ayicegi'},
+  {title:'ZZ Bitkisi Bakımı: Unutkanlara Mükemmel Bitki',cat:'İç Mekan',plantId:'zz'},
+  {title:'Ihlamur Ağacı: Çiçek Hasadı ve Şifalı Çay Yapımı',cat:'Dış Mekan',plantId:'ihlamur'},
+  {title:'Mısır Yetiştiriciliği: Tatlı Mısır Hasadı İpuçları',cat:'Sebzeler',plantId:'misir'},
+  {title:'Melisa Çayı İçin Evde Melisa Yetiştirme',cat:'Tıbbi Bitkiler',plantId:'melisa'},
+  {title:'Palmiye Bakımı: Türkiyede Tropikal Görünüm',cat:'Dış Mekan',plantId:'palmiye'},
+  {title:'Fındık Bahçesinde Verim Artışı: Gübreleme Takvimi',cat:'Meyve Ağaçları',plantId:'findik'},
+  {title:'Patlıcan Hastalıkları: Külleme ve Yanıklık Tedavisi',cat:'Hastalık Rehberi',plantId:'patlican'},
+  {title:'Bambu Yetiştiriciliği: Hızlı Büyüyen Yeşil Perde',cat:'Dış Mekan',plantId:'bambu'},
+  {title:'Barış Zambağı Bakımı: Gölgede Çiçek Açan Bitki',cat:'İç Mekan',plantId:'baris_zambagi'},
+  {title:'Kivi Yetiştiriciliği: İklim ve Toprak Gereksinimleri',cat:'Meyve Ağaçları',plantId:'kivi'},
+  {title:'Sera Kurulumu: Küçük Bahçe İçin Ucuz Çözümler',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'Kayısı Ağacında Don Zararı: Önleme Yolları',cat:'Meyve Ağaçları',plantId:'kayisi'},
+  {title:'Ispanak Yetiştiriciliği: 4 Mevsim Sürekli Hasat',cat:'Sebzeler',plantId:'ispanak'},
+  {title:'Soğan Yetiştiriciliği: Ekim Zamanı ve Gübreleme',cat:'Sebzeler',plantId:'sogan'},
+  {title:'Servi Ağacı Bakımı: Akdeniz Peyzajının Simgesi',cat:'Dış Mekan',plantId:'servi'},
+  {title:'Marul Çeşitleri ve Balkon Bahçesinde Yetiştirme',cat:'Sebzeler',plantId:'marul'},
+  {title:'Ayva Bakımı: Az Bakım Gerektiren Meyve',cat:'Meyve Ağaçları',plantId:'ayva'},
+  {title:'Sardunya Neden Sararır? Nedeni ve Çözümleri',cat:'Çiçekler',plantId:'sardunya'},
+  {title:'Erik Ağacı Bakımı: Budama Programı',cat:'Meyve Ağaçları',plantId:'erik'},
+  {title:'Brokoli Yetiştiriciliği: Kış Sebzeciliği Rehberi',cat:'Sebzeler',plantId:'brokoli'},
+  {title:'Kavun Bahçesi: Çeşit Seçimi ve Sulama',cat:'Sebzeler',plantId:'kavun'},
+  {title:'Organik Bahçecilik: Kimyasalsız Verimli Bahçe',cat:'Genel Bahçecilik',plantId:'elma'},
+  {title:'Bezelye Yetiştiriciliği: İlkbahar Bahçesinin Vazgeçilmezi',cat:'Sebzeler',plantId:'bezelye'},
+  {title:'Portakal Bahçesi Kurma: Narenciye Yetiştiriciliği',cat:'Meyve Ağaçları',plantId:'portakal'},
+  {title:'Maydanoz ve Dereotu: Balkonlarda Taze Ot',cat:'Tıbbi Bitkiler',plantId:'maydanoz'},
+  {title:'Fasulye Çeşitleri: Sırık ve Bodur Bakım Farkları',cat:'Sebzeler',plantId:'fasulye'},
+  {title:'Badem Ağacı Çiçeklenmesi ve Don Koruması',cat:'Meyve Ağaçları',plantId:'badem'},
+  {title:'Kabak Yetiştiriciliği: Saksıda ve Bahçede Bol Verim',cat:'Sebzeler',plantId:'kabak'},
+  {title:'Limon Ağacı Saksıda Yetiştirilir mi?',cat:'Meyve Ağaçları',plantId:'limon'},
+  {title:'Papatya Çayı İçin Bahçede Papatya Yetiştirme',cat:'Çiçekler',plantId:'papatya'},
+  {title:'Zambak Bakımı ve Soğanlı Bitkinin Çoğaltılması',cat:'Çiçekler',plantId:'zambak'},
+  {title:'Avokado Çekirdeğinden Fide Yetiştirme',cat:'Meyve Ağaçları',plantId:'avokado'},
+  {title:'Fide Yetiştirme: Tohum Ekiminden Şaşırtmaya',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'Bahçede Ekim Takvimi: Hangi Ay Ne Ekilir',cat:'Genel Bahçecilik',plantId:'elma'},
+  {title:'Armut Hastalıkları: Ateş Yanıklığı Tedavisi',cat:'Hastalık Rehberi',plantId:'armut'},
+  {title:'Çam Ağacı Hastalıkları: Mantar ve Böcek',cat:'Hastalık Rehberi',plantId:'cam'},
+  {title:'Karanfil Yetiştiriciliği ve Kesme Çiçek Üretimi',cat:'Çiçekler',plantId:'karanfil'},
+  {title:'Toprak İyileştirme: Kil Toprağı Düzeltme Yolları',cat:'Genel Bahçecilik',plantId:'elma'},
+  {title:'Kış Budaması: Meyve Ağaçlarında Doğru Teknik',cat:'Genel Bahçecilik',plantId:'elma'},
+  {title:'Sulama Hataları: En Yaygın 8 Hata ve Çözümü',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'Çilek Hastalıkları: Gri Küf ve Solgunluk Tedavisi',cat:'Hastalık Rehberi',plantId:'cilek'},
+  {title:'Sarı Yapraklar: Nedenleri ve Çözüm Rehberi',cat:'Hastalık Rehberi',plantId:'monstera'},
+  {title:'Meyve Ağaçlarında Aşılama Teknikleri',cat:'Genel Bahçecilik',plantId:'kiraz'},
+  {title:'Balkon Bahçeciliği: En Kolay 10 Sebze',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'İncir Ağacı Budaması ve Verim Artırma',cat:'Meyve Ağaçları',plantId:'incir'},
+  {title:'Aromatik Bitki Bahçesi Nasıl Kurulur',cat:'Tıbbi Bitkiler',plantId:'lavanta'},
+  {title:'Beyazsinekle Organik Mücadele Yöntemleri',cat:'Hastalık Rehberi',plantId:'domates'},
+  {title:'Succulentler İçin Doğru Toprak Karışımı',cat:'İç Mekan',plantId:'sukulent'},
+  {title:'Mantar Gübresi: Avantajları ve Kullanım Rehberi',cat:'Genel Bahçecilik',plantId:'domates'},
+  {title:'Kuraklığa Dayanıklı Bahçe Bitkileri',cat:'Genel Bahçecilik',plantId:'zeytin'},
+  {title:'Ev Bitkilerinde Sinek Problemi: Organik Çözüm',cat:'Hastalık Rehberi',plantId:'monstera'},
+  {title:'Çay Bahçesi Kurma: Tıbbi Bitkilerle Dolu Bahçe',cat:'Tıbbi Bitkiler',plantId:'nane'},
+  {title:'Bağ Budaması: Üzümde Yıllık Bakım Takvimi',cat:'Meyve Ağaçları',plantId:'uzum'},
+  {title:'Enginar Yetiştiriciliği ve Hasadı',cat:'Sebzeler',plantId:'enginar'},
+  {title:'Bamya Yetiştiriciliği: Sıcak İklim Sebzesi',cat:'Sebzeler',plantId:'bamya'},
+  {title:'Mandalina Ağacı Bakımı ve İklim Gereksinimleri',cat:'Meyve Ağaçları',plantId:'mandalina'},
+  {title:'Kasımpatı Bakımı: Sonbaharın Rengi',cat:'Çiçekler',plantId:'kasimpati'},
+  {title:'Kalathea Bakımı: Tropikal Desenli Yapraklar',cat:'İç Mekan',plantId:'kalathea'},
+  {title:'Ekinezya Yetiştiriciliği: Bağışıklığı Güçlendiren Bitki',cat:'Tıbbi Bitkiler',plantId:'ekinezya'},
+  {title:'Dut Ağacı Bakımı ve Meyve Hasadı',cat:'Meyve Ağaçları',plantId:'dut'},
+  {title:'Ortanca Bakımı: Renkli Çiçekler İçin Toprak Sırrı',cat:'Çiçekler',plantId:'ortanca'},
+];
+
+// ── BLOG SİSTEMİ ─────────────────────────────────────────────────
+const BLOG_KEY = 'bd_posts';
+const BLOG_QUEUE_KEY = 'bd_queue';
+const BLOG_LAST_KEY = 'bd_last_pub';
+const BLOG_SETTINGS_KEY = 'bd_settings';
+
+function getBlogPosts() { try { return JSON.parse(localStorage.getItem(BLOG_KEY) || '[]'); } catch { return []; } }
+function saveBlogPosts(p) { localStorage.setItem(BLOG_KEY, JSON.stringify(p)); }
+function getBlogQueue() { try { return JSON.parse(localStorage.getItem(BLOG_QUEUE_KEY) || '[]'); } catch { return []; } }
+function saveBlogQueue(q) { localStorage.setItem(BLOG_QUEUE_KEY, JSON.stringify(q)); }
+function getBlogSettings() { try { return JSON.parse(localStorage.getItem(BLOG_SETTINGS_KEY) || '{"hour":12,"auto":true}'); } catch { return {hour:12, auto:true}; } }
+
+function checkAutoPub() {
+  const s = getBlogSettings();
+  if (!s.auto) return;
+  const last = localStorage.getItem(BLOG_LAST_KEY);
+  const now = new Date();
+  const pubTime = new Date(now);
+  pubTime.setHours(s.hour, 0, 0, 0);
+  const lastDate = last ? new Date(last) : null;
+  if (now >= pubTime && (!lastDate || lastDate < pubTime)) {
+    const q = getBlogQueue();
+    if (q.length > 0) {
+      const p = q.shift();
+      p.published = true;
+      p.date = now.toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
+      p.dateISO = now.toISOString();
+      const posts = getBlogPosts();
+      posts.unshift(p);
+      saveBlogPosts(posts.slice(0, 200));
+      saveBlogQueue(q);
+      localStorage.setItem(BLOG_LAST_KEY, now.toISOString());
+    }
+  }
+}
+
+// ── AKADEMİK API ─────────────────────────────────────────────────
+async function fetchAcademic(q, n = 3) {
+  try {
+    const r = await fetch(`https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(q)}&limit=${n}&fields=title,authors,year,openAccessPdf,url`);
+    if (!r.ok) return [];
+    const d = await r.json();
+    return (d.data || []).filter(p => p.title);
+  } catch { return []; }
+}
+
+function sourcesHTML(papers) {
+  if (!papers || !papers.length) return '';
+  var items = papers.slice(0,4).map(function(p,i) {
+    var a = (p.authors||[]).slice(0,2).map(function(x){return x.name;}).join(', ') + ((p.authors||[]).length>2?' et al.':'');
+    var l = (p.openAccessPdf && p.openAccessPdf.url) || p.url || '';
+    var title = l ? '<a href="'+l+'" target="_blank" rel="noopener">'+p.title+'</a>' : p.title;
+    return '<li><strong>'+title+'</strong><br><small style="color:#777;">'+(a?a+' &middot; ':'')+'<span style="color:#ca6f1e;">'+(p.year||'')+'</span></small></li>';
+  }).join('');
+  return '<div class="info-box info-box-green" style="margin-top:1.5rem;"><h5>📚 Akademik Kaynaklar</h5><ul style="margin:0;padding-left:1.2rem;font-size:.82rem;">'+items+'</ul></div>';
+}
+
+// ── CLAUDE API ────────────────────────────────────────────────────
+async function callClaude(prompt, img = null, mime = null) {
+  const endpoint = img ? '/api/diagnose' : '/api/blog';
+  const body = img ? {prompt, image: img, mime} : {prompt};
+  const r = await fetch(endpoint, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) {
+    const err = await r.text();
+    throw new Error('Sunucu hatası: ' + err);
+  }
+  const d = await r.json();
+  if (d.error) throw new Error(typeof d.error === 'string' ? d.error : JSON.stringify(d.error));
+  if (!d.text) throw new Error('Yanıt boş geldi');
+  return d.text;
+}
+
+function parseJSON(raw) {
+  return JSON.parse(raw.replace(/```json|```/g, '').trim());
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────
+function searchPlants(q, cat = 'all') {
+  const ql = (q || '').toLowerCase().trim();
+  return PLANT_DB.filter(p => {
+    const mc = cat === 'all' || p.cat === cat;
+    const mq = !ql || p.tr.toLowerCase().includes(ql) || p.en.toLowerCase().includes(ql) || p.sci.toLowerCase().includes(ql) || (p.tags||[]).some(t => t.includes(ql));
+    return mc && mq;
+  });
+}
+
+// ── PLANT CARD ────────────────────────────────────────────────────
+function plantCardHTML(p) {
+  var nm = currentLang === 'tr' ? p.tr : p.en;
+  var ct = CATEGORIES.find(function(c){return c.id===p.cat;});
+  var wl = {low:'Az', moderate:'Orta', high:'Çok'};
+  var sl = {full_sun:'Güneş', partial_shade:'Yarı Gölge', shade:'Gölge'};
+  var dl = {easy:'Kolay', medium:'Orta', hard:'Zor'};
+  var regionHtml = p.regions ? '<p style="font-size:.7rem;color:#666;margin-bottom:.4rem">📍 '+(Array.isArray(p.regions)?p.regions.join(', '):p.regions)+'</p>' : '';
+  return '<div class="card"><div class="card-img">'+p.emoji+'</div><div class="card-body"><span class="card-category">'+(ct?(currentLang==="tr"?ct.tr:ct.en):p.cat)+'</span><h3 class="card-title"><a href="bitki.html?id='+p.id+'">'+nm+'</a></h3><p class="card-excerpt" style="font-size:.75rem;font-style:italic;color:#888;margin-bottom:.5rem;">'+p.sci+'</p>'+regionHtml+'<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.7rem;"><span class="badge badge-green">&#x1F4A7; '+(wl[p.water]||p.water)+'</span><span class="badge badge-amber">&#x2600;&#xFE0F; '+(sl[p.sun]||p.sun)+'</span><span class="badge badge-blue">'+(dl[p.difficulty]||p.difficulty)+'</span></div><a href="bitki.html?id='+p.id+'" class="btn btn-secondary btn-sm">Detay &rarr;</a></div></div>';
+}
+
+// ── BLOG CARD ─────────────────────────────────────────────────────
+function blogCardHTML(post) {
+  var pl2 = PLANT_DB.find(function(p){return p.id===post.plantId;});
+  return '<div class="card"><div class="card-img" style="font-size:3rem;background:var(--gp);">'+(pl2?pl2.emoji:'🌿')+'</div><div class="card-body"><span class="card-category">'+post.category+'</span><h3 class="card-title"><a href="makale.html?id='+post.id+'">'+post.title+'</a></h3><p class="card-excerpt">'+(post.intro?post.intro.substring(0,110)+'...':'')+'</p><div class="card-meta"><span>📅 '+post.date+'</span><span>⏱ '+(post.readingTime||6)+' dk</span></div></div></div>';
+}
+
+// ── BLOG ÜRETME ───────────────────────────────────────────────────
+async function generateBlogPost(topic, lang = 'tr') {
+  const plant = PLANT_DB.find(p => p.id === topic.plantId) || PLANT_DB[0];
+  const sources = await fetchAcademic(plant.tr+' '+topic.cat+' disease management cultivation', 3);
+  var ctx = sources.slice(0,2).map(function(p,i){return '['+(i+1)+'] '+p.title+' ('+(p.year||'?')+')';}).join('\n');
+
+  const prompt = `Sen uzman bir bitki bilimcisi ve SEO içerik yazarısın. "${topic.title}" hakkında Türkçe kapsamlı blog makalesi yaz.
+Bitki: ${plant.tr} (${plant.sci})
+Akademik kaynaklar: ${ctx || 'kendi bilginle devam et'}
+Google AdSense onayına uygun, özgün, minimum 800 kelime.
+SADECE şu JSON:
+{"title":"SEO başlık (55 karakter)","metaDesc":"Meta açıklama (155 karakter)","intro":"Giriş (150 kelime, anahtar kelime içermeli)","sections":[{"heading":"H2 Başlık","content":"200 kelime içerik"},{"heading":"H2 Başlık 2","content":"200 kelime"},{"heading":"H2 Başlık 3","content":"150 kelime"},{"heading":"H2 Başlık 4","content":"150 kelime"}],"tips":["İpucu 1","İpucu 2","İpucu 3","İpucu 4","İpucu 5"],"conclusion":"Sonuç (80 kelime)","faq":[{"q":"Soru","a":"Cevap 50 kelime"},{"q":"Soru 2","a":"Cevap"},{"q":"Soru 3","a":"Cevap"}],"readingTime":7,"tags":["etiket1","etiket2","etiket3"]}`;
+
+  const raw = await callClaude(prompt);
+  const d = parseJSON(raw);
+  return {
+    id: Date.now() + Math.random(),
+    title: d.title || topic.title,
+    metaDesc: d.metaDesc || '',
+    category: topic.cat,
+    plantId: topic.plantId,
+    intro: d.intro || '',
+    sections: d.sections || [],
+    tips: d.tips || [],
+    conclusion: d.conclusion || '',
+    faq: d.faq || [],
+    readingTime: d.readingTime || 7,
+    tags: d.tags || [],
+    sources,
+    lang,
+    date: new Date().toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'}),
+    dateISO: new Date().toISOString(),
+    published: true,
+    topicTitle: topic.title,
+  };
+}
+
+// ── NAV ───────────────────────────────────────────────────────────
+function initNav() {
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('mainNav');
+  if (burger && nav) {
+    burger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nav.classList.toggle('open');
+      burger.classList.toggle('open');
+    });
+    // Menü dışına tıklayınca kapat
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== burger) {
+        nav.classList.remove('open');
+        burger.classList.remove('open');
+      }
+    });
+    // Nav linkine tıklayınca kapat
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      burger.classList.remove('open');
+    }));
+  }
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.site-nav a').forEach(a => {
+    const h = a.getAttribute('href');
+    if (h === path || (path === '' && h === 'index.html')) a.classList.add('active');
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  setLang(currentLang);
+  checkAutoPub();
+}
+
+function initAds() {
+  document.querySelectorAll('.ad-slot').forEach(s => {
+    if (!s.innerHTML.trim()) s.innerHTML = '<span class="ad-label">Reklam</span><small>AdSense</small>';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => { initNav(); initAds(); });
