@@ -271,3 +271,37 @@ html,body{overflow-x:hidden;max-width:100%}
   .hero-arama input{border-radius:var(--r) var(--r) 0 0}
   .hero-arama button{border-radius:0 0 var(--r) var(--r);width:100%}
 }
+
+/* ── GENEL MOBİL TAŞMA ÖNLEME ── */
+@media(max-width:768px){
+  /* Header sağ butonlar çok yer kaplıyor */
+  .dm-toggle .dm-text{display:none}
+  /* Logo küçült */
+  .site-logo{gap:.4rem}
+  /* Nav açıkken sayfa kaymayı önle */
+  body.nav-open{overflow:hidden}
+}
+@media(max-width:480px){
+  /* Genel container padding */
+  .container{padding-left:.65rem!important;padding-right:.65rem!important}
+  /* Tablolar yatay scroll */
+  .care-table,.tak-tablo{display:block;overflow-x:auto;white-space:nowrap;font-size:.8rem}
+  /* Büyük başlıklar */
+  h1{font-size:1.4rem!important}
+  h2{font-size:1.15rem!important}
+  /* Grid'ler */
+  .plant-info-grid{grid-template-columns:1fr 1fr!important}
+  /* Filtre butonları */
+  .filter-tabs,.filter-bar{flex-wrap:wrap;gap:.3rem}
+  .filter-tab,.filter-btn{font-size:.72rem!important;padding:.25rem .6rem!important}
+  /* Arama kutusu */
+  .hero-section{padding:1.5rem .65rem!important}
+  .hero-arama{flex-direction:column}
+  .hero-arama input{border-radius:8px 8px 0 0!important}
+  .hero-arama button{border-radius:0 0 8px 8px!important;width:100%}
+  /* Sayfalama */
+  .page-btn{padding:.3rem .55rem!important;font-size:.78rem!important}
+  /* Yetişir mi select */
+  .ym-select{width:100%!important;font-size:.85rem}
+  .ym-form{flex-direction:column!important;gap:.5rem!important}
+}
