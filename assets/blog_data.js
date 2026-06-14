@@ -1,28 +1,103 @@
-module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method === 'GET') return res.status(200).json({status: 'ok'});
-  if (req.method !== 'POST') return res.status(405).json({error: 'Method not allowed'});
-  try {
-    const { prompt, image, mime } = req.body;
-    const content = [];
-    if (image) content.push({type:'image', source:{type:'base64', media_type: mime||'image/jpeg', data: image}});
-    content.push({type:'text', text: prompt});
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({model:'claude-haiku-4-5-20251001', max_tokens:2048, messages:[{role:'user', content}]})
-    });
-    const data = await response.json();
-    if (!response.ok || data.type === 'error') return res.status(400).json({error: data.error?.message||JSON.stringify(data)});
-    return res.status(200).json({text: data.content.map(b=>b.text||'').join('')});
-  } catch(e) {
-    return res.status(500).json({error: e.message});
-  }
-};
+var MAKALELER = [
+  {id:1,cat:'Meyve Ağaçları',emoji:'🍎',bitki:'elma',title:'Elma Ağacı Bakımı: Budama, Sulama ve Gübreleme Rehberi',desc:'Elma ağacında yıllık bakım takvimi, doğru budama teknikleri, sulama sıklığı ve gübreleme programı hakkında kapsamlı rehber.',sure:'8 dk'},
+  {id:2,cat:'Meyve Ağaçları',emoji:'🫒',bitki:'zeytin',title:'Zeytin Hastalıkları: Teşhis ve Organik Tedavi Yöntemleri',desc:'Zeytin ağacında görülen Verticillium solgunluğu, zeytin sineği, halka lekesi hastalıklarının organik yöntemlerle tedavisi.',sure:'7 dk'},
+  {id:3,cat:'Sebzeler',emoji:'🍅',bitki:'domates',title:'Domates Yetiştirme: Hastalık Olmadan Bol Hasat Sırrı',desc:'Domatesin en yaygın hastalıklarından korunarak bol ve sağlıklı hasat almanın püf noktaları, toprak hazırlığı ve bakım ipuçları.',sure:'9 dk'},
+  {id:4,cat:'Çiçekler',emoji:'🌹',bitki:'gul',title:'Gül Bakımı: Mevsimlik Takvim ve Hastalık Önleme',desc:'İlkbahardan sonbahara gül bakımı, siyah leke hastalığı önleme, gübre seçimi ve kış hazırlığı hakkında detaylı rehber.',sure:'7 dk'},
+  {id:5,cat:'İç Mekan',emoji:'🌿',bitki:'monstera',title:'Monstera Bakımı: Sararmış Yaprakların Nedenleri',desc:'Monstera yapraklarının neden sarardığını ve bunun nasıl önleneceğini, sulama hatalarını ve ışık ihtiyacını açıklayan kapsamlı rehber.',sure:'6 dk'},
+  {id:6,cat:'Çiçekler',emoji:'💜',bitki:'lavanta',title:'Lavanta Yetiştiriciliği ve Hasat Takvimi',desc:'Lavanta yetiştirme koşulları, toprak hazırlığı, sulama ve hasat zamanlaması hakkında adım adım rehber.',sure:'6 dk'},
+  {id:7,cat:'Meyve Ağaçları',emoji:'🍒',bitki:'kiraz',title:'Kiraz Ağacı Yetiştirme: Dikimden Hasada Rehber',desc:'Kiraz ağacı dikim zamanı, toprak seçimi, budama teknikleri ve kiraz sineğiyle mücadele yöntemleri hakkında detaylı bilgi.',sure:'8 dk'},
+  {id:8,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'nane',title:'Nane Yetiştiriciliği: Balkon ve Mutfak Bahçesinde',desc:'Balkonda ve bahçede nane yetiştirme, saksı seçimi, sulama sıklığı ve hasad teknikleri hakkında pratik rehber.',sure:'5 dk'},
+  {id:9,cat:'Sebzeler',emoji:'🍉',bitki:'karpuz',title:'Karpuz Yetiştiriciliği: Büyük ve Tatlı Karpuz İpuçları',desc:'Karpuzda tatlılığı artıran sulama teknikleri, gübreleme programı, hasat zamanı belirleme ve depolama yöntemleri.',sure:'7 dk'},
+  {id:10,cat:'İç Mekan',emoji:'🌵',bitki:'aloe',title:'Aloe Vera Bakımı: Hem Dekoratif Hem Şifalı',desc:'Aloe vera sulama sıklığı, toprak türü, güneş ihtiyacı ve çoğaltma yöntemleri hakkında kapsamlı ev bitkisi bakım rehberi.',sure:'5 dk'},
+  {id:11,cat:'Meyve Ağaçları',emoji:'🍓',bitki:'cilek',title:'Çilek Yetiştiriciliği: Serada ve Açıkta Üretim',desc:'Çilek fidesi seçimi, dikim aralığı, sulama sistemi kurma, hastalıktan korunma ve hasat dönemini optimize etme rehberi.',sure:'8 dk'},
+  {id:12,cat:'Sebzeler',emoji:'🫑',bitki:'biber',title:'Biber Çeşitleri ve Yetiştiriciliği Rehberi',desc:'Dolmalık, sivri ve acı biber çeşitlerinin yetiştirme farklılıkları, gübreleme programı ve hasat teknikleri.',sure:'7 dk'},
+  {id:13,cat:'Meyve Ağaçları',emoji:'🌰',bitki:'ceviz',title:'Ceviz Ağacında Görülen Hastalıklar ve Çözümler',desc:'Ceviz antraknozu, Phytophthora çürüklüğü ve ceviz yaprak lekesi hastalıklarının belirtileri ve ilaçlama programı.',sure:'8 dk'},
+  {id:14,cat:'İç Mekan',emoji:'🌿',bitki:'sansevieria',title:'Kayınvalide Dili Bakımı: Öldürülmesi Zor Bitki',desc:'Sansevieria bakımının temel kuralları, az sulama yöntemi, yeniden canlandırma teknikleri ve çoğaltma rehberi.',sure:'5 dk'},
+  {id:15,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'kekik',title:'Kekik Yetiştiriciliği ve Kurutma Teknikleri',desc:'Bahçede ve balkonda kekik yetiştirme, hasat zamanlaması, kurutma ve saklama yöntemleri ile kullanım alanları.',sure:'6 dk'},
+  {id:16,cat:'Meyve Ağaçları',emoji:'🍇',bitki:'uzum',title:'Üzüm Bağı Kurma: Toprak Seçimi ve Çeşit Tercihi',desc:'Üzüm bağı kurmak için ideal toprak özellikleri, çeşit seçimi kriterleri, terbiye sistemi ve ilk yıl bakımı rehberi.',sure:'9 dk'},
+  {id:17,cat:'Sebzeler',emoji:'🥒',bitki:'salatalik',title:'Salatalık Sararmış Yapraklar: Neden Olur Nasıl Önlenir',desc:'Salatalık yapraklarının sararmasının nedenleri — besin eksikliği, aşırı sulama, hastalık — ve çözüm yöntemleri.',sure:'6 dk'},
+  {id:18,cat:'İç Mekan',emoji:'🌸',bitki:'orkide',title:'Orkide Bakımı: Yeniden Çiçek Açtırmanın 7 Kuralı',desc:'Orkide çiçeklendirme için doğru sıcaklık, nem, ışık ve gübreleme koşulları ile saksı yenileme teknikleri.',sure:'7 dk'},
+  {id:19,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'biberiye',title:'Biberiye Bakımı: Çok Yıllık Aromatik Bitkinin Sırları',desc:'Biberiye sulama sıklığı, budama zamanı, kışa hazırlık ve mutfakta kullanım alanları hakkında kapsamlı rehber.',sure:'6 dk'},
+  {id:20,cat:'Meyve Ağaçları',emoji:'🍑',bitki:'seftali',title:'Şeftali Budaması: Mevsime Göre Yapılması Gerekenler',desc:'Şeftali ağacında kış ve yaz budamasının zamanı, tekniği ve budama sonrası bakım hakkında detaylı rehber.',sure:'7 dk'},
+  {id:21,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Kompost Yapımı: Evde Organik Gübre Üretimi',desc:'Mutfak artıklarından ve bahçe atıklarından kaliteli kompost yapımı, olgunlaşma süreci ve kullanım yöntemleri.',sure:'8 dk'},
+  {id:22,cat:'Hastalık Rehberi',emoji:'🌹',bitki:'gul',title:'Külleme Hastalığı: Tüm Bitkilerde Tanı ve Tedavi',desc:'Beyaz un görünümlü külleme hastalığının belirtileri, sebepleri, önleyici tedbirler ve organik-kimyasal mücadele yöntemleri.',sure:'7 dk'},
+  {id:23,cat:'Hastalık Rehberi',emoji:'🍅',bitki:'domates',title:'Yaprak Biti ile Organik Mücadele Yöntemleri',desc:'Yaprak bitinin hayat döngüsü, zarar belirtileri ve sarımsak suyu, sabun çözeltisi gibi organik mücadele yöntemleri.',sure:'6 dk'},
+  {id:24,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'elma',title:'Toprak pH Testi: Neden Önemli ve Nasıl Yapılır',desc:'Toprak asitliğinin bitki gelişimine etkisi, pH testi yapma yöntemleri ve pH düzeltme teknikleri hakkında rehber.',sure:'7 dk'},
+  {id:25,cat:'Genel Bahçecilik',emoji:'💧',bitki:'domates',title:'Damlama Sulama Sistemi Kurma Rehberi',desc:'Bahçe ve seraya damlama sulama sistemi kurma adımları, bileşen seçimi, kurulum ve bakım hakkında pratik rehber.',sure:'9 dk'},
+  {id:26,cat:'İç Mekan',emoji:'🌿',bitki:'pothos',title:'Pothos Bakımı: Sarkık Sarmaşığı Sağlıklı Tutma',desc:'Pothos sulama zamanı, ışık ihtiyacı, sararan yaprak sorunları ve çelik ile çoğaltma teknikleri hakkında rehber.',sure:'5 dk'},
+  {id:27,cat:'İç Mekan',emoji:'🌵',bitki:'kaktus',title:'Kaktüs Bakımı: Sulama Hataları ve Doğru Toprak',desc:'Kaktüste en yaygın sulama hataları, doğru toprak karışımı, saksı seçimi ve kışın bakım koşulları rehberi.',sure:'6 dk'},
+  {id:28,cat:'Çiçekler',emoji:'🌷',bitki:'lale',title:'Lale Soğanı Dikimi: Sonbaharda Yapılması Gerekenler',desc:'Lale soğanı dikim zamanı, derinliği, toprak hazırlığı ve soğan saklaması hakkında adım adım rehber.',sure:'6 dk'},
+  {id:29,cat:'Meyve Ağaçları',emoji:'🍎',bitki:'nar',title:'Nar Ağacı Bakımı ve Hasat Zamanı Belirleme',desc:'Nar ağacı sulama sıklığı, budama teknikleri, hasat zamanı belirleme yöntemleri ve depolama koşulları.',sure:'7 dk'},
+  {id:30,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'elma',title:'Gübre Çeşitleri: NPK Oranları ve Doğru Kullanım',desc:'Azot, fosfor ve potasyum içeren gübrelerin bitki gelişimine etkileri, doğru doz hesaplama ve uygulama zamanları.',sure:'8 dk'},
+  {id:31,cat:'Sebzeler',emoji:'🥕',bitki:'havuc',title:'Havuç Yetiştiriciliği: Tohumdan Hasada Toprak Hazırlığı',desc:'Havuç için ideal toprak özellikleri, ekim derinliği, seyreltme zamanı ve hasat tekniği hakkında kapsamlı rehber.',sure:'7 dk'},
+  {id:32,cat:'Hastalık Rehberi',emoji:'🥔',bitki:'patates',title:'Patates Hastalıkları: Geç Yanıklık ve Tedavisi',desc:'Phytophthora infestans kaynaklı patates geç yanıklığının belirtileri, yayılma koşulları ve ilaçlama programı.',sure:'8 dk'},
+  {id:33,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'adacayi',title:'Adaçayı Bakımı ve Şifalı Kullanım Alanları',desc:'Adaçayı yetiştirme koşulları, hasat zamanı, kurutma yöntemleri ve tıbbi kullanım alanları hakkında kapsamlı rehber.',sure:'6 dk'},
+  {id:34,cat:'Çiçekler',emoji:'🌺',bitki:'begonvil',title:'Begonvil Bakımı: Akdeniz\'in Renk Şöleni',desc:'Begonvil sulama sıklığı, güneş ihtiyacı, budama zamanı, kışa hazırlık ve çiçeklenmeyi artırma teknikleri.',sure:'6 dk'},
+  {id:35,cat:'Dış Mekan',emoji:'🌳',bitki:'mese',title:'Meşe Ağacı Dikimi: Uzun Ömürlü Ağaç Yetiştirme',desc:'Meşe palamudundan ağaç yetiştirme, dikim yeri seçimi, ilk yıl sulama ve uzun vadeli bakım rehberi.',sure:'7 dk'},
+  {id:36,cat:'Hastalık Rehberi',emoji:'🍅',bitki:'domates',title:'Kırmızı Örümcek Mücadelesi: Erken Tespit ve Tedavi',desc:'Kırmızı örümceğin zarar belirtileri, yaşam koşulları ve akarisit seçimi ile organik mücadele yöntemleri.',sure:'7 dk'},
+  {id:37,cat:'Sebzeler',emoji:'🧄',bitki:'sarimsak',title:'Sarımsak Yetiştiriciliği: Sağlıklı Diş Elde Etme',desc:'Sarımsak diş seçimi, ekim zamanı, gübreleme programı, hasat zamanı belirleme ve kurutma yöntemleri.',sure:'7 dk'},
+  {id:38,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'fesleen',title:'Fesleğen Yetiştiriciliği: Marul ile Ortak Yetiştirme',desc:'Fesleğen ve marulun ortak yetiştirilmesinin faydaları, sulama, gübreleme ve hasat teknikleri rehberi.',sure:'6 dk'},
+  {id:39,cat:'Çiçekler',emoji:'🌻',bitki:'ayicegi',title:'Ayçiçeği Yetiştiriciliği: Dev Çiçekler İçin Gübre',desc:'Büyük başlı ayçiçeği yetiştirmek için doğru gübreleme programı, sulama sıklığı ve destekleme teknikleri.',sure:'6 dk'},
+  {id:40,cat:'İç Mekan',emoji:'🌿',bitki:'zz',title:'ZZ Bitkisi Bakımı: Unutkanlara Mükemmel Bitki',desc:'Az bakım gerektiren ZZ bitkisinin sulama sıklığı, ışık ihtiyacı, yeniden canlandırma ve çoğaltma rehberi.',sure:'5 dk'},
+  {id:41,cat:'Dış Mekan',emoji:'🌳',bitki:'ihlamur',title:'Ihlamur Ağacı: Çiçek Hasadı ve Şifalı Çay Yapımı',desc:'Ihlamur çiçeği hasat zamanı, kurutma teknikleri, şifalı çay hazırlama ve ağaç bakımı hakkında rehber.',sure:'6 dk'},
+  {id:42,cat:'Sebzeler',emoji:'🌽',bitki:'misir',title:'Mısır Yetiştiriciliği: Tatlı Mısır Hasadı İpuçları',desc:'Tatlı mısır çeşidi seçimi, dikim aralığı, sulama ve gübreleme programı ile hasat zamanı belirleme rehberi.',sure:'7 dk'},
+  {id:43,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'melisa',title:'Melisa Çayı İçin Evde Melisa Yetiştirme',desc:'Saksıda ve bahçede melisa yetiştirme, hasat zamanı, kurutma yöntemleri ve sakinleştirici çay hazırlama rehberi.',sure:'5 dk'},
+  {id:44,cat:'Dış Mekan',emoji:'🌴',bitki:'palmiye',title:'Palmiye Bakımı: Türkiye\'de Tropikal Görünüm',desc:'Türkiye iklimine uygun palmiye türleri, kışa dayanıklılık, sulama sıklığı ve gübre seçimi hakkında rehber.',sure:'6 dk'},
+  {id:45,cat:'Meyve Ağaçları',emoji:'🌰',bitki:'findik',title:'Fındık Bahçesinde Verim Artışı: Gübreleme Takvimi',desc:'Karadeniz fındık bahçesi için yıllık gübreleme programı, mikrobesin eksiklikleri ve verimi artıran teknikler.',sure:'8 dk'},
+  {id:46,cat:'Hastalık Rehberi',emoji:'🍆',bitki:'patlican',title:'Patlıcan Hastalıkları: Külleme ve Yanıklık Tedavisi',desc:'Patlıcanda külleme ve Verticillium yanıklığının belirtileri, önleyici tedbirler ve ilaçlama programı.',sure:'7 dk'},
+  {id:47,cat:'Dış Mekan',emoji:'🎍',bitki:'bambu',title:'Bambu Yetiştiriciliği: Hızlı Büyüyen Yeşil Perde',desc:'Bahçe perdesi için bambu çeşidi seçimi, dikim aralığı, yayılma kontrolü ve bakım rehberi.',sure:'7 dk'},
+  {id:48,cat:'İç Mekan',emoji:'🌸',bitki:'baris_zambagi',title:'Barış Zambağı Bakımı: Gölgede Çiçek Açan Bitki',desc:'Az ışıkta çiçek açan barış zambağının sulama sıklığı, nem ihtiyacı, sararan yapraklar ve canlandırma rehberi.',sure:'5 dk'},
+  {id:49,cat:'Meyve Ağaçları',emoji:'🥝',bitki:'kivi',title:'Kivi Yetiştiriciliği: İklim ve Toprak Gereksinimleri',desc:'Türkiye\'de kivi yetiştiriciliği için iklim koşulları, toprak hazırlığı, sulama sistemi ve erkek-dişi bitki oranı.',sure:'8 dk'},
+  {id:50,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Sera Kurulumu: Küçük Bahçe İçin Ucuz Çözümler',desc:'Düşük bütçeyle küçük sera kurulumu, malzeme seçimi, havalandırma sistemi ve ısıtma yöntemleri rehberi.',sure:'9 dk'},
+  {id:51,cat:'Meyve Ağaçları',emoji:'🍑',bitki:'kayisi',title:'Kayısı Ağacında Don Zararı: Önleme Yolları',desc:'İlkbahar donlarından kayısı çiçeklerini koruma yöntemleri, don örtüsü kullanımı ve hasar sonrası bakım.',sure:'7 dk'},
+  {id:52,cat:'Sebzeler',emoji:'🥬',bitki:'ispanak',title:'Ispanak Yetiştiriciliği: 4 Mevsim Sürekli Hasat',desc:'Yıl boyunca ıspanak hasadı için ekim takvimi, çeşit seçimi, sulama ve gübreleme programı rehberi.',sure:'6 dk'},
+  {id:53,cat:'Sebzeler',emoji:'🧅',bitki:'sogan',title:'Soğan Yetiştiriciliği: Ekim Zamanı ve Gübreleme',desc:'Soğan ekim zamanı, tohum ve fide yöntemi farkları, gübreleme programı ve hasat-depolama teknikleri.',sure:'7 dk'},
+  {id:54,cat:'Dış Mekan',emoji:'🌲',bitki:'servi',title:'Servi Ağacı Bakımı: Akdeniz Peyzajının Simgesi',desc:'İtalyan servisi bakımı, budama zamanı, sulama sıklığı ve peyzajda doğru kullanım rehberi.',sure:'6 dk'},
+  {id:55,cat:'Sebzeler',emoji:'🥬',bitki:'marul',title:'Marul Çeşitleri ve Balkon Bahçesinde Yetiştirme',desc:'Kıvırcık, göbek ve iceberg marulun balkon saksısında yetiştirilmesi, sulama ve hasat teknikleri.',sure:'6 dk'},
+  {id:56,cat:'Meyve Ağaçları',emoji:'💛',bitki:'ayva',title:'Ayva Bakımı: Az Bakım Gerektiren Meyve',desc:'Ayva ağacının sulama, gübreleme ve budama ihtiyaçları ile hasat zamanı ve ev yapımı ayva reçeli rehberi.',sure:'6 dk'},
+  {id:57,cat:'Çiçekler',emoji:'🌸',bitki:'sardunya',title:'Sardunya Neden Sararır? Nedeni ve Çözümleri',desc:'Sardunya yapraklarının sararmasının 5 temel nedeni ve her biri için pratik çözüm yöntemleri rehberi.',sure:'5 dk'},
+  {id:58,cat:'Meyve Ağaçları',emoji:'🟣',bitki:'erik',title:'Erik Ağacı Bakımı: Budama Programı',desc:'Erik ağacında yıllık budama programı, seyreltme önemi, hastalıktan korunma ve hasat optimizasyonu.',sure:'7 dk'},
+  {id:59,cat:'Sebzeler',emoji:'🥦',bitki:'brokoli',title:'Brokoli Yetiştiriciliği: Kış Sebzeciliği Rehberi',desc:'Güz ve kış döneminde brokoli yetiştirme, don dayanıklılığı, gübreleme programı ve hasat zamanı rehberi.',sure:'7 dk'},
+  {id:60,cat:'Sebzeler',emoji:'🍈',bitki:'kavun',title:'Kavun Bahçesi: Çeşit Seçimi ve Sulama',desc:'Türk kavun çeşitlerinin özellikleri, sulama sıklığı, olgunluk belirleme teknikleri ve depolama koşulları.',sure:'7 dk'},
+  {id:61,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'elma',title:'Organik Bahçecilik: Kimyasalsız Verimli Bahçe',desc:'Organik bahçeciliğe geçiş rehberi, doğal gübre alternatifleri, biyolojik mücadele ve toprak sağlığı.',sure:'9 dk'},
+  {id:62,cat:'Sebzeler',emoji:'🫛',bitki:'bezelye',title:'Bezelye Yetiştiriciliği: İlkbahar Bahçesinin Vazgeçilmezi',desc:'Bezelye ekim zamanı, destek sistemi kurma, sulama ve gübreleme programı ile taze hasat teknikleri.',sure:'6 dk'},
+  {id:63,cat:'Meyve Ağaçları',emoji:'🍊',bitki:'portakal',title:'Portakal Bahçesi Kurma: Narenciye Yetiştiriciliği',desc:'Türkiye\'de portakal yetiştiriciliği için iklim koşulları, çeşit seçimi, sulama sistemi ve hasat rehberi.',sure:'8 dk'},
+  {id:64,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'maydanoz',title:'Maydanoz ve Dereotu: Balkonlarda Taze Ot',desc:'Balkonda maydanoz ve dereotu yetiştirme, saksı seçimi, sulama sıklığı ve sürekli hasat teknikleri.',sure:'5 dk'},
+  {id:65,cat:'Sebzeler',emoji:'🫘',bitki:'fasulye',title:'Fasulye Çeşitleri: Sırık ve Bodur Bakım Farkları',desc:'Sırık ve bodur fasulye çeşitlerinin dikim, sulama, gübreleme ve hasat farklılıkları hakkında karşılaştırmalı rehber.',sure:'7 dk'},
+  {id:66,cat:'Meyve Ağaçları',emoji:'🤎',bitki:'badem',title:'Badem Ağacı Çiçeklenmesi ve Don Koruması',desc:'Erken çiçeklenen badem ağacını don zararından koruma yöntemleri, don örtüsü kullanımı ve hasar sonrası bakım.',sure:'7 dk'},
+  {id:67,cat:'Sebzeler',emoji:'🥬',bitki:'kabak',title:'Kabak Yetiştiriciliği: Saksıda ve Bahçede Bol Verim',desc:'Kabak çeşidi seçimi, tozlaşma sorunu çözme, sulama-gübreleme programı ve bol verim için teknikler.',sure:'6 dk'},
+  {id:68,cat:'Meyve Ağaçları',emoji:'🍋',bitki:'limon',title:'Limon Ağacı Saksıda Yetiştirilir mi?',desc:'Saksıda limon ağacı yetiştirme koşulları, kışın içeri alma, gübreleme programı ve çiçek dökmesini önleme.',sure:'7 dk'},
+  {id:69,cat:'Çiçekler',emoji:'🌼',bitki:'papatya',title:'Papatya Çayı İçin Bahçede Papatya Yetiştirme',desc:'Şifalı papatya yetiştirme koşulları, hasat zamanı, kurutma yöntemleri ve yatıştırıcı çay hazırlama.',sure:'5 dk'},
+  {id:70,cat:'Çiçekler',emoji:'🌸',bitki:'zambak',title:'Zambak Bakımı ve Soğanlı Bitkinin Çoğaltılması',desc:'Zambak soğanı dikim zamanı, derinliği, güneş ihtiyacı ve soğan bölme ile çoğaltma teknikleri rehberi.',sure:'6 dk'},
+  {id:71,cat:'Meyve Ağaçları',emoji:'🥑',bitki:'avokado',title:'Avokado Çekirdeğinden Fide Yetiştirme',desc:'Avokado çekirdeğini suda filizlendirme, saksıya aktarma, sulama sıklığı ve meyve vermesi için gerekli koşullar.',sure:'7 dk'},
+  {id:72,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Fide Yetiştirme: Tohum Ekiminden Şaşırtmaya',desc:'Kapalı ortamda fide yetiştirme, viyol seçimi, çimlenme sıcaklığı ve fideleri şaşırtma teknikleri rehberi.',sure:'8 dk'},
+  {id:73,cat:'Genel Bahçecilik',emoji:'📅',bitki:'elma',title:'Bahçede Ekim Takvimi: Hangi Ay Ne Ekilir',desc:'Ocak\'tan Aralık\'a aylık bahçe ekim ve dikim takvimi, Türkiye iklim bölgelerine göre optimum zamanlar.',sure:'9 dk'},
+  {id:74,cat:'Hastalık Rehberi',emoji:'🍐',bitki:'armut',title:'Armut Hastalıkları: Ateş Yanıklığı Tedavisi',desc:'Erwinia amylovora kaynaklı ateş yanıklığının belirtileri, yayılma yolları ve antibiyotikli ilaçlama programı.',sure:'8 dk'},
+  {id:75,cat:'Hastalık Rehberi',emoji:'🌲',bitki:'cam',title:'Çam Ağacı Hastalıkları: Mantar ve Böcek',desc:'Çam ağacında kabuk böceği, çam kesmeci ve mantar hastalıklarının belirtileri ile mücadele yöntemleri.',sure:'7 dk'},
+  {id:76,cat:'Çiçekler',emoji:'🌸',bitki:'karanfil',title:'Karanfil Yetiştiriciliği ve Kesme Çiçek Üretimi',desc:'Kesme karanfil üretimi için çeşit seçimi, sera koşulları, gübreleme programı ve hasat-soğuk zinciri rehberi.',sure:'8 dk'},
+  {id:77,cat:'Genel Bahçecilik',emoji:'🪨',bitki:'elma',title:'Toprak İyileştirme: Kil Toprağı Düzeltme Yolları',desc:'Kil toprağını gevşetme yöntemleri, perlit, kum ve organik madde karışım oranları ve drenaj iyileştirme.',sure:'7 dk'},
+  {id:78,cat:'Genel Bahçecilik',emoji:'✂️',bitki:'elma',title:'Kış Budaması: Meyve Ağaçlarında Doğru Teknik',desc:'Kış budamasının zamanı, kullanılacak aletler, yara kalus oluşumu ve hatalı budamanın sonuçları hakkında rehber.',sure:'8 dk'},
+  {id:79,cat:'Genel Bahçecilik',emoji:'💧',bitki:'domates',title:'Sulama Hataları: En Yaygın 8 Hata ve Çözümü',desc:'Aşırı sulama, yetersiz sulama, yanlış sulama zamanı gibi 8 yaygın hata ve her biri için pratik çözümler.',sure:'7 dk'},
+  {id:80,cat:'Hastalık Rehberi',emoji:'🍓',bitki:'cilek',title:'Çilek Hastalıkları: Gri Küf ve Solgunluk Tedavisi',desc:'Botrytis gri küfü ve Verticillium solgunluğunun belirtileri, önleyici tedbirler ve ilaçlama programı.',sure:'7 dk'},
+  {id:81,cat:'Hastalık Rehberi',emoji:'🌿',bitki:'monstera',title:'Sarı Yapraklar: Nedenleri ve Çözüm Rehberi',desc:'Tüm bitkilerde sarı yaprak sorununun 10 farklı nedeni ve her biri için tanı ve çözüm yöntemleri rehberi.',sure:'8 dk'},
+  {id:82,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'kiraz',title:'Meyve Ağaçlarında Aşılama Teknikleri',desc:'T-göz, yarma ve dil aşısı tekniklerinin detaylı anlatımı, aşı kalemi saklama ve aşı başarısını artırma.',sure:'9 dk'},
+  {id:83,cat:'Genel Bahçecilik',emoji:'🌱',bitki:'domates',title:'Balkon Bahçeciliği: En Kolay 10 Sebze',desc:'Balkonda en kolay yetiştirilen 10 sebze türü, saksı boyutu, sulama sıklığı ve gübreleme programı rehberi.',sure:'7 dk'},
+  {id:84,cat:'Meyve Ağaçları',emoji:'🌿',bitki:'incir',title:'İncir Ağacı Budaması ve Verim Artırma',desc:'İncir ağacında budama zamanı, şekil budaması teknikleri, verim artırma yöntemleri ve kışa hazırlık.',sure:'7 dk'},
+  {id:85,cat:'Tıbbi Bitkiler',emoji:'💜',bitki:'lavanta',title:'Aromatik Bitki Bahçesi Nasıl Kurulur',desc:'Lavanta, biberiye, kekik ve adaçayından oluşan aromatik bitki bahçesi tasarımı, dikim planı ve bakım takvimi.',sure:'8 dk'},
+  {id:86,cat:'Hastalık Rehberi',emoji:'🍅',bitki:'domates',title:'Beyazsinekle Organik Mücadele Yöntemleri',desc:'Beyazsineklerin yaşam döngüsü, zarar belirtileri ve sarı yapışkan tuzak, sabun çözeltisi ile mücadele yöntemleri.',sure:'6 dk'},
+  {id:87,cat:'İç Mekan',emoji:'🌵',bitki:'sukulent',title:'Succulentler İçin Doğru Toprak Karışımı',desc:'Sukulent toprağı hazırlama, perlit oranı, ph değeri, saksı seçimi ve kış ile yaz sulama farkları rehberi.',sure:'5 dk'},
+  {id:88,cat:'Genel Bahçecilik',emoji:'🌿',bitki:'domates',title:'Mantar Gübresi: Avantajları ve Kullanım Rehberi',desc:'Mantar gübresi içeriği, toprak yapısına katkıları, uygulama miktarı ve diğer organik gübrelerle karşılaştırma.',sure:'7 dk'},
+  {id:89,cat:'Genel Bahçecilik',emoji:'🫒',bitki:'zeytin',title:'Kuraklığa Dayanıklı Bahçe Bitkileri',desc:'Su isteği az olan 15 kuraklık toleranslı bitki türü, bakım gereksinimleri ve su tasarrufu sağlayan peyzaj önerileri.',sure:'8 dk'},
+  {id:90,cat:'Hastalık Rehberi',emoji:'🌿',bitki:'monstera',title:'Ev Bitkilerinde Sinek Problemi: Organik Çözüm',desc:'Toprak sineği ve beyazsinek sorunlarının nedenleri ile neem yağı, sarı tuzak ve toprak kuruması yöntemi ile çözüm.',sure:'6 dk'},
+  {id:91,cat:'Tıbbi Bitkiler',emoji:'🌿',bitki:'nane',title:'Çay Bahçesi Kurma: Tıbbi Bitkilerle Dolu Bahçe',desc:'Nane, melisa, adaçayı ve kekikten oluşan şifalı çay bahçesi tasarımı, bakım takvimi ve hasat teknikleri.',sure:'7 dk'},
+  {id:92,cat:'Meyve Ağaçları',emoji:'🍇',bitki:'uzum',title:'Bağ Budaması: Üzümde Yıllık Bakım Takvimi',desc:'Üzüm bağında yıllık budama zamanı, Guyot ve kordon terbiye sistemlerinde teknikler ve yeşil budama rehberi.',sure:'9 dk'},
+  {id:93,cat:'Sebzeler',emoji:'🌿',bitki:'enginar',title:'Enginar Yetiştiriciliği ve Hasadı',desc:'Enginar fide dikimi, sulama sıklığı, gübreleme programı, hasat zamanı belirleme ve çok yıllık bakım rehberi.',sure:'7 dk'},
+  {id:94,cat:'Sebzeler',emoji:'🌿',bitki:'bamya',title:'Bamya Yetiştiriciliği: Sıcak İklim Sebzesi',desc:'Bamya tohumun çimlendirilmesi, dikim aralığı, sulama-gübreleme programı ve sürekli hasat teknikleri rehberi.',sure:'6 dk'},
+  {id:95,cat:'Meyve Ağaçları',emoji:'🍊',bitki:'mandalina',title:'Mandalina Ağacı Bakımı ve İklim Gereksinimleri',desc:'Saksı ve bahçe mandalinası bakımı, don dayanıklılığı, gübre seçimi ve bol meyve için teknikler.',sure:'7 dk'},
+  {id:96,cat:'Çiçekler',emoji:'🌸',bitki:'kasimpati',title:'Kasımpatı Bakımı: Sonbaharın Rengi',desc:'Kasımpatı dikim zamanı, sulama sıklığı, çiçeklenmeyi uzatma teknikleri ve kışa hazırlık rehberi.',sure:'5 dk'},
+  {id:97,cat:'İç Mekan',emoji:'🌿',bitki:'kalathea',title:'Kalathea Bakımı: Tropikal Desenli Yapraklar',desc:'Kalathea için doğru nem oranı, sulama suyu kalitesi, ışık ihtiyacı ve yaprak uçlarının kurumasını önleme.',sure:'6 dk'},
+  {id:98,cat:'Tıbbi Bitkiler',emoji:'🌸',bitki:'ekinezya',title:'Ekinezya Yetiştiriciliği: Bağışıklığı Güçlendiren Bitki',desc:'Ekinezya tohum ekimi, büyüme koşulları, hasat zamanı ve bağışıklık sistemini destekleyen kullanım şekilleri.',sure:'7 dk'},
+  {id:99,cat:'Meyve Ağaçları',emoji:'🫐',bitki:'dut',title:'Dut Ağacı Bakımı ve Meyve Hasadı',desc:'Dut ağacı budama zamanı, sulama ihtiyacı, hasat teknikleri ve dut pekmezi yapımı hakkında rehber.',sure:'6 dk'},
+  {id:100,cat:'Çiçekler',emoji:'💙',bitki:'ortanca',title:'Ortanca Bakımı: Renkli Çiçekler İçin Toprak Sırrı',desc:'Ortanca çiçek rengini belirleyen toprak pH\'ı, budama zamanı, sulama sıklığı ve kışa hazırlık rehberi.',sure:'6 dk'},
+  {id:101,cat:'Sebzeler',emoji:'🥔',bitki:'patates',title:'Patates Yetiştirme: Evde Saksıda Patates Rehberi',desc:'Saksıda patates yetiştirme yöntemi, tohum patates seçimi, toprak karışımı ve hasat zamanı belirleme teknikleri.',sure:'7 dk'},
+];

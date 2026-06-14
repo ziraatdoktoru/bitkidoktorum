@@ -20,13 +20,13 @@ strong{color:var(--t1)}
 .main-content{min-width:0}
 .sidebar{min-width:0}
 @media(max-width:900px){.site-wrap{grid-template-columns:1fr}.sidebar{display:none}}
-.site-header{background:var(--wh);border-bottom:3px solid var(--g);position:sticky;top:0;z-index:100;box-shadow:var(--sh);overflow:hidden}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;max-width:1200px;margin:0 auto;gap:.5rem}
+.site-header{background:var(--wh);border-bottom:3px solid var(--g);position:sticky;top:0;z-index:100;box-shadow:var(--sh)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.25rem;max-width:1200px;margin:0 auto}
 .site-logo{display:flex;align-items:center;gap:.6rem;font-family:'Merriweather','Georgia',serif;font-size:1.3rem;font-weight:700;color:var(--gd);text-decoration:none}
 .logo-icon{font-size:1.5rem}
 .logo-tagline{font-size:.65rem;font-family:'Open Sans',sans-serif;color:var(--t3);font-weight:400;display:block}
-.site-nav{display:flex;align-items:center;gap:0;flex-wrap:wrap}
-.site-nav a{padding:.28rem .38rem;border-radius:var(--rs);font-size:.72rem;font-weight:600;color:var(--t2);text-decoration:none;transition:all .2s;white-space:nowrap}
+.site-nav{display:flex;align-items:center;gap:.1rem}
+.site-nav a{padding:.45rem .7rem;border-radius:var(--rs);font-size:.85rem;font-weight:600;color:var(--t2);text-decoration:none;transition:all .2s;white-space:nowrap}
 .site-nav a:hover,.site-nav a.active{background:var(--gp);color:var(--gd)}
 .nav-lang{margin-left:.5rem;display:flex;background:var(--gp);border-radius:6px;overflow:hidden}
 .nav-lang button{padding:.28rem .6rem;border:none;background:transparent;font-size:.72rem;font-weight:700;cursor:pointer;color:var(--t3);font-family:'Open Sans',sans-serif;transition:all .2s}
