@@ -1,14 +1,5 @@
 /* BitkiDoktorum — app.js */
 
-// ── DİL ──────────────────────────────────────────────────────────
-let currentLang = localStorage.getItem('bd_lang') || 'tr';
-function setLang(l) {
-  currentLang = l;
-  localStorage.setItem('bd_lang', l);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
-  document.documentElement.lang = l;
-}
-
 // ── BİTKİ VERİTABANI (135 Tür) ──────────────────────────────────
 const PLANT_DB = [
   // MEYVE
@@ -554,13 +545,13 @@ function searchPlants(q, cat = 'all') {
 
 // ── PLANT CARD ────────────────────────────────────────────────────
 function plantCardHTML(p) {
-  var nm = currentLang === 'tr' ? p.tr : p.en;
+  var nm = p.tr;
   var ct = CATEGORIES.find(function(c){return c.id===p.cat;});
   var wl = {low:'Az', moderate:'Orta', high:'Çok'};
   var sl = {full_sun:'Güneş', partial_shade:'Yarı Gölge', shade:'Gölge'};
   var dl = {easy:'Kolay', medium:'Orta', hard:'Zor'};
   var regionHtml = p.regions ? '<p style="font-size:.7rem;color:#666;margin-bottom:.4rem">📍 '+(Array.isArray(p.regions)?p.regions.join(', '):p.regions)+'</p>' : '';
-  return '<div class="card"><div class="card-img">'+p.emoji+'</div><div class="card-body"><span class="card-category">'+(ct?(currentLang==="tr"?ct.tr:ct.en):p.cat)+'</span><h3 class="card-title"><a href="bitki.html?id='+p.id+'">'+nm+'</a></h3><p class="card-excerpt" style="font-size:.75rem;font-style:italic;color:#888;margin-bottom:.5rem;">'+p.sci+'</p>'+regionHtml+'<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.7rem;"><span class="badge badge-green">&#x1F4A7; '+(wl[p.water]||p.water)+'</span><span class="badge badge-amber">&#x2600;&#xFE0F; '+(sl[p.sun]||p.sun)+'</span><span class="badge badge-blue">'+(dl[p.difficulty]||p.difficulty)+'</span></div><a href="bitki.html?id='+p.id+'" class="btn btn-secondary btn-sm">Detay &rarr;</a></div></div>';
+  return '<div class="card"><div class="card-img">'+p.emoji+'</div><div class="card-body"><span class="card-category">'+(ct?('tr'==="tr"?ct.tr:ct.en):p.cat)+'</span><h3 class="card-title"><a href="bitki.html?id='+p.id+'">'+nm+'</a></h3><p class="card-excerpt" style="font-size:.75rem;font-style:italic;color:#888;margin-bottom:.5rem;">'+p.sci+'</p>'+regionHtml+'<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.7rem;"><span class="badge badge-green">&#x1F4A7; '+(wl[p.water]||p.water)+'</span><span class="badge badge-amber">&#x2600;&#xFE0F; '+(sl[p.sun]||p.sun)+'</span><span class="badge badge-blue">'+(dl[p.difficulty]||p.difficulty)+'</span></div><a href="bitki.html?id='+p.id+'" class="btn btn-secondary btn-sm">Detay &rarr;</a></div></div>';
 }
 
 // ── BLOG CARD ─────────────────────────────────────────────────────
@@ -641,8 +632,6 @@ function initNav() {
     const h = a.getAttribute('href');
     if (h === path || (path === '' && h === 'index.html')) a.classList.add('active');
   });
-  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
-  setLang(currentLang);
   checkAutoPub();
 }
 
