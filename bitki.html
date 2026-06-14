@@ -1,11 +1,10 @@
 <!DOCTYPE html>
+<!-- v2 -->
 <html lang="tr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Bitki Ansiklopedisi — 135+ Tür | BitkiDoktorum</title>
-<meta name="description" content="135+ bitki türü. Meyve ağaçları, sebzeler, çiçekler, iç mekan ve tıbbi bitkiler hakkında detaylı bakım rehberleri.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://bitkidoktorum.com/ansiklopedi.html">
+<title>Bitki Detayı | BitkiDoktorum</title>
+<meta name="description" id="pageDesc" content="BitkiDoktorum bitki bakım rehberi">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <script>
@@ -49,7 +48,18 @@
 .qs-bos{text-align:center;padding:1.5rem;font-size:.85rem;color:var(--t3)}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"Bitki Ansiklopedisi | BitkiDoktorum","url":"https://bitkidoktorum.com/ansiklopedi.html","description":"244+ bitki türü ansiklopedisi"}
+{
+  "@context":"https://schema.org",
+  "@type":"WebPage",
+  "name":"Bitki Detayı | BitkiDoktorum",
+  "url":"https://bitkidoktorum.com/bitki.html",
+  "isPartOf":{"@type":"WebSite","name":"BitkiDoktorum","url":"https://bitkidoktorum.com"},
+  "breadcrumb":{"@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://bitkidoktorum.com/"},
+    {"@type":"ListItem","position":2,"name":"Ansiklopedi","item":"https://bitkidoktorum.com/ansiklopedi.html"},
+    {"@type":"ListItem","position":3,"name":"Bitki Detayı"}
+  ]}
+}
 </script>
 </head>
 <body>
@@ -67,72 +77,160 @@
 </div>
 <button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
 <div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
-<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Ansiklopedi</span></div></div></nav>
+<nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><a href="ansiklopedi.html">Ansiklopedi</a><span>›</span><span id="breadTitle">Bitki</span></div></div></nav>
 <div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
 <div class="site-wrap">
-<div class="main-content">
-<h1 style="margin-bottom:.4rem">🌿 Bitki Ansiklopedisi</h1>
-<p style="color:var(--t3);margin-bottom:1.25rem">135+ bitki türü — bakım, yetiştirme, hastalıklar</p>
-<div class="search-box"><input type="text" id="searchIn" placeholder="Bitki adı veya özellik ara..." oninput="doSearch()"></div>
-<div class="filter-bar" id="filterBar"></div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
-  <p style="margin:0;color:var(--t3);font-size:.85rem" id="resultInfo"></p>
-  <select id="sortSel" onchange="doSearch()" style="padding:.38rem .75rem;border:1px solid var(--br);border-radius:var(--rs);font-family:'Open Sans',sans-serif;font-size:.8rem;background:white">
-    <option value="name">İsme Göre A-Z</option>
-    <option value="difficulty">Kolay Önce</option>
-    <option value="water">Az Su Önce</option>
-  </select>
-</div>
-<div class="ad-slot ad-slot-in-article" style="margin-bottom:1.25rem"><span class="ad-label">Reklam</span><small>336×280</small></div>
-<div class="grid-3" id="plantGrid"></div>
-<div class="pagination" id="pgn"></div>
-<div class="ad-slot ad-slot-banner" style="margin-top:1.5rem"><span class="ad-label">Reklam</span><small>728×90</small></div>
-</div>
+<div class="main-content"><div id="pc"><div class="loading-spinner"><div class="spinner"></div><span>Yükleniyor...</span></div></div></div>
 <aside class="sidebar">
 <div class="ad-slot ad-slot-sidebar"><span class="ad-label">Reklam</span><small>300×600</small></div>
-<div class="widget"><h3 class="widget-title">📂 Kategoriler</h3><ul class="widget-list" id="sideCats"></ul></div>
+<div class="widget"><h3 class="widget-title">🌿 Benzer Bitkiler</h3><ul class="widget-list" id="sim"></ul></div>
 <div class="ad-slot ad-slot-rectangle"><span class="ad-label">Reklam</span><small>300×250</small></div>
-<div class="widget" style="background:var(--gp)"><h3 class="widget-title">🔬 Hastalık Teşhisi</h3><p style="font-size:.82rem;margin-bottom:1rem">Bitkinizdeki hastalığı anında tespit edin</p><a href="teshis.html" class="btn btn-amber btn-sm btn-block">Fotoğraf ile Teşhis →</a></div>
+<div class="widget" style="background:var(--gp)"><h3 class="widget-title">🔬 Hastalık Teşhisi</h3><p style="font-size:.82rem;margin-bottom:1rem">Bitkinizdeki sorunu AI ile teşhis edin.</p><a href="teshis.html" class="btn btn-amber btn-sm btn-block">Teşhis Yap →</a></div>
 </aside>
 </div>
-<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Kategoriler</h4><ul><li><a href="ansiklopedi.html?cat=fruit">🍎 Meyve</a></li><li><a href="ansiklopedi.html?cat=vegetable">🥦 Sebze</a></li><li><a href="ansiklopedi.html?cat=flower">🌸 Çiçek</a></li><li><a href="ansiklopedi.html?cat=indoor">🪴 İç Mekan</a></li></ul></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="blog.html">Blog</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
+<div class="paylasim-bar">
+  <span>Paylaş:</span>
+  <button class="paylasim-btn paylasim-whatsapp" onclick="paylasim('whatsapp')">💬 WhatsApp</button>
+  <button class="paylasim-btn paylasim-twitter" onclick="paylasim('twitter')">🐦 Twitter</button>
+  <button class="paylasim-btn paylasim-facebook" onclick="paylasim('facebook')">📘 Facebook</button>
+  <button class="paylasim-btn paylasim-link" onclick="paylasim('link')">🔗 Kopyala</button>
+</div>
+<footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="ansiklopedi.html">Ansiklopedi</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
 <script src="assets/app.js"></script>
 <script>
-const PER=12;let page=1,cat='all',q='';
-const params=new URLSearchParams(window.location.search);
-if(params.get('cat'))cat=params.get('cat');
-if(params.get('q')){q=params.get('q');document.getElementById('searchIn').value=q;}
-function renderFilters(){
-  document.getElementById('filterBar').innerHTML=CATEGORIES.map(function(c){
-    var count=c.id==='all'?PLANT_DB.length:PLANT_DB.filter(function(p){return p.cat===c.id;}).length;
-    return '<button class="filter-btn '+(c.id===cat?'active':'')+'" onclick="setFilter(\''+c.id+'\')">'+c.icon+' '+c.tr+' ('+count+')</button>';
-  }).join('');
-  document.getElementById('sideCats').innerHTML=CATEGORIES.map(function(c){
-    var count=c.id==='all'?PLANT_DB.length:PLANT_DB.filter(function(p){return p.cat===c.id;}).length;
-    return '<li><a href="?cat='+c.id+'" onclick="setFilter(\''+c.id+'\');return false;">'+c.icon+' '+c.tr+' <span style="color:var(--t3);float:right">('+count+')</span></a></li>';
-  }).join('');
-}
-function setFilter(c2){cat=c2;page=1;renderFilters();render();}
-function doSearch(){q=document.getElementById('searchIn').value;page=1;render();}
+var pid = new URLSearchParams(window.location.search).get('id');
+var plant = PLANT_DB.find(function(p){ return p.id === pid; });
+var pc = document.getElementById('pc');
+window.onLangChange = function(){ if(plant) render(); };
+if(!plant){
+  pc.innerHTML = '<div class="info-box info-box-red"><h5>Bitki bulunamadı</h5><p><a href="ansiklopedi.html">Ansiklopediye dön</a></p></div>';
+} else { render(); }
+
 function render(){
-  var sort=document.getElementById('sortSel').value;
-  var r=searchPlants(q,cat);
-  if(sort==='name') r.sort(function(a,b){return a.tr.localeCompare(b.tr);});
-  else if(sort==='difficulty'){var d={easy:1,medium:2,hard:3};r.sort(function(a,b){return d[a.difficulty]-d[b.difficulty];});}
-  else if(sort==='water'){var w={low:1,moderate:2,high:3};r.sort(function(a,b){return w[a.water]-w[b.water];});}
-  var total=r.length,tp=Math.ceil(total/PER),sl=r.slice((page-1)*PER,page*PER);
-  document.getElementById('resultInfo').textContent=total+' bitki türü listeleniyor';
-  document.getElementById('plantGrid').innerHTML=sl.length?sl.map(function(p){return plantCardHTML(p);}).join(''):'<p style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--t3)">Sonuç bulunamadı.</p>';
-  var pg=document.getElementById('pgn');
-  if(tp<=1){pg.innerHTML='';return;}
-  var h='';
-  if(page>1)h+='<button class="page-btn" onclick="goPage('+(page-1)+')">‹</button>';
-  for(var i=Math.max(1,page-2);i<=Math.min(tp,page+2);i++)h+='<button class="page-btn '+(i===page?'active':'')+'" onclick="goPage('+i+')">'+i+'</button>';
-  if(page<tp)h+='<button class="page-btn" onclick="goPage('+(page+1)+')">›</button>';
-  pg.innerHTML=h;
+  var tr = currentLang === 'tr';
+  var name = tr ? plant.tr : plant.en;
+  document.title = name + (tr?' Bakımı':' Care') + ' | BitkiDoktorum';
+  document.getElementById('pageDesc').content = name + ' (' + plant.sci + ') ' + (tr?'bakımı.':'care guide.');
+  document.getElementById('breadTitle').textContent = name;
+  var cat = CATEGORIES.find(function(c){ return c.id === plant.cat; });
+  var catName = cat ? (tr ? cat.tr : cat.en) : plant.cat;
+  var wl = {low: tr?'Az':'Low', moderate: tr?'Orta':'Moderate', high: tr?'Çok':'High'};
+  var sl = {full_sun: tr?'Tam Güneş':'Full Sun', partial_shade: tr?'Yarı Gölge':'Partial Shade', shade: tr?'Gölge':'Shade'};
+  var dl = {easy: tr?'Kolay':'Easy', medium: tr?'Orta':'Medium', hard: tr?'Zor':'Hard'};
+  
+  var tags = '';
+  if(plant.tags){ plant.tags.slice(0,3).forEach(function(t){ tags += '<span class="badge badge-blue">'+t+'</span> '; }); }
+  
+  var harvestRow = '';
+  if(plant.harvest && plant.harvest !== '-' && plant.harvest !== '–'){
+    harvestRow = '<tr><td>🍎 '+(tr?'Hasat':'Harvest')+'</td><td>'+plant.harvest+'</td></tr>';
+  }
+  
+  var html = '';
+  html += '<div style="background:linear-gradient(135deg,var(--gp),white);padding:1.75rem;border-radius:var(--r);margin-bottom:1.5rem;display:flex;gap:1.5rem;flex-wrap:wrap">';
+  html += '<div style="font-size:4.5rem;flex-shrink:0;line-height:1">'+plant.emoji+'</div>';
+  html += '<div style="flex:1;min-width:180px">';
+  html += '<div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.4rem"><span class="badge badge-green">'+catName+'</span>'+tags+'</div>';
+  html += '<h1 style="margin-bottom:.15rem">'+name+'</h1>';
+  html += '<p style="font-style:italic;color:var(--t3);margin-bottom:.5rem;font-size:.9rem">'+plant.sci+' · '+plant.family+'</p>';
+  html += '<div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.85rem">';
+  html += '<span class="badge badge-green">💧 '+(wl[plant.water]||plant.water)+'</span>';
+  html += '<span class="badge badge-amber">☀️ '+(sl[plant.sun]||plant.sun)+'</span>';
+  html += '<span class="badge badge-blue">'+(dl[plant.difficulty]||plant.difficulty)+'</span>';
+  html += '</div>';
+  html += '<div class="plant-info-grid">';
+  html += '<div class="plant-info-item"><div class="icon">📏</div><div class="label">'+(tr?'Boy':'Height')+'</div><div class="value">'+plant.height+'</div></div>';
+  html += '<div class="plant-info-item"><div class="icon">⏳</div><div class="label">'+(tr?'Ömür':'Lifespan')+'</div><div class="value">'+plant.lifespan+'</div></div>';
+  html += '<div class="plant-info-item"><div class="icon">🌸</div><div class="label">'+(tr?'Çiçeklenme':'Bloom')+'</div><div class="value">'+plant.bloom+'</div></div>';
+  html += '<div class="plant-info-item"><div class="icon">🌍</div><div class="label">'+(tr?'Köken':'Origin')+'</div><div class="value">'+plant.origin+'</div></div>';
+  html += '<div class="plant-info-item"><div class="icon">🌡</div><div class="label">'+(tr?'İklim':'Climate')+'</div><div class="value">'+plant.climate+'</div></div>';
+  html += '<div class="plant-info-item"><div class="icon">🪨</div><div class="label">'+(tr?'Toprak':'Soil')+'</div><div class="value">'+plant.soil+'</div></div>';
+  html += '</div></div></div>';
+  html += '<div class="ad-slot ad-slot-in-article"><span class="ad-label">Reklam</span><small>336×280</small></div>';
+  html += '<h2>'+(tr?'📋 Bakım Rehberi':'📋 Care Guide')+'</h2>';
+  html += '<table class="care-table" style="margin-bottom:1.5rem">';
+  html += '<tr><td>💧 '+(tr?'Sulama':'Watering')+'</td><td>'+(wl[plant.water]||plant.water)+'</td></tr>';
+  html += '<tr><td>☀️ '+(tr?'Işık':'Light')+'</td><td>'+(sl[plant.sun]||plant.sun)+'</td></tr>';
+  html += '<tr><td>🪨 '+(tr?'Toprak':'Soil')+'</td><td>'+plant.soil+'</td></tr>';
+  html += '<tr><td>🌱 '+(tr?'Bakım':'Care')+'</td><td>'+(dl[plant.difficulty]||plant.difficulty)+'</td></tr>';
+  html += '<tr><td>📏 '+(tr?'Boy':'Height')+'</td><td>'+plant.height+'</td></tr>';
+  html += '<tr><td>⏳ '+(tr?'Ömür':'Lifespan')+'</td><td>'+plant.lifespan+'</td></tr>';
+  html += '<tr><td>🌸 '+(tr?'Çiçeklenme':'Bloom')+'</td><td>'+plant.bloom+'</td></tr>';
+  html += harvestRow;
+  html += '<tr><td>🌍 '+(tr?'Köken':'Origin')+'</td><td>'+plant.origin+'</td></tr>';
+  html += '<tr><td>🌿 '+(tr?'Familya':'Family')+'</td><td>'+plant.family+'</td></tr>';
+  if(plant.regions) html += '<tr><td>📍 '+(tr?'Türkiyede Bölge':'Regions in Turkey')+'</td><td>'+(Array.isArray(plant.regions)?plant.regions.join(', '):plant.regions)+'</td></tr>';
+  if(plant.fertilize) html += '<tr><td>🌱 '+(tr?'Gübreleme Takvimi':'Fertilizing Schedule')+'</td><td>'+plant.fertilize+'</td></tr>';
+  if(plant.dikim) html += '<tr><td>🌿 '+(tr?'Dikim Zamanı':'Planting Time')+'</td><td>'+plant.dikim+'</td></tr>';
+  if(plant.budama) html += '<tr><td>✂️ '+(tr?'Budama':'Pruning')+'</td><td>'+plant.budama+'</td></tr>';
+  html += '</table>';
+  html += '<div style="background:white;border:1px solid var(--br);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem">';
+  html += '<h3>'+(tr?'🤖 AI Destekli Detaylı Bilgi':'🤖 AI Powered Details')+'</h3>';
+  html += '<button class="btn btn-primary" id="aiBtn" onclick="loadAI()">'+(tr?'📚 Detaylı Bilgi Yükle':'📚 Load Detailed Info')+'</button>';
+  html += '<div id="aiContent" style="margin-top:1rem"></div>';
+  html += '</div>';
+  html += '<div class="info-box info-box-amber"><h5>⚠️ '+(tr?'Uyarı':'Notice')+'</h5><p style="margin:0;font-size:.82rem">'+(tr?'Ciddi sorunlarda ziraat mühendisine danışın.':'Consult an agronomist for serious issues.')+'</p></div>';
+  html += '<div style="margin-top:1.25rem;padding:1.25rem;background:var(--gp);border-radius:var(--r);text-align:center">';
+  html += '<h3>🔬 '+(tr?'Bitkide Hastalık mı?':'Disease on Plant?')+'</h3>';
+  html += '<p style="margin:.4rem 0 .85rem;font-size:.9rem">'+(tr?'Fotoğraf yükleyin, AI teşhis yapsın.':'Upload photo, var AI diagnose.')+'</p>';
+  html += '<a href="teshis.html" class="btn btn-amber">'+(tr?'Hastalık Teşhisi →':'Disease Diagnosis →')+'</a>';
+  html += '</div>';
+  html += '<div class="ad-slot ad-slot-banner" style="margin-top:1.25rem"><span class="ad-label">Reklam</span><small>728×90</small></div>';
+  
+  pc.innerHTML = html;
+  
+  var simList = '';
+  PLANT_DB.filter(function(p){ return p.cat===plant.cat && p.id!==plant.id; }).slice(0,6).forEach(function(p){
+    simList += '<li><a href="bitki.html?id='+p.id+'">'+p.emoji+' '+(tr?p.tr:p.en)+'</a></li>';
+  });
+  document.getElementById('sim').innerHTML = simList;
 }
-function goPage(p){page=p;render();window.scrollTo(0,200);}
-renderFilters();render();
+
+async function loadAI(){
+  var btn = document.getElementById('aiBtn');
+  var c = document.getElementById('aiContent');
+  var tr = currentLang === 'tr';
+  btn.disabled = true;
+  btn.textContent = tr ? '⏳ Yükleniyor...' : '⏳ Loading...';
+  c.innerHTML = '<div class="loading-spinner" style="padding:1rem"><div class="spinner"></div><span>'+(tr?'Yükleniyor...':'Loading...')+'</span></div>';
+  var name = tr ? plant.tr : plant.en;
+  var sources = await fetchAcademic(name+' '+plant.sci+' cultivation care', 3);
+  var ctx = sources.slice(0,2).map(function(p,i){ return '['+(i+1)+'] '+p.title; }).join('\n');
+  var prompt = 'You are an expert botanist. Write about "'+name+'" ('+plant.sci+') in '+(tr?'Turkish':'English')+'.\nSources: '+(ctx||'use your knowledge')+'\nReturn ONLY this JSON (no other text):\n{"intro":"100 word description","care":{"watering":"detail","fertilizing":"detail","pruning":"detail"},"diseases":["disease 1","disease 2","disease 3"],"tips":["tip 1","tip 2","tip 3","tip 4"],"fact":"interesting fact"}';
+  try {
+    var raw = await callClaude(prompt);
+    var d = parseJSON(raw);
+    var out = '<p>'+( d.intro||'')+'</p>';
+    if(d.care){
+      out += '<h4 style="color:var(--gd);margin:1rem 0 .5rem">🌱 '+(tr?'Bakım':'Care')+'</h4>';
+      out += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">';
+      var careKeys = Object.keys(d.care);
+      careKeys.forEach(function(k){
+        var label = k==='watering'?(tr?'💧 Sulama':'💧 Watering'):k==='fertilizing'?(tr?'🌿 Gübre':'🌿 Fertilize'):(tr?'✂️ Budama':'✂️ Pruning');
+        out += '<div class="info-box info-box-green" style="margin:0"><h5>'+label+'</h5><p style="margin:0;font-size:.8rem">'+d.care[k]+'</p></div>';
+      });
+      out += '</div>';
+    }
+    if(d.diseases && d.diseases.length){
+      out += '<h4 style="color:var(--red);margin:1rem 0 .4rem">🦠 '+(tr?'Hastalıklar':'Diseases')+'</h4><ul>';
+      d.diseases.forEach(function(x){ out += '<li style="font-size:.83rem;margin-bottom:.25rem">'+x+'</li>'; });
+      out += '</ul>';
+    }
+    if(d.tips && d.tips.length){
+      out += '<div class="info-box info-box-green" style="margin-top:.75rem"><h5>💡 '+(tr?'İpuçları':'Tips')+'</h5><ul style="margin:0">';
+      d.tips.forEach(function(t){ out += '<li style="font-size:.82rem">'+t+'</li>'; });
+      out += '</ul></div>';
+    }
+    if(d.fact) out += '<div class="info-box info-box-amber" style="margin-top:.75rem"><h5>🌟 '+(tr?'İlginç Bilgi':'Fun Fact')+'</h5><p style="margin:0;font-size:.82rem">'+d.fact+'</p></div>';
+    out += sourcesHTML(sources);
+    c.innerHTML = out;
+    btn.style.display = 'none';
+  } catch(e) {
+    c.innerHTML = '<p style="color:var(--red)">'+e.message+'</p>';
+    btn.disabled = false;
+    btn.textContent = tr ? '📚 Tekrar Dene' : '📚 Retry';
+  }
+}
 </script>
 <script>
 function qsAc(){
@@ -177,6 +275,23 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+
+// Ziyaret sayacı
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var pid = params.get('id');
+  if(!pid) return;
+  try {
+    var key = 'bd_views_' + pid;
+    var count = parseInt(localStorage.getItem(key)||'0') + 1;
+    localStorage.setItem(key, count);
+    // Toplam görüntüleme listesini güncelle
+    var all = JSON.parse(localStorage.getItem('bd_all_views')||'{}');
+    all[pid] = (all[pid]||0) + 1;
+    localStorage.setItem('bd_all_views', JSON.stringify(all));
+  } catch(e){}
+})();
+
 <script>
 function dmToggle(){
   var cur = document.documentElement.getAttribute('data-theme')||'light';
@@ -189,6 +304,22 @@ document.addEventListener('DOMContentLoaded', function(){
   var t = localStorage.getItem('bd_theme')||'light';
   document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
 });
+</script>
+<script>
+function paylasim(platform) {
+  var url = encodeURIComponent(window.location.href);
+  var baslik = encodeURIComponent(document.title);
+  var linkler = {
+    whatsapp: 'https://wa.me/?text=' + baslik + '%20' + url,
+    twitter:  'https://twitter.com/intent/tweet?text=' + baslik + '&url=' + url,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
+  };
+  if(platform === 'link') {
+    navigator.clipboard.writeText(window.location.href).then(function(){alert('Bağlantı kopyalandı!');});
+    return;
+  }
+  window.open(linkler[platform], '_blank', 'width=600,height=400');
+}
 </script>
 </body>
 </html>

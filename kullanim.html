@@ -94,10 +94,10 @@
 <script src="assets/app.js"></script>
 <script>
 function sendMsg(){
-  const n=document.getElementById('cName').value.trim();
-  const e=document.getElementById('cEmail').value.trim();
-  const m=document.getElementById('cMsg').value.trim();
-  const s=document.getElementById('msgSt');
+  var n=document.getElementById('cName').value.trim();
+  var e=document.getElementById('cEmail').value.trim();
+  var m=document.getElementById('cMsg').value.trim();
+  var s=document.getElementById('msgSt');
   if(!n||!e||!m){s.style.display='block';s.innerHTML='<div class="info-box info-box-red" style="margin:0"><p style="margin:0">Lütfen tüm zorunlu alanları doldurun.</p></div>';return;}
   s.style.display='block';s.innerHTML='<div class="info-box info-box-green" style="margin:0"><h5>✅ Mesajınız alındı!</h5><p style="margin:0">En kısa sürede yanıt vereceğiz.</p></div>';
   document.getElementById('cName').value='';document.getElementById('cEmail').value='';document.getElementById('cMsg').value='';

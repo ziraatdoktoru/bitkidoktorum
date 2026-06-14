@@ -76,9 +76,9 @@
 <footer class="site-footer"><div class="footer-grid"><div class="footer-brand"><div class="logo">🌿 BitkiDoktorum</div><p>Türkiye'nin en kapsamlı bitki ansiklopedisi.</p></div><div class="footer-col"><h4>Site</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="ansiklopedi.html">Ansiklopedi</a></li><li><a href="teshis.html">Teşhis</a></li><li><a href="populer.html">Popüler</a></li><li><a href="mevsim.html">Mevsim</a></li><li><a href="ipuclari.html">İpuçları</a></li></ul></div><div class="footer-col"><h4>Yasal</h4><ul><li><a href="gizlilik.html">Gizlilik</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div></div><div class="footer-bottom"><p>© 2025 bitkidoktorum.com</p></div></footer>
 <script src="assets/app.js"></script>
 <script>
-const pid = new URLSearchParams(window.location.search).get('id');
-const plant = PLANT_DB.find(p => p.id === pid);
-const pc = document.getElementById('plantContent');
+var pid = new URLSearchParams(window.location.search).get('id');
+var plant = PLANT_DB.find(p => p.id === pid);
+var pc = document.getElementById('plantContent');
 
 // Dil değişince yeniden render
 window.onLangChange = () => { if (plant) renderPlant(); };
@@ -90,16 +90,16 @@ if (!plant) {
 }
 
 function renderPlant() {
-  const tr = currentLang === 'tr';
-  const name = tr ? plant.tr : plant.en;
+  var tr = currentLang === 'tr';
+  var name = tr ? plant.tr : plant.en;
   document.title = name + (tr ? ' Bakımı' : ' Care Guide') + ' | BitkiDoktorum';
   document.getElementById('pageDesc').content = name + ' (' + plant.sci + ') ' + (tr ? 'bakımı, yetiştiriciliği, hastalıkları.' : 'care, growing guide, diseases.');
   document.getElementById('breadTitle').textContent = name;
-  const cat = CATEGORIES.find(c => c.id === plant.cat);
-  const catName = cat ? (tr ? cat.tr : cat.en) : plant.cat;
-  const wl = {low: tr?'Az (Kuraklığa Dayanıklı)':'Low (Drought Resistant)', moderate: tr?'Orta':'Moderate', high: tr?'Çok (Sık Sulama)':'High (Frequent)'};
-  const sl = {full_sun: tr?'Tam Güneş (6+ saat)':'Full Sun (6+ hrs)', partial_shade: tr?'Yarı Gölge':'Partial Shade', shade: tr?'Gölge':'Shade'};
-  const dl = {easy: tr?'Kolay':'Easy', medium: tr?'Orta':'Medium', hard: tr?'Zor':'Hard'};
+  var cat = CATEGORIES.find(c => c.id === plant.cat);
+  var catName = cat ? (tr ? cat.tr : cat.en) : plant.cat;
+  var wl = {low: tr?'Az (Kuraklığa Dayanıklı)':'Low (Drought Resistant)', moderate: tr?'Orta':'Moderate', high: tr?'Çok (Sık Sulama)':'High (Frequent)'};
+  var sl = {full_sun: tr?'Tam Güneş (6+ saat)':'Full Sun (6+ hrs)', partial_shade: tr?'Yarı Gölge':'Partial Shade', shade: tr?'Gölge':'Shade'};
+  var dl = {easy: tr?'Kolay':'Easy', medium: tr?'Orta':'Medium', hard: tr?'Zor':'Hard'};
 
   pc.innerHTML = `
     <div style="background:linear-gradient(135deg,var(--gp),white);padding:2rem;border-radius:var(--r);margin-bottom:1.5rem;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap">
@@ -149,7 +149,7 @@ function renderPlant() {
     <div class="info-box info-box-amber"><h5>⚠️ ${tr?'Önemli':'Notice'}</h5><p style="margin:0;font-size:.83rem">${tr?'Yerel koşullar sonuçları etkileyebilir. Ciddi sorunlarda ziraat mühendisine danışın.':'Local conditions may vary. Consult an agronomist for serious issues.'}</p></div>
     <div style="margin-top:1.25rem;padding:1.35rem;background:var(--gp);border-radius:var(--r);text-align:center">
       <h3>🔬 ${tr?'Bitkide Hastalık mı Var?':'Disease on Your Plant?'}</h3>
-      <p style="margin:.5rem 0 1rem">${tr?'Fotoğraf yükleyin, AI teşhis yapsın.':'Upload a photo, let AI diagnose.'}</p>
+      <p style="margin:.5rem 0 1rem">${tr?'Fotoğraf yükleyin, AI teşhis yapsın.':'Upload a photo, var AI diagnose.'}</p>
       <a href="teshis.html" class="btn btn-amber">${tr?'Hastalık Teşhisi →':'Disease Diagnosis →'}</a>
     </div>
     <div class="ad-slot ad-slot-banner" style="margin-top:1.25rem"><span class="ad-label">Reklam</span><small>728×90</small></div>`;
@@ -159,22 +159,22 @@ function renderPlant() {
 }
 
 async function loadAI() {
-  const btn = document.getElementById('aiBtn');
-  const c = document.getElementById('aiContent');
-  const tr = currentLang === 'tr';
+  var btn = document.getElementById('aiBtn');
+  var c = document.getElementById('aiContent');
+  var tr = currentLang === 'tr';
   btn.disabled = true;
   btn.textContent = tr ? '⏳ Yükleniyor...' : '⏳ Loading...';
   c.innerHTML = `<div class="loading-spinner" style="padding:1rem"><div class="spinner"></div><span>${tr?'Akademik kaynaklar taranıyor...':'Searching academic sources...'}</span></div>`;
-  const name = tr ? plant.tr : plant.en;
-  const sources = await fetchAcademic(`${name} ${plant.sci} cultivation care disease`, 4);
-  const ctx = sources.slice(0,3).map((p,i)=>`[${i+1}] ${p.title} (${p.year||'?'})`).join('\n');
-  const prompt = `You are an expert botanist. Write a comprehensive guide about "${name}" (${plant.sci}) in ${tr?'Turkish':'English'}.
+  var name = tr ? plant.tr : plant.en;
+  var sources = await fetchAcademic(`${name} ${plant.sci} cultivation care disease`, 4);
+  var ctx = sources.slice(0,3).map((p,i)=>`[${i+1}] ${p.title} (${p.year||'?'})`).join('\n');
+  var prompt = `You are an expert botanist. Write a comprehensive guide about "${name}" (${plant.sci}) in ${tr?'Turkish':'English'}.
 Academic sources: ${ctx||'use your knowledge'}
 ONLY return JSON:
 {"intro":"150 words general description","care":{"watering":"detail","fertilizing":"detail","pruning":"detail","repotting":"detail"},"diseases":["disease 1 and treatment","disease 2","disease 3"],"pests":["pest 1","pest 2"],"tips":["tip 1","tip 2","tip 3","tip 4","tip 5"],"fact":"interesting fact"}`;
   try {
-    const raw = await callClaude(prompt);
-    const d = parseJSON(raw);
+    var raw = await callClaude(prompt);
+    var d = parseJSON(raw);
     c.innerHTML = `<p>${d.intro||''}</p>
       ${d.care?`<h4 style="color:var(--gd);margin:1rem 0 .65rem">🌱 ${tr?'Bakım':'Care'}</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem">${Object.entries(d.care).map(([k,v])=>`<div class="info-box info-box-green" style="margin:0"><h5>${k==='watering'?'💧'+(tr?' Sulama':' Watering'):k==='fertilizing'?'🌿'+(tr?' Gübreleme':' Fertilizing'):k==='pruning'?'✂️'+(tr?' Budama':' Pruning'):'🪴'+(tr?' Saksı':' Repotting')}</h5><p style="margin:0;font-size:.82rem">${v}</p></div>`).join('')}</div>`:''}
       ${d.diseases?.length?`<h4 style="color:var(--red);margin:1rem 0 .5rem">🦠 ${tr?'Hastalıklar':'Diseases'}</h4><ul>${d.diseases.map(x=>`<li style="font-size:.85rem;margin-bottom:.3rem">${x}</li>`).join('')}</ul>`:''}

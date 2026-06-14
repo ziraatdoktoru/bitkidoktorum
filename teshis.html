@@ -156,33 +156,33 @@
 
 <script src="assets/app.js"></script>
 <script>
-let imgB64 = null, imgMime = null;
+var imgB64 = null, imgMime = null;
 
 function loadFile(f) {
   if (!f || !f.type.startsWith('image/')) return;
-  const reader = new FileReader();
+  var reader = new FileReader();
   reader.onload = e => {
-    const original = e.target.result;
+    var original = e.target.result;
     // Canvas ile sıkıştır
-    const img2 = new Image();
+    var img2 = new Image();
     img2.onload = () => {
-      const canvas = document.createElement('canvas');
-      let w = img2.width, h = img2.height;
+      var canvas = document.createElement('canvas');
+      var w = img2.width, h = img2.height;
       // Max 600px
-      const MAX = 200;
+      var MAX = 200;
       if (w > MAX || h > MAX) {
         if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
         else { w = Math.round(w * MAX / h); h = MAX; }
       }
       canvas.width = w; canvas.height = h;
-      const ctx2 = canvas.getContext('2d');
+      var ctx2 = canvas.getContext('2d');
       ctx2.drawImage(img2, 0, 0, w, h);
       // Kalite 0.6
-      const compressed = canvas.toDataURL('image/jpeg', 0.3);
+      var compressed = canvas.toDataURL('image/jpeg', 0.3);
       imgB64 = compressed.split(',')[1];
       imgMime = 'image/jpeg';
       // Boyut göster
-      const kb = Math.round(imgB64.length * 0.75 / 1024);
+      var kb = Math.round(imgB64.length * 0.75 / 1024);
       document.getElementById('imgInfo').style.display = 'block';
       document.getElementById('imgInfo').textContent = `✅ Fotoğraf hazır: ${w}×${h}px, ~${kb}KB`;
       document.getElementById('prevImg').src = compressed;
@@ -198,23 +198,23 @@ function loadFile(f) {
 
 async function runDiag() {
   if (!imgB64) { alert('Lütfen önce bir fotoğraf yükleyin.'); return; }
-  const plant = document.getElementById('plantIn').value.trim();
-  const dur = document.getElementById('durIn').value;
-  const note = document.getElementById('noteIn').value.trim();
+  var plant = document.getElementById('plantIn').value.trim();
+  var dur = document.getElementById('durIn').value;
+  var note = document.getElementById('noteIn').value.trim();
   document.getElementById('diagBtn').disabled = true;
   document.getElementById('diagLoading').style.display = 'flex';
   document.getElementById('diagResult').style.display = 'none';
   document.getElementById('diagMsg').textContent = 'Analiz ediliyor...';
   try {
-    const sources = await fetchAcademic(`${plant||'plant'} disease treatment`, 3);
-    const ctx = sources.slice(0,2).map((p,i) => `[${i+1}] ${p.title}`).join('\n');
-    const prompt = `Sen uzman bitki patoloğu yapay zekasısın. Fotoğraftaki bitkiyi incele, Türkçe tanı raporu hazırla.
+    var sources = await fetchAcademic(`${plant||'plant'} disease treatment`, 3);
+    var ctx = sources.slice(0,2).map((p,i) => `[${i+1}] ${p.title}`).join('\n');
+    var prompt = `Sen uzman bitki patoloğu yapay zekasısın. Fotoğraftaki bitkiyi incele, Türkçe tanı raporu hazırla.
 ${plant?'Bitki: '+plant:''} ${dur?'Süre: '+dur:''} ${note?'Not: '+note:''}
 Akademik: ${ctx||'kendi bilginle devam et'}
 SADECE JSON döndür - başka hiçbir şey yazma:
 {"tree":"Bitki türü","status":"kritik|uyari|saglikli","diagnosis":"Hastalık adı","confidence":82,"desc":"2-3 cümle açıklama","symptoms":["b1","b2"],"causes":["n1"],"urgent":"Acil yapılacak","treatment":"Tedavi","products":[{"type":"Fungisit","name":"Ürün","ingredient":"Etken madde","dose":"Doz","timing":"Ne zaman","desc":"Açıklama"}]}`;
-    const raw = await callClaude(prompt, imgB64, imgMime);
-    const d = parseJSON(raw);
+    var raw = await callClaude(prompt, imgB64, imgMime);
+    var d = parseJSON(raw);
     renderDiag(d, sources);
   } catch(e) {
     document.getElementById('diagResult').innerHTML = `<div class="info-box info-box-red"><h5>⚠️ Hata</h5><p style="margin:0">${e.message}</p></div>`;
@@ -226,10 +226,10 @@ SADECE JSON döndür - başka hiçbir şey yazma:
 }
 
 function renderDiag(d, sources) {
-  const sm = {kritik:{cls:'critical',badge:'🔴 Kritik',bc:'badge-red'}, uyari:{cls:'warning',badge:'🟡 Dikkat',bc:'badge-amber'}, saglikli:{cls:'healthy',badge:'🟢 Sağlıklı',bc:'badge-green'}};
-  const s = sm[d.status] || sm.uyari;
-  const conf = Math.min(100, Math.max(0, d.confidence||75));
-  const prods = (d.products||[]).map(p => `<div class="prod-card">
+  var sm = {kritik:{cls:'critical',badge:'🔴 Kritik',bc:'badge-red'}, uyari:{cls:'warning',badge:'🟡 Dikkat',bc:'badge-amber'}, saglikli:{cls:'healthy',badge:'🟢 Sağlıklı',bc:'badge-green'}};
+  var s = sm[d.status] || sm.uyari;
+  var conf = Math.min(100, Math.max(0, d.confidence||75));
+  var prods = (d.products||[]).map(p => `<div class="prod-card">
     <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:var(--am);margin-bottom:.2rem">${p.type}</div>
     <div style="font-weight:700;font-size:.9rem;color:var(--gd);margin-bottom:.25rem">${p.name}</div>
     <code style="background:white;border:1px solid var(--br);border-radius:3px;padding:.08rem .35rem;font-size:.68rem;color:var(--g)">${p.ingredient}</code>
@@ -263,7 +263,7 @@ function renderDiag(d, sources) {
     <button class="btn btn-outline" style="margin-top:1rem" onclick="resetDiag()">↻ Yeni Teşhis</button>`;
   document.getElementById('diagResult').style.display = 'block';
   document.getElementById('diagResult').scrollIntoView({behavior:'smooth'});
-  setTimeout(() => { const f = document.getElementById('confFill'); if(f) f.style.width = conf + '%'; }, 200);
+  setTimeout(() => { var f = document.getElementById('confFill'); if(f) f.style.width = conf + '%'; }, 200);
 }
 
 function resetDiag() {
