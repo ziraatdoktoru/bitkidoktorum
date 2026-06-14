@@ -14,7 +14,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
-<script>(function(){var t=localStorage.getItem('bd_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
 <style>
 .ym-hero{background:linear-gradient(135deg,#064e3b,#065f46,#047857);color:#fff;border-radius:var(--r);padding:2rem;margin-bottom:1.5rem;text-align:center}
 .ym-hero h1{font-size:1.8rem;margin-bottom:.5rem}
@@ -80,13 +80,11 @@
   <a href="araclar.html">Araçlar</a>
   <a href="yetisir-mi.html" class="active">Yetişir mi?</a>
   <a href="hakkimizda.html">Hakkımızda</a>
-  <div class="nav-mobile-extras">
-    <button class="dm-toggle-nav" onclick="dmToggle()">🌙 Koyu Mod</button>
-  </div>
+  
 </nav>
 <div class="header-right">
   <div class="qs-wrap-mini" id="qsWrap"><button class="qs-mini-btn" onclick="qsAc()" title="Ara">🔍</button></div>
-  <button class="dm-toggle" onclick="dmToggle()">🌙</button>
+  
   <div class="hamburger" id="burger"><span></span><span></span><span></span></div>
 </div>
 </div>
@@ -354,14 +352,8 @@ function qsAc(){document.getElementById('qsBox').classList.add('acik');document.
 function qsKapat(){document.getElementById('qsBox').classList.remove('acik');document.getElementById('qsOverlay').classList.remove('acik');document.getElementById('qsInput').value='';document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';}
 function qsAra(q){q=q.trim().toLowerCase();var el=document.getElementById('qsSonuclar');if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}var r=PLANT_DB.filter(function(p){return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);}).slice(0,12);if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı</div>';return;}el.innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()"><span class="qs-item-emoji">'+p.emoji+'</span><div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div><div class="qs-item-sci">'+p.sci+'</div></div></a>';}).join('');}
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();qsAc();}if(e.key==='Escape')qsKapat();});
-function dmToggle(){
-  var cur=document.documentElement.getAttribute('data-theme')||'light';
-  var nxt=cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',nxt);
-  localStorage.setItem('bd_theme',nxt);
-  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️':'🌙';});
-  document.querySelectorAll('.dm-toggle-nav').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık Mod':'🌙 Koyu Mod';});
-}!DOCTYPE html>
+);
+  }!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -377,7 +369,7 @@ function dmToggle(){
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
-<script>(function(){var t=localStorage.getItem('bd_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
 <style>
 .ym-hero{background:linear-gradient(135deg,#064e3b,#065f46,#047857);color:#fff;border-radius:var(--r);padding:2rem;margin-bottom:1.5rem;text-align:center}
 .ym-hero h1{font-size:1.8rem;margin-bottom:.5rem}
@@ -443,13 +435,11 @@ function dmToggle(){
   <a href="araclar.html">Araçlar</a>
   <a href="yetisir-mi.html" class="active">Yetişir mi?</a>
   <a href="hakkimizda.html">Hakkımızda</a>
-  <div class="nav-mobile-extras">
-    <button class="dm-toggle-nav" onclick="dmToggle()">🌙 Koyu Mod</button>
-  </div>
+  
 </nav>
 <div class="header-right">
   <div class="qs-wrap-mini" id="qsWrap"><button class="qs-mini-btn" onclick="qsAc()" title="Ara">🔍</button></div>
-  <button class="dm-toggle" onclick="dmToggle()">🌙</button>
+  
   <div class="hamburger" id="burger"><span></span><span></span><span></span></div>
 </div>
 </div>
@@ -717,9 +707,7 @@ function qsAc(){document.getElementById('qsBox').classList.add('acik');document.
 function qsKapat(){document.getElementById('qsBox').classList.remove('acik');document.getElementById('qsOverlay').classList.remove('acik');document.getElementById('qsInput').value='';document.getElementById('qsSonuclar').innerHTML='<div class="qs-bos">Aramaya başlamak için yazın...</div>';}
 function qsAra(q){q=q.trim().toLowerCase();var el=document.getElementById('qsSonuclar');if(!q||q.length<2){el.innerHTML='<div class="qs-bos">En az 2 karakter yazın...</div>';return;}var r=PLANT_DB.filter(function(p){return p.tr.toLowerCase().includes(q)||p.en.toLowerCase().includes(q)||(p.sci||'').toLowerCase().includes(q);}).slice(0,12);if(!r.length){el.innerHTML='<div class="qs-bos">Sonuç bulunamadı</div>';return;}el.innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'" class="qs-item" onclick="qsKapat()"><span class="qs-item-emoji">'+p.emoji+'</span><div class="qs-item-bilgi"><div class="qs-item-isim">'+p.tr+'</div><div class="qs-item-sci">'+p.sci+'</div></div></a>';}).join('');}
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();qsAc();}if(e.key==='Escape')qsKapat();});
-function dmToggle(){var cur=document.documentElement.getAttribute('data-theme')||'light';var nxt=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',nxt);localStorage.setItem('bd_theme',nxt);document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık':'🌙 Koyu';});}
-var t=localStorage.getItem('bd_theme')||'light';document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=t==='dark'?'☀️ Açık':'🌙 Koyu';});
-</script>
+);}
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}</script>
 </body>
 </html>

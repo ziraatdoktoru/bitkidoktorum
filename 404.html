@@ -11,7 +11,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
-<script>(function(){var t=localStorage.getItem('bd_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
 <style>
 .lost-wrap{text-align:center;padding:4rem 1rem;max-width:560px;margin:0 auto}
 .lost-emoji{font-size:6rem;margin-bottom:1rem;animation:wiggle 2s ease-in-out infinite}
@@ -43,13 +43,11 @@
   <a href="araclar.html">Araçlar</a>
   <a href="yetisir-mi.html">Yetişir mi?</a>
   <a href="hakkimizda.html">Hakkımızda</a>
-  <div class="nav-mobile-extras">
-    <button class="dm-toggle-nav" onclick="dmToggle()">🌙 Koyu Mod</button>
-  </div>
+  
 </nav>
 <div class="header-right">
   <div class="qs-wrap-mini" id="qsWrap"><button class="qs-mini-btn" onclick="qsAc()" title="Ara">🔍</button></div>
-  <button class="dm-toggle" onclick="dmToggle()">🌙</button>
+  
   <div class="hamburger" id="burger"><span></span><span></span><span></span></div>
 </div>
 </div>
@@ -92,14 +90,8 @@ function git404(){var q=document.getElementById('s404').value.trim();if(q)window
 // Rastgele 8 bitki göster
 var r=[];while(r.length<8){var p=PLANT_DB[Math.floor(Math.random()*PLANT_DB.length)];if(!r.find(function(x){return x.id===p.id;}))r.push(p);}
 document.getElementById('rastgeleGrid').innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'">'+p.emoji+' '+p.tr+'</a>';}).join('');
-function dmToggle(){
-  var cur=document.documentElement.getAttribute('data-theme')||'light';
-  var nxt=cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',nxt);
-  localStorage.setItem('bd_theme',nxt);
-  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️':'🌙';});
-  document.querySelectorAll('.dm-toggle-nav').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık Mod':'🌙 Koyu Mod';});
-}!DOCTYPE html>
+);
+  }!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -112,7 +104,7 @@ function dmToggle(){
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752408768281793" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BFFHPP4MPT"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BFFHPP4MPT');</script>
-<script>(function(){var t=localStorage.getItem('bd_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
 <style>
 .lost-wrap{text-align:center;padding:4rem 1rem;max-width:560px;margin:0 auto}
 .lost-emoji{font-size:6rem;margin-bottom:1rem;animation:wiggle 2s ease-in-out infinite}
@@ -144,13 +136,11 @@ function dmToggle(){
   <a href="araclar.html">Araçlar</a>
   <a href="yetisir-mi.html">Yetişir mi?</a>
   <a href="hakkimizda.html">Hakkımızda</a>
-  <div class="nav-mobile-extras">
-    <button class="dm-toggle-nav" onclick="dmToggle()">🌙 Koyu Mod</button>
-  </div>
+  
 </nav>
 <div class="header-right">
   <div class="qs-wrap-mini" id="qsWrap"><button class="qs-mini-btn" onclick="qsAc()" title="Ara">🔍</button></div>
-  <button class="dm-toggle" onclick="dmToggle()">🌙</button>
+  
   <div class="hamburger" id="burger"><span></span><span></span><span></span></div>
 </div>
 </div>
@@ -193,9 +183,7 @@ function git404(){var q=document.getElementById('s404').value.trim();if(q)window
 // Rastgele 8 bitki göster
 var r=[];while(r.length<8){var p=PLANT_DB[Math.floor(Math.random()*PLANT_DB.length)];if(!r.find(function(x){return x.id===p.id;}))r.push(p);}
 document.getElementById('rastgeleGrid').innerHTML=r.map(function(p){return '<a href="bitki.html?id='+p.id+'">'+p.emoji+' '+p.tr+'</a>';}).join('');
-function dmToggle(){var cur=document.documentElement.getAttribute('data-theme')||'light';var nxt=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',nxt);localStorage.setItem('bd_theme',nxt);document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık':'🌙 Koyu';});}
-var t=localStorage.getItem('bd_theme')||'light';document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=t==='dark'?'☀️ Açık':'🌙 Koyu';});
-</script>
+);}
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}</script>
 </body>
 </html>

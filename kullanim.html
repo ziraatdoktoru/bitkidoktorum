@@ -64,13 +64,11 @@
   <a href="araclar.html">Araçlar</a>
   <a href="yetisir-mi.html">Yetişir mi?</a>
   <a href="hakkimizda.html">Hakkımızda</a>
-  <div class="nav-mobile-extras">
-    <button class="dm-toggle-nav" onclick="dmToggle()">🌙 Koyu Mod</button>
-  </div>
+  
 </nav>
 <div class="header-right">
   <div class="qs-wrap-mini" id="qsWrap"><button class="qs-mini-btn" onclick="qsAc()" title="Ara">🔍</button></div>
-  <button class="dm-toggle" onclick="dmToggle()">🌙</button>
+  
   <div class="hamburger" id="burger"><span></span><span></span><span></span></div>
 </div>
 </div>
@@ -162,18 +160,11 @@ if('serviceWorker' in navigator){
 }
 </script>
 <script>
-function dmToggle(){
-  var cur=document.documentElement.getAttribute('data-theme')||'light';
-  var nxt=cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',nxt);
-  localStorage.setItem('bd_theme',nxt);
-  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️':'🌙';});
-  document.querySelectorAll('.dm-toggle-nav').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık Mod':'🌙 Koyu Mod';});
-}
+);
+  }
 document.addEventListener('DOMContentLoaded', function(){
   var t = localStorage.getItem('bd_theme')||'light';
-  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = t==='dark'?'☀️ Açık':'🌙 Koyu';});
-});
+  });
 </script>
 </body>
 </html>
