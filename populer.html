@@ -62,20 +62,35 @@
 </style>
 </head>
 <body>
-<header class="site-header"><div class="header-inner"><a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span>BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a><nav class="site-nav" id="mainNav"><a href="index.html">Ana Sayfa</a><a href="ansiklopedi.html">Ansiklopedi</a><a href="blog.html">Blog</a><a href="teshis.html">Hastalık Teşhisi</a><a href="takvim.html">Takvim</a><a href="araclar.html">Araçlar</a><a href="yetisir-mi.html">Yetişir mi?</a><a href="hakkimizda.html">Hakkımızda</a></nav><div style="display:flex;align-items:center;gap:.5rem"><div class="quick-search-wrap" id="qsWrap">
-<button class="quick-search-btn" onclick="qsAc()">🔍 Bitki Ara</button>
+<header class="site-header">
+<div class="header-inner">
+<a href="index.html" class="site-logo"><span class="logo-icon">🌿</span><div><span class="logo-name">BitkiDoktorum</span><span class="logo-tagline">Türkiye'nin Bitki Ansiklopedisi</span></div></a>
+<nav class="site-nav" id="mainNav">
+  <a href="index.html">Ana Sayfa</a>
+  <a href="ansiklopedi.html">Ansiklopedi</a>
+  <a href="blog.html">Blog</a>
+  <a href="teshis.html">Hastalık Teşhisi</a>
+  <a href="takvim.html">Takvim</a>
+  <a href="araclar.html">Araçlar</a>
+  <a href="yetisir-mi.html">Yetişir mi?</a>
+  <a href="hakkimizda.html">Hakkımızda</a>
+  <div class="nav-mobile-extras">
+    <button class="dm-toggle-nav" onclick="dmToggle()">🌙 Koyu Mod</button>
+  </div>
+</nav>
+<div class="header-right">
+  <div class="qs-wrap-mini" id="qsWrap"><button class="qs-mini-btn" onclick="qsAc()" title="Ara">🔍</button></div>
+  <button class="dm-toggle" onclick="dmToggle()">🌙</button>
+  <div class="hamburger" id="burger"><span></span><span></span><span></span></div>
 </div>
+</div>
+<!-- Arama overlay -->
 <div class="quick-search-overlay" id="qsOverlay" onclick="qsKapat()"></div>
 <div class="quick-search-box" id="qsBox">
-<div class="qs-input-wrap">
-<span style="font-size:1.1rem">🔍</span>
-<input class="qs-input" id="qsInput" placeholder="Bitki adı yazın... (elma, gül, monstera)" oninput="qsAra(this.value)" autocomplete="off">
-<button class="qs-close" onclick="qsKapat()">✕</button>
+  <div class="qs-input-wrap"><span style="font-size:1.1rem">🔍</span><input class="qs-input" id="qsInput" placeholder="Bitki adı yazın..." oninput="qsAra(this.value)" autocomplete="off"><button class="qs-close" onclick="qsKapat()">✕</button></div>
+  <div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
 </div>
-<div class="qs-sonuclar" id="qsSonuclar"><div class="qs-bos">Aramaya başlamak için yazın...</div></div>
-</div>
-<button class="dm-toggle" onclick="dmToggle()">🌙 Koyu</button>
-<div class="nav-lang"><button class="lang-btn active" data-lang="tr">TR</button><button class="lang-btn" data-lang="en">EN</button></div><div class="hamburger" id="burger"><span></span><span></span><span></span></div></div></div></header>
+</header>
 <nav class="breadcrumb"><div class="container"><div class="breadcrumb-nav"><a href="index.html">Ana Sayfa</a><span>›</span><span>Popüler Bitkiler</span></div></div></nav>
 
 <div class="container" style="padding-top:.5rem"><div class="ad-slot ad-slot-leaderboard"><span class="ad-label">Reklam</span><small>728×90</small></div></div>
@@ -199,11 +214,12 @@ if('serviceWorker' in navigator){
 </script>
 <script>
 function dmToggle(){
-  var cur = document.documentElement.getAttribute('data-theme')||'light';
-  var nxt = cur==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme', nxt);
-  localStorage.setItem('bd_theme', nxt);
-  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent = nxt==='dark'?'☀️ Açık':'🌙 Koyu';});
+  var cur=document.documentElement.getAttribute('data-theme')||'light';
+  var nxt=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',nxt);
+  localStorage.setItem('bd_theme',nxt);
+  document.querySelectorAll('.dm-toggle').forEach(function(b){b.textContent=nxt==='dark'?'☀️':'🌙';});
+  document.querySelectorAll('.dm-toggle-nav').forEach(function(b){b.textContent=nxt==='dark'?'☀️ Açık Mod':'🌙 Koyu Mod';});
 }
 document.addEventListener('DOMContentLoaded', function(){
   var t = localStorage.getItem('bd_theme')||'light';
