@@ -616,9 +616,9 @@ function initNav() {
       nav.classList.toggle('open');
       burger.classList.toggle('open');
     });
-    // Menü dışına tıklayınca kapat
-    document.addEventListener('click', (e) => {
-      if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== burger) {
+    // Overlay (karartma kısmı) tıklaması - kapat
+    nav.addEventListener('click', (e) => {
+      if (e.target === nav) {
         nav.classList.remove('open');
         burger.classList.remove('open');
       }
@@ -628,6 +628,13 @@ function initNav() {
       nav.classList.remove('open');
       burger.classList.remove('open');
     }));
+    // ESC tuşu ile kapat
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        nav.classList.remove('open');
+        burger.classList.remove('open');
+      }
+    });
   }
   const path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.site-nav a').forEach(a => {
